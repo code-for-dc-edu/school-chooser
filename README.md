@@ -1,5 +1,5 @@
-Code for DC Education Project: Phase II
-=======================================
+Code for DC Education: Phase II
+===============================
 
 ```
 npm install
