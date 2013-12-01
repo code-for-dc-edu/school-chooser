@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <title>School Chooser</title>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/fonts.css">
+        <link rel="stylesheet" href="css/main.css">
+
+        <script src="js/lib/modernizr-2.6.2.min.js"></script>
+        <script data-main="js/main" src="js/lib/require-2.1.9.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an outdated browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <div id="wrapper">
+
+            <div id="app"></div>
+
+        </div>
+
+        <script type="text/template" id="app-view-template">
+            <h2 class="app-view-title"><%= content.views[view].title %></h2>
+            <p class="app-view-instructions"><%= content.views[view].instructions %></p>
+        </script>
+
+        <script type="text/template" id="app-progress-view-template">
+            <ul>
+                <% _.times(3, function(i) { %>
+                    <li>
+                        <a id="app-progress-view-<%= i + 1 %>">
+                            <span class="number"><%= i + 1 %></span>
+                            <span class="label"><%= uiStrings.next %></span>
+                        </a>
+                    </li>
+                <% }); %>
+            </ul>
+        </script>
+
+        <script type="text/template" id="basic-info-form-view-template">
+            <label for="basic-info-address"><%= uiStrings.address %></label><br />
+            <input type="text" id="basic-info-address"
+                <% if(addressGISValid) { %> class="valid" <% } %>
+                value="<%- address %>" /><br />
+            <label for="basic-info-grade"><%= uiStrings.grade %></label><br />
+            <select id="basic-info-grade">
+                <option selected disabled hidden value=""></option>
+                <% _.forEach(grades, function(grade) { %>
+                    <option value="<%= grade %>" <% if(grade === selectedGrade) { %> selected <% } %>>
+                        <%= isNaN(grade) ? uiStrings[grade] : grade %>
+                    </option>
+                <% }); %>
+            </select>
+        </script>
+
+        <script type="text/template" id="ranking-table-view-template">
+            <ul>
+                <% _.forEach(selectedItems, function(item) { %>
+                    <li class="selected item" data-name="<%= item %>">
+                        <span class="touch-target"></span>
+                        <span class="name"><%= content.items[item].name %></span>
+                    </li>
+                <% }); %>
+                <li class="placeholder">Drag items that are important to you here.</li>
+                <li id="ranking-table-view-divider" class="header-row">Available Items</li>
+                <% _.forEach(unselectedItems, function(item) { %>
+                    <li class="item" data-name="<%= item %>">
+                        <span class="touch-target"></span>
+                        <span class="name"><%= content.items[item].name %></span>
+                    </li>
+                <% }); %>
+            </ul>
+        </script>
+
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID.
+        <script>
+            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+            e.src='//www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+            ga('create','UA-XXXXX-X');ga('send','pageview');
+        </script>
+        -->
+    </body>
+</html>
