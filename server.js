@@ -2,6 +2,7 @@
 var application_root = __dirname,
     express = require( 'express' ), //Web framework
     path = require( 'path' ), //Utilities for dealing with file paths
+    request = require('request'), //Simple HTTP requests
     mongoose = require( 'mongoose' ); //MongoDB integration
 
 //Create server
@@ -23,6 +24,12 @@ app.configure( function() {
 
     //Show all errors in development
     app.use( express.errorHandler({ dumpExceptions: true, showStack: true }));
+});
+
+app.post('/api/dcgis', function(req,res) {
+    var url = 'http://dcatlas.dcgis.dc.gov/wsProxy/proxy_LocVerifier.asmx/findLocation_all',
+        str = req.body.address;
+    request.post(url, {form: {str: str}}).pipe(res);
 });
 
 //Start server

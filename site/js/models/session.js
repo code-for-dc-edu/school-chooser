@@ -9,6 +9,8 @@ define(
             grade: '',
             address: '',
             addressGISValid: false,
+            xcoord: 0,
+            ycoord: 0,
             neighborhoodCluster: 0,
             zonedSchools: [],
             rankings: {
@@ -83,7 +85,18 @@ define(
         },
 
         lookupAddress: function () {
+            var address = this.get('address');
+
             this.set({'addressGISValid': false});
+
+            $.post('/api/dcgis', {address: address}, function (data) {
+                var returnedAddresses = $(data).find('FULLADDRESS');
+                if (returnedAddresses.length === 1) {
+                    console.log(returnedAddresses[0]);
+                } else {
+                    //invalid!
+                }
+            })
 
             // Until we have a POST proxy set up.
             if (this.get('address')) {
