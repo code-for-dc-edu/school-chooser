@@ -17,7 +17,6 @@ define(
         formViewTemplate: _.template($('#basic-info-form-view-template').html()),
 
         events: {
-            'focus #basic-info-address': 'clearValidClass',
             'blur #basic-info-address': 'addressUpdate',
             'change #basic-info-grade': 'gradeUpdate'
         },
@@ -59,13 +58,13 @@ define(
             }));
         },
 
-        clearValidClass: function (e) {
-            $(e.target).removeClass();
-        },
-
         addressUpdate: function (e) {
-            var address = e.target.value;
-            this.model.set({'address': address});
+            var newAddress = e.target.value,
+                currentAddress = this.model.get('address');
+            if (newAddress !== currentAddress) {
+                this.model.set({'address': newAddress});
+                $(e.target).removeClass();
+            }
         },
 
         gradeUpdate: function (e) {

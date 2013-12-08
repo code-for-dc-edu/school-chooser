@@ -9,8 +9,8 @@ define(
             grade: '',
             address: '',
             addressGISValid: false,
-            xcoord: 0,
-            ycoord: 0,
+            xcoord: 0.0,
+            ycoord: 0.0,
             neighborhoodCluster: 0,
             zonedSchools: [],
             rankings: {
@@ -99,9 +99,9 @@ define(
                         returnedAddresses = $(data).find('FULLADDRESS');
                     if (returnedAddresses.length === 1) {
                         address = $(returnedAddresses[0]).text();
-                        xcoord = $($(data).find('XCOORD')[0]).text();
-                        ycoord = $($(data).find('YCOORD')[0]).text();
-                        neighborhoodCluster = $($(data).find('CLUSTER_')[0]).text().split(' ')[1];
+                        xcoord = parseFloat($($(data).find('XCOORD')[0]).text());
+                        ycoord = parseFloat($($(data).find('YCOORD')[0]).text());
+                        neighborhoodCluster = parseInt($($(data).find('CLUSTER_')[0]).text().split(' ')[1],10);
                         that.set({
                             'addressGISValid': true,
                             'address': address,
