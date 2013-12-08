@@ -85,23 +85,35 @@ define(
         },
 
         lookupAddress: function () {
-            var address = this.get('address');
+            var address = this.get('address'),
+                that = this;
 
             this.set({'addressGISValid': false});
 
-            $.post('/api/dcgis', {address: address}, function (data) {
-                var returnedAddresses = $(data).find('FULLADDRESS');
-                if (returnedAddresses.length === 1) {
-                    console.log(returnedAddresses[0]);
-                } else {
-                    //invalid!
-                }
-            })
-
-            // Until we have a POST proxy set up.
-            if (this.get('address')) {
-                this.set({'addressGISValid': true});
-                this.trigger('addressGIS:valid');
+            if (address) {
+                $.post('/api/dcgis', {address: address}, function (data) {
+                    var address,
+                        xcoord,
+                        ycoord,
+                        neighborhoodCluster,
+                        returnedAddresses = $(data).find('FULLADDRESS');
+                    if (returnedAddresses.length === 1) {
+                        address = $(returnedAddresses[0]).text();
+                        xcoord = $($(data).find('XCOORD')[0]).text();
+                        ycoord = $($(data).find('YCOORD')[0]).text();
+                        neighborhoodCluster = $($(data).find('CLUSTER_')[0]).text().split(' ')[1];
+                        that.set({
+                            'addressGISValid': true,
+                            'address': address,
+                            'xcoord': xcoord,
+                            'ycoord': ycoord,
+                            'neighborhoodCluster': neighborhoodCluster
+                        });
+                        that.trigger('addressGIS:valid');
+                    } else {
+                        that.trigger('addressGIS:invalid');
+                    }
+                });
             }
         },
 

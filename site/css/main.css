@@ -267,6 +267,14 @@ div#wrapper {
     font-weight: 700;
 }
 
+#basic-info-address.valid {
+    border: 3px solid green;
+}
+
+#basic-info-address.invalid {
+    border: 3px solid red;
+}
+
 #app-progress-view {
     padding: 11px;
     position: fixed;

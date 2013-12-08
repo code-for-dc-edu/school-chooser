@@ -17,11 +17,13 @@ define(
         formViewTemplate: _.template($('#basic-info-form-view-template').html()),
 
         events: {
+            'focus #basic-info-address': 'clearValidClass',
             'blur #basic-info-address': 'addressUpdate',
             'change #basic-info-grade': 'gradeUpdate'
         },
 
         initialize: function () {
+            var model = this.model;
             this.$el.html(this.template({
                 view: 'basicInfo',
                 content: content
@@ -35,6 +37,10 @@ define(
 
             this.listenTo(this.model, 'addressGIS:invalid', function () {
                 $('#basic-info-address').addClass('invalid');
+            });
+
+            this.listenTo(this.model, 'change:address', function () {
+                $('#basic-info-address').val(model.get('address'));
             });
         },
 
@@ -53,10 +59,13 @@ define(
             }));
         },
 
+        clearValidClass: function (e) {
+            $(e.target).removeClass();
+        },
+
         addressUpdate: function (e) {
             var address = e.target.value;
             this.model.set({'address': address});
-            $(e.target).removeClass();
         },
 
         gradeUpdate: function (e) {
