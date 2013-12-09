@@ -1,39 +1,44 @@
 // Module dependencies.
 var application_root = __dirname,
-    express = require( 'express' ), //Web framework
-    path = require( 'path' ), //Utilities for dealing with file paths
-    request = require('request'), //Simple HTTP requests
-    mongoose = require( 'mongoose' ); //MongoDB integration
+    express = require('express'),
+    fs = require('fs'),
+    request = require('request'),
+    mongoose = require( 'mongoose' ),
+    env = require('node-env-file');
+
+// Load environment file if present
+if (fs.existsSync('.env')) { env('.env'); }
 
 //Create server
 var app = express();
 
 // Configure server
-app.configure( function() {
+app.configure(function () {
     //parses request body and populates request.body
-    app.use( express.bodyParser() );
+    app.use(express.json());
+    app.use(express.urlencoded());
 
     //checks request.body for HTTP method overrides
-    app.use( express.methodOverride() );
+    app.use(express.methodOverride());
 
     //perform route lookup based on url and HTTP method
-    app.use( app.router );
+    app.use(app.router);
 
     //Where to serve static content
-    app.use( express.static( path.join( application_root, 'site') ) );
+    app.use(express.static(__dirname + '/site'));
 
     //Show all errors in development
-    app.use( express.errorHandler({ dumpExceptions: true, showStack: true }));
+    app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
 
 // MongoDB
-var mongoURI = process.env.MONGOHQ_URL || 'mongodb://localhost/school-chooser';
+var mongoURL = process.env.MONGOHQ_URL || 'mongodb://localhost/school-chooser';
 
-mongoose.connect(mongoURI, function (err, res) {
+mongoose.connect(mongoURL, function (err, res) {
     if (!err) {
-        console.log ('Connected to database at ' + mongoURI);
+        console.log ('Database connection established.');
     } else {
-        console.log ('ERROR connecting to database at ' + mongoURI + '. ' + err);
+        console.log ('ERROR: Problem connecting to database at ' + mongoURL + '. ' + err);
     }
 });
 
@@ -110,10 +115,6 @@ var Session = new mongoose.Schema({
         schoolCulture: Number,
         studentsFromMyNeighborhood: Number
     }
-});
-
-Session.virtual('results').get(function () {
-    return; // STUB
 });
 
 var SessionModel = mongoose.model('Session', Session);

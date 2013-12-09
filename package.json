@@ -1,14 +1,15 @@
 {
-    "name": "school-chooser",
-    "version": "0.0.1",
-    "description": "Code for DC school choice app",
-    "repository": {
-        "type" : "git",
-        "url" : "http://github.com/isaacs/npm.git"
-    },
-    "dependencies": {
-        "express": "3.x",
-        "request": "*",
-        "mongoose": "3.8.x"
-    }
+  "name": "school-chooser",
+  "version": "0.0.1",
+  "description": "Code for DC school choice app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/code-for-dc-edu/school-chooser.git"
+  },
+  "dependencies": {
+    "express": "3.x",
+    "request": "2.x",
+    "mongoose": "3.8.x",
+    "node-env-file": "0.1.x"
+  }
 }
