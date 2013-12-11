@@ -25,7 +25,7 @@ app.configure(function () {
     app.use(app.router);
 
     //Where to serve static content
-    app.use(express.static(__dirname + '/site'));
+    app.use(express.static(application_root + '/site'));
 
     //Show all errors in development
     app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
@@ -43,10 +43,10 @@ mongoose.connect(mongoURL, function (err, res) {
 });
 
 // Schools
-var School = new mongoose.Schema({
+var SchoolSchema = new mongoose.Schema({
     code: Number,
     name: String,
-    grades: [String],
+    grades: { type: [String], index: true },
     collegeEnrollment: {
         val: Number,
         sd: Number
@@ -82,23 +82,20 @@ var School = new mongoose.Schema({
         val: Number,
         sd: Number
     },
-    growth: [
-        {
-            grade: String,
-            val: Number,
-            sd: Number
-        }
-    ],
+    growth: {
+        val: Number,
+        sd: Number
+    },
     instructorRatio: {
         val: Number,
         sd: Number
     }
 });
 
-var SchoolModel = mongoose.model('School', School);
+var School = mongoose.model('School', School);
 
 // Sessions
-var Session = new mongoose.Schema({
+var SessionSchema = new mongoose.Schema({
     grade: String,
     address: String,
     addressGISValid: Boolean,
@@ -117,7 +114,7 @@ var Session = new mongoose.Schema({
     }
 });
 
-var SessionModel = mongoose.model('Session', Session);
+var Session = mongoose.model('Session', Session);
 
 // Routes
 app.post('/api/dcgis', function(req,res) {
@@ -126,7 +123,7 @@ app.post('/api/dcgis', function(req,res) {
     request.post(url, {form: {str: str}}).pipe(res);
 });
 
-//Start server
+// Start server
 var port = process.env.PORT || 5000;
 app.listen( port, function() {
     console.log( 'Express server listening on port %d in %s mode', port, app.settings.env );
