@@ -36,7 +36,7 @@ define({
                 "definition": ""
             },
             "schoolCulture": {
-                "name": "School Culture",
+                "name": "School Climate",
                 "definition": ""
             },
             "studentsFromMyNeighborhood": {
