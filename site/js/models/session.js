@@ -15,14 +15,13 @@ define(
             zonedSchools: [],
             rankings: {
                 academicGrowth: 0,
-                collegeEnrollment: 0,
+                // collegeEnrollment: 0,
                 graduationRate: 0,
-                instructionalStaffPerStudent: 0,
-                racialDiversity: 0,
+                // instructionalStaffPerStudent: 0,
+                // racialDiversity: 0,
                 schoolCulture: 0,
                 studentsFromMyNeighborhood: 0
             },
-            results: new Schools(),
             validationLevel: 0,
             levelValid: false
         },
@@ -35,6 +34,8 @@ define(
                     this.validate();
                 }
             });
+
+            this.schools = new Schools();
         },
 
         validate: function (attrs) {
@@ -121,15 +122,23 @@ define(
             var rankings = this.get('rankings'),
                 grade = this.get('grade');
 
-            if (_.contains(['9','10','11','12'], grade)) {
-                if (!rankings.collegeEnrollment) { rankings.collegeEnrollment = 0; }
+            if (_.contains(['09','10','11','12'], grade)) {
+                // if (!rankings.collegeEnrollment) { rankings.collegeEnrollment = 0; }
                 if (!rankings.graduationRate) { rankings.graduationRate = 0; }
             } else {
-                rankings.collegeEnrollment = false;
+                // rankings.collegeEnrollment = false;
                 rankings.graduationRate = false;
             }
 
             this.set({'rankings': rankings});
+        },
+
+        results: function () {
+            var grade = this.get('grade'),
+                nc = this.get('neighborhoodCluster'),
+                rankings = this.get('rankings');
+
+            return this.schools.sorted(grade, nc, rankings);
         }
 
     });

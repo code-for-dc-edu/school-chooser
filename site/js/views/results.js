@@ -23,10 +23,17 @@ define(
                 view: 'results',
                 content: content
             }));
+            this.$schoolList = $('<ol id="school-list"></ol>')
+                .appendTo(this.$el);
         },
 
         render: function () {
+            var schools = this.model.results(),
+                $schoolList = this.$schoolList;
 
+            _.forEach(schools, function (school) {
+                $schoolList.append('<li>' + school.attributes.name + '</li>');
+            });
         },
 
         close: function () {

@@ -43,56 +43,56 @@ mongoose.connect(mongoURL, function (err, res) {
 });
 
 // Schools
-var SchoolSchema = new mongoose.Schema({
-    code: Number,
-    name: String,
-    grades: { type: [String], index: true },
-    collegeEnrollment: {
-        val: Number,
-        sd: Number
-    },
-    commute: [
-        {
-            nc: Number,
-            val: Number,
-            sd: Number
-        }
-    ],
-    culture: {
-        val: {
-            attendance: Number,
-            suspensions: Number,
-            withdrawals: Number
-        },
-        sd: Number
-    },
-    diversity: {
-        val: {
-            a:  { type: Number, default: 0 }, // Asian
-            aa: { type: Number, default: 0 }, // African American
-            ai: { type: Number, default: 0 }, // American Indian / Alaskan Native
-            h:  { type: Number, default: 0 }, // Hispanic
-            mr: { type: Number, default: 0 }, // Two or more races
-            pi: { type: Number, default: 0 }, // Native Hawaiian / Pacific Islander
-            w:  { type: Number, default: 0 }  // White, non-Hispanic
-        },
-        sd: Number
-    },
-    graduationRate: {
-        val: Number,
-        sd: Number
-    },
-    growth: {
-        val: Number,
-        sd: Number
-    },
-    instructorRatio: {
-        val: Number,
-        sd: Number
-    }
-});
+// var SchoolSchema = new mongoose.Schema({
+//     code: Number,
+//     name: String,
+//     grades: { type: [String], index: true },
+//     collegeEnrollment: {
+//         val: Number,
+//         sd: Number
+//     },
+//     commute: [
+//         {
+//             nc: Number,
+//             val: Number,
+//             sd: Number
+//         }
+//     ],
+//     culture: {
+//         val: {
+//             attendance: Number,
+//             suspensions: Number,
+//             withdrawals: Number
+//         },
+//         sd: Number
+//     },
+//     diversity: {
+//         val: {
+//             a:  { type: Number, default: 0 }, // Asian
+//             aa: { type: Number, default: 0 }, // African American
+//             ai: { type: Number, default: 0 }, // American Indian / Alaskan Native
+//             h:  { type: Number, default: 0 }, // Hispanic
+//             mr: { type: Number, default: 0 }, // Two or more races
+//             pi: { type: Number, default: 0 }, // Native Hawaiian / Pacific Islander
+//             w:  { type: Number, default: 0 }  // White, non-Hispanic
+//         },
+//         sd: Number
+//     },
+//     graduationRate: {
+//         val: Number,
+//         sd: Number
+//     },
+//     growth: {
+//         val: Number,
+//         sd: Number
+//     },
+//     instructorRatio: {
+//         val: Number,
+//         sd: Number
+//     }
+// });
 
-var School = mongoose.model('School', School);
+// var School = mongoose.model('School', SchoolSchema);
 
 // Sessions
 var SessionSchema = new mongoose.Schema({
@@ -114,7 +114,7 @@ var SessionSchema = new mongoose.Schema({
     }
 });
 
-var Session = mongoose.model('Session', Session);
+var Session = mongoose.model('Session', SessionSchema);
 
 // Routes
 app.post('/api/dcgis', function(req,res) {

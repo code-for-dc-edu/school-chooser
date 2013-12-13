@@ -47,7 +47,7 @@ define(
             var address = this.model.get('address'),
                 addressGISValid = this.model.get('addressGISValid'),
                 grade = this.model.get('grade'),
-                grades = ['PS', 'PK', 'K', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+                grades = ['PS', 'PK', 'K', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
 
             this.$formView.html(this.formViewTemplate({
                 address: address,
