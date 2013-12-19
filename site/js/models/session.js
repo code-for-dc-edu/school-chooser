@@ -18,7 +18,7 @@ define(
                 // collegeEnrollment: 0,
                 graduationRate: 0,
                 // instructionalStaffPerStudent: 0,
-                // racialDiversity: 0,
+                racialDiversity: 0,
                 schoolCulture: 0,
                 studentsFromMyNeighborhood: 0
             },
