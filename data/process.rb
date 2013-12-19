@@ -42,7 +42,7 @@ schools.each do |school|
             "hispanic" => school["Hispanic / Latino"],
             "americanIndianAlaskaNative" => school["Native American / Alaskan"]
         },
-        "sd" => nil
+        "sd" => school["Diversity"]
     }
     newSchool["graduationRate"] = {
         "val" => school["Graduation Rate"],
