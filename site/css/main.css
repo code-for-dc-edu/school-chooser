@@ -125,6 +125,9 @@ div#wrapper {
     position: relative;
     overflow-x: hidden;
     min-height: 100%;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
 }
 
 .app-view {
@@ -195,6 +198,10 @@ div#wrapper {
     height: 22px;
     line-height: 22px;
     z-index: 5;
+}
+
+#ranking-table-view li.item {
+    cursor: pointer;
 }
 
 #ranking-table-view li.item span.touch-target {

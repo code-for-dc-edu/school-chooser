@@ -8,6 +8,26 @@
     }
 }(function ($) {
     "use strict";
+    $.fn.longtouch = function (callback, timeout) {
+        var touchDevice = ('ontouchstart' in document.documentElement),
+            startEvents = touchDevice ? "touchstart" : "mousedown",
+            endEvents = touchDevice ? "touchend touchcancel" : "mouseup"
+            timeout = timeout || 500;
+
+        $(this).bind(startEvents, function (event) {
+            var initialEvent = event,
+                timer = window.setTimeout(function () { callback(initialEvent); }, timeout);
+
+            $(document).bind(endEvents, function () {
+                window.clearTimeout(timer);
+                $(document).unbind(endEvents);
+
+                return true;
+            });
+
+            return true;
+        });
+    };
     $.fn.sortable = function (options) {
         options = options || {};
         options.itemHeight = options.itemHeight || 44;
@@ -20,9 +40,13 @@
         return this.each(function () {
             var parent = $(this);
             var els = parent.children()
-                .css({ 'user-select': 'none' })
+                .css({ '-webkit-user-select': 'none',
+                       '-moz-user-select': 'none',
+                       'user-select': 'none' })
                 .attr('unselectable', 'on')
                 .on('selectstart', false);
+
+            var items = parent.children(options.selector).longtouch(onStart);
 
             var selectables = parent.children(options.selector).children(options.touchTarget)
                 .on(startEvent, onStart);
@@ -42,6 +66,7 @@
             var el, parentTop, parentBtm, positionAtStart, hasQueuedAni;
 
             function onStart(e) {
+                e.stopPropagation();
                 e = e.originalEvent.touches ? e.originalEvent : e;
                 el = $(e.touches ? e.touches[0].target : e.target);
                 if (!el.is('li')) el = el.closest('li');
