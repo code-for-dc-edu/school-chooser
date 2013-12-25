@@ -73,8 +73,10 @@
                         <span class="name"><%= content.items[item].name %></span>
                     </li>
                 <% }); %>
-                <li class="placeholder">Drag items that are important to you here.</li>
-                <li id="ranking-table-view-divider" class="header-row">Available Items</li>
+                <li id="ranking-table-view-divider" class="header-row">
+                    <div class="placeholder">Drag items that are important to you here.</div>
+                    Available Items
+                </li>
                 <% _.forEach(unselectedItems, function(item) { %>
                     <li class="item" data-name="<%= item %>">
                         <span class="touch-target"></span>
