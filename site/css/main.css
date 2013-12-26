@@ -175,9 +175,9 @@ div#wrapper {
     padding-left: 33px;
 }
 
-#ranking-table-view div.placeholder {
-    transition: color 150ms, border-color 150ms;
-    -webkit-transition: color 150ms, border-color 150ms;
+#ranking-table-view li.header-row div.placeholder {
+    transition: color 150ms, border-color 150ms, background 500ms;
+    -webkit-transition: color 150ms, border-color 150ms, background 500ms;
     background: #d8dae1;
     color: #2a2b2c;
     font-weight: 300;
@@ -188,21 +188,37 @@ div#wrapper {
     border: 3px dashed transparent;
 }
 
-#ranking-table-view ul.in-motion div.placeholder {
+#ranking-table-view ul.in-motion li.header-row div.placeholder {
     color: #ff6a30;
     border-color: #ff6a30;
 }
 
+#ranking-table-view li.header-row.no-placeholder div.placeholder {
+    background: transparent !important;
+    border-color: transparent !important;
+    color: transparent !important;
+}
+
 #ranking-table-view li.header-row {
+    height: 66px;
+    z-index: 5;
+}
+
+#ranking-table-view li.header-row div {
     background: #8b91a3;
     color: white;
-    height: 66px;
     line-height: 22px;
-    z-index: 5;
+    height: 22px;
+    margin: 0 -11px;
+    padding: 0 11px;
 }
 
 #ranking-table-view li.item {
     cursor: pointer;
+}
+
+#ranking-table-view li.item.selected {
+    z-index: 6;
 }
 
 #ranking-table-view li.item span.touch-target {

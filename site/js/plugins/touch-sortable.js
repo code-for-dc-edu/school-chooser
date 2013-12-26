@@ -92,6 +92,7 @@
             }
 
             function onMove(e) {
+                console.log("move");
                 var positionDelta;
                 if (e) {
                     e = e.originalEvent.touches ? e.originalEvent : e;
@@ -116,6 +117,7 @@
 
                 // The real height of the neighboring element in case it's a header row
                 var elHeight = positionDelta > 0 ? el.next().outerHeight(true) : el.prev().outerHeight(true);
+                var elHeader = positionDelta > 0 ? el.next().hasClass('header-row') : el.prev().hasClass('header-row');
 
                 // Any additional rows remaining to move?
                 var additionalRows = Math.abs(positionDelta) - elHeight > 0 ? Math.floor((Math.abs(positionDelta) - elHeight) / elDistance) : 0;
@@ -126,39 +128,68 @@
                 var sel;
 
                 /* Re-order the list once item crosses over the neighboring elements */
-                if (positionDelta < -elHeight && el.prev().length) {
-
-                    if (!els.filter(':animated').length) {
-                        hasQueuedAni = true;
-                        
+                if ((positionDelta < -elHeight || (elHeader && positionDelta < -options.itemHeight)) && el.prev().length) {
+                        if (!els.filter(':animated').length) {
+                            hasQueuedAni = true;
+                            
                         /* Animate and swap */
-                        sel = el.prevAll().slice(0, 1 + additionalRows);
-                        sel.animate({
-                            'top': el.outerHeight(true)
-                        }, 150).promise().done(function () {
-                            positionAtStart = positionAtStart - (elHeight + (elDistance * additionalRows));
-                            el.insertBefore(sel.last()).css('top', '+=' + (elHeight + (elDistance * additionalRows)));
-                            sel.css('top','');
-                            options.onReorder();
-                            onMove();
-                        });
+                        if (elHeader && el.prevAll('.item').length === 0 ) {
+                            // The row is becoming the only selected item
+                            sel = el.nextAll();
+                            sel.animate({
+                                'top': -el.outerHeight(true)
+                            }, 150).promise().done(function () {
+                                positionAtStart = positionAtStart - (elHeight + (elDistance * additionalRows));
+                                el.prependTo(parent).css('top', '+=' + (elHeight + (elDistance * additionalRows)));
+                                el.next().css('margin-top', '-=' + (options.itemHeight + 1)).addClass('no-placeholder');
+                                sel.css('top','');
+                                options.onReorder();
+                                onMove();
+                            });
+                        } else {
+                            sel = el.prevAll().slice(0, 1 + additionalRows);
+                            sel.animate({
+                                'top': el.outerHeight(true)
+                            }, 150).promise().done(function () {
+                                positionAtStart = positionAtStart - (elHeight + (elDistance * additionalRows));
+                                el.insertBefore(sel.last()).css('top', '+=' + (elHeight + (elDistance * additionalRows)));
+                                sel.css('top','');
+                                options.onReorder();
+                                onMove();
+                            });
+                        }
                     }
                 } else if (positionDelta > elHeight && el.next().length) {
-
                     if (!els.filter(':animated').length) {
                         hasQueuedAni = true;
-                        
+
                         /* Animate and swap */
-                        sel = el.nextAll().slice(0, 1 + additionalRows);
-                        sel.animate({
-                            'top': -el.outerHeight(true)
-                        }, 150).promise().done(function () {
-                            positionAtStart = positionAtStart + (elHeight + (elDistance * additionalRows));
-                            el.insertAfter(sel.last()).css('top', '-=' + (elHeight + (elDistance * additionalRows)));
-                            sel.css('top','');
-                            options.onReorder();
-                            onMove();
-                        });
+                        if (elHeader && el.prevAll('.item').length === 0 ) {
+                            // The row is the last selected item and leaving
+                            console.log("moving below header");
+                            sel = el.nextAll().slice(1);
+                            sel.animate({
+                                'top': el.outerHeight(true)
+                            }, 150).promise().done(function () {
+                                positionAtStart = positionAtStart + (elHeight + options.itemHeight + (elDistance * additionalRows));
+                                el.insertAfter(el.next()).css('top', '-=' + (elHeight + options.itemHeight + (elDistance * additionalRows)));
+                                el.prev().css('margin-top', '').removeClass('no-placeholder');
+                                sel.css('top','');
+                                options.onReorder();
+                                onMove();
+                            });
+                        } else {
+                            sel = el.nextAll().slice(0, 1 + additionalRows);
+                            sel.animate({
+                                'top': -el.outerHeight(true)
+                            }, 150).promise().done(function () {
+                                positionAtStart = positionAtStart + (elHeight + (elDistance * additionalRows));
+                                el.insertAfter(sel.last()).css('top', '-=' + (elHeight + (elDistance * additionalRows)));
+                                sel.css('top','');
+                                options.onReorder();
+                                onMove();
+                            });
+                        }
                     }
 
                 } else {
