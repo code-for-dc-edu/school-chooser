@@ -193,6 +193,10 @@ div#wrapper {
     border-color: #ff6a30;
 }
 
+#ranking-table-view li.header-row.no-placeholder {
+    margin-top: -45px;
+}
+
 #ranking-table-view li.header-row.no-placeholder div.placeholder {
     background: transparent !important;
     border-color: transparent !important;

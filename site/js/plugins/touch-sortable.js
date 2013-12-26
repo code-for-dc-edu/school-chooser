@@ -141,7 +141,7 @@
                             }, 150).promise().done(function () {
                                 positionAtStart = positionAtStart - (elHeight + (elDistance * additionalRows));
                                 el.prependTo(parent).css('top', '+=' + (elHeight + (elDistance * additionalRows)));
-                                el.next().css('margin-top', '-=' + (options.itemHeight + 1)).addClass('no-placeholder');
+                                el.next().addClass('no-placeholder');
                                 sel.css('top','');
                                 options.onReorder();
                                 onMove();
@@ -173,7 +173,7 @@
                             }, 150).promise().done(function () {
                                 positionAtStart = positionAtStart + (elHeight + options.itemHeight + (elDistance * additionalRows));
                                 el.insertAfter(el.next()).css('top', '-=' + (elHeight + options.itemHeight + (elDistance * additionalRows)));
-                                el.prev().css('margin-top', '').removeClass('no-placeholder');
+                                el.prev().removeClass('no-placeholder');
                                 sel.css('top','');
                                 options.onReorder();
                                 onMove();

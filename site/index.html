@@ -73,7 +73,7 @@
                         <span class="name"><%= content.items[item].name %></span>
                     </li>
                 <% }); %>
-                <li id="ranking-table-view-divider" class="header-row">
+                <li id="ranking-table-view-divider" class="header-row <% if(selectedItems.length > 0) { %> no-placeholder <% } %>">
                     <div class="placeholder">Drag items that are important to you here.</div>
                     <div>Available Items</div>
                 </li>
