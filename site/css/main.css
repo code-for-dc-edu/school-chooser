@@ -289,18 +289,45 @@ div#wrapper {
 #basic-info-form-view select {
     width: 100%;
     margin-bottom: 1em;
+    height: 22px;
 }
 
 #basic-info-form-view label {
     font-weight: 700;
 }
 
+#basic-info-address {
+    position: relative;
+    transition: all 150ms;
+    -webkit-transition: all 150ms;
+    padding: 0 2px;
+    background: #ebecf0;
+    border: 2px solid #d8dae1;
+    color: #2a2b2c;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    outline: none;
+    -webkit-appearance: none;
+}
+
 #basic-info-address.valid {
-    border: 3px solid green;
+    background: #e1f4d0;
+    border-color: #9cdb63;
 }
 
 #basic-info-address.invalid {
-    border: 3px solid red;
+    color: #ff6a30;
+    border-color: #ff6a30;
+}
+
+#basic-info-address:focus {
+    background: #dff3f7;
+    color: #2a2b2c;
+    border-color: #63c6db;
+}
+
+#basic-info-grade {
 }
 
 #app-progress-view {

@@ -3,7 +3,7 @@ define({
         "views": {
             "basicInfo": {
                 "title": "Step 1: Tell us about yourself",
-                "instructions": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vehicula sem ligula, sit amet pretium ante varius a. Suspendisse fringilla eleifend dignissim."
+                "instructions": "We will use this basic information to look up your in-boundary school(s) and to customize your results."
             },
             "ranking": {
                 "title": "Step 2: What's important to you?",

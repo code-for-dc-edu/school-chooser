@@ -59,7 +59,7 @@
                 <option selected disabled hidden value=""></option>
                 <% _.forEach(grades, function(grade) { %>
                     <option value="<%= grade %>" <% if(grade === selectedGrade) { %> selected <% } %>>
-                        <%= isNaN(grade) ? uiStrings[grade] : grade %>
+                        <%= isNaN(grade) ? uiStrings[grade] : parseInt(grade, 10) %>
                     </option>
                 <% }); %>
             </select>
