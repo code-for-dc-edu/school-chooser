@@ -11,7 +11,7 @@ define({
             },
             "results": {
                 "title": "Step 3: Explore your results",
-                "instructions": "Cras nec nisl nulla. Suspendisse potenti. Pellentesque erat sem, rutrum non tristique sit amet, lacinia at massa."
+                "instructions": "Using the priorities you selected, we've sorted all available schools that offer your grade. Tap any school to learn more about it."
             }
         },
         "items": {
