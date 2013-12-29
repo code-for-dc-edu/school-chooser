@@ -27,7 +27,7 @@ define(
                     })
                     .pairs()
                     .value(),
-                results = _(app.router.session.schools.models).filter(function (school)
+                results = _(this.models).filter(function (school)
                     {
                         return _.include(school.attributes.grades, grade);
                     })

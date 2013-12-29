@@ -92,7 +92,6 @@
             }
 
             function onMove(e) {
-                console.log("move");
                 var positionDelta;
                 if (e) {
                     e = e.originalEvent.touches ? e.originalEvent : e;
@@ -166,7 +165,6 @@
                         /* Animate and swap */
                         if (elHeader && el.prevAll('.item').length === 0 ) {
                             // The row is the last selected item and leaving
-                            console.log("moving below header");
                             sel = el.nextAll().slice(1);
                             sel.animate({
                                 'top': el.outerHeight(true)
