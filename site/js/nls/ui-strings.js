@@ -6,6 +6,6 @@ define({
         "PK": "Pre-Kindergarten",
         "K": "Kindergarten",
         "next": "Next",
-        "forTheGeeks": "For The Geeks"
+        "forTheGeeks": "For the Geeks"
     }
 });
