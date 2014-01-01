@@ -112,6 +112,10 @@ body {
     background: #eee;
 }
 
+.small {
+    font-size: .85em;
+}
+
 /* For development, gives us an iPhone-sized screen. */
 div#wrapper {
     position: relative;
@@ -521,14 +525,86 @@ a#app-progress-view-3 {
 }
 
 
+/* ==========================================================================
+   jQuery Modal
+   ========================================================================== */
 
+.modal {
+  display: none;
+  width: 90%;
+  max-width: 480px;
+  max-height: 90%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #fff;
+  padding: 15px 30px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -o-border-radius: 8px;
+  -ms-border-radius: 8px;
+  border-radius: 8px;
+  -webkit-box-shadow: 0 0 10px #000;
+  -moz-box-shadow: 0 0 10px #000;
+  -o-box-shadow: 0 0 10px #000;
+  -ms-box-shadow: 0 0 10px #000;
+  box-shadow: 0 0 10px #000;
+}
 
+.modal a.close-modal {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  display: block;
+  font-size: 22px;
+  width: 1em;
+  height: 1em;
+  line-height: 1em;
+  overflow: hidden;
+  color: #8b91a3;
+}
 
+.modal-spinner {
+  display: none;
+  width: 64px;
+  height: 64px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-right: -32px;
+  margin-top: -32px;
+  background: url(/img/spinner.gif) #111 no-repeat center center;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -o-border-radius: 8px;
+  -ms-border-radius: 8px;
+  border-radius: 8px;
+}
 
+.modal h3, .modal h4 {
+    margin-bottom: 0px;
+}
 
+.modal h4 {
+    font-size: .85em;
+}
 
+.modal p {
+    margin-top: 0;
+}
 
+.fa {
+  display: inline-block;
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
+.fa-times-circle:before {
+  content: "\f057";
+}
 
 
 

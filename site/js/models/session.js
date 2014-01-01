@@ -41,27 +41,27 @@ define(
         validate: function (attrs) {
             var invalid = [];
 
-            attrs = _.has(attrs, 'validationLevel') ? attrs : this.attributes;
+            // attrs = _.has(attrs, 'validationLevel') ? attrs : this.attributes;
 
-            switch (attrs.validationLevel) {
-            case 1:
-                if (!attrs.grade) { invalid.push("grade") };
-                if (!attrs.address) {
-                    invalid.push("address");
-                } else if (!attrs.addressGISValid) {
-                    invalid.push("addressGISValid");
-                }
-                break;
-            case 2:
-                if (!_.find(attrs.rankings, function (ranking) {
-                    return ranking > 0;
-                })) {
-                    invalid.push("rankings");
-                }
-                break;
-            default:
-                break;
-            }
+            // switch (attrs.validationLevel) {
+            // case 1:
+            //     if (!attrs.grade) { invalid.push("grade") };
+            //     if (!attrs.address) {
+            //         invalid.push("address");
+            //     } else if (!attrs.addressGISValid) {
+            //         invalid.push("addressGISValid");
+            //     }
+            //     break;
+            // case 2:
+            //     if (!_.find(attrs.rankings, function (ranking) {
+            //         return ranking > 0;
+            //     })) {
+            //         invalid.push("rankings");
+            //     }
+            //     break;
+            // default:
+            //     break;
+            // }
 
             if (invalid.length > 0) {
                 this.set({'levelValid': false});

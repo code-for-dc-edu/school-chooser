@@ -3,8 +3,10 @@ define(
      'lodash',
      'backbone',
      'i18n!nls/content',
-     'plugins/touch-sortable'
-    ], function ($, _, Backbone, content) {
+     'i18n!nls/ui-strings',
+     'plugins/touch-sortable',
+     'plugins/jquery-modal/jquery.modal'
+    ], function ($, _, Backbone, content, uiStrings) {
     var RankingView = Backbone.View.extend({
 
         tagName: 'div',
@@ -15,9 +17,11 @@ define(
 
         template: _.template($('#app-view-template').html()),
         tableViewTemplate: _.template($('#ranking-table-view-template').html()),
+        modalTemplate: _.template($('#modal-template').html()),
 
         events: {
-            'update #ranking-table-view': 'update'
+            'update #ranking-table-view': 'update',
+            'click .item': 'modal'
         },
 
         initialize: function () {
@@ -81,6 +85,27 @@ define(
             });
 
             this.model.set({'rankings': rankings}, { validate:true });
+        },
+
+        modal: function (e) {
+            var item,
+                $modal,
+                $el = $(e.currentTarget);
+
+            if ($el.hasClass('grabbed')) {
+                $el.removeClass('grabbed');
+            } else {
+                item = $el.data('name');
+                $modal = $('<div class="modal" id="' + item + '"></div>')
+                    .html(this.modalTemplate({
+                        item: item,
+                        content: content.items,
+                        uiStrings: uiStrings
+                    }));
+                $('body').append($modal);
+                $modal.modal()
+
+            }
         },
 
         close: function () {

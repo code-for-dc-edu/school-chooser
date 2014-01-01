@@ -17,32 +17,39 @@ define({
         "items": {
             "academicGrowth": {
                 "name": "Academic Growth",
-                "definition": ""
+                "definition": "Academic growth looks at the changes in students' math and reading test scores between years. By using growth instead of proficiency, we can begin to understand how a school is helping the students it has, rather than reward a school for simply having a high-performing population.",
+                "forTheGeeks": "This measure is derived from the median growth percentile (MGP) measure. MGP is defined as the median of individual student growth percentiles (SGP), measures of a student's performance relative to that of other students with similar test scores. SGPs are calculated using quantile regression of DC CAS scores by the Office of the State Superintend of Education (OSSE) for each student in DC. OSSE then reports MGP values for schools (and individual grades and subgroups within schools) as both a year-to-year and two-year combined median, the latter offering somewhat greater stability. Our model uses the most recent two-year MGP in both math and reading, taking a weighted average of the normalized values of each."
             },
             "collegeEnrollment": {
                 "name": "College Enrollment",
-                "definition": ""
+                "definition": "",
+                "forTheGeeks": ""
             },
             "graduationRate": {
                 "name": "Graduation Rate",
-                "definition": ""
+                "definition": "",
+                "forTheGeeks": ""
             },
             "instructionalStaffPerStudent": {
                 "name": "Instructional Staff per Student",
-                "definition": ""
+                "definition": "",
+                "forTheGeeks": ""
             },
             "racialDiversity": {
                 "name": "Racial Diversity",
-                "definition": ""
+                "definition": "",
+                "forTheGeeks": ""
             },
             "schoolCulture": {
                 "name": "School Climate",
-                "definition": ""
+                "definition": "",
+                "forTheGeeks": ""
             },
             "studentsFromMyNeighborhood": {
                 "name": "Students from my Neighborhood",
-                "definition": ""
+                "definition": "",
+                "forTheGeeks": ""
             }
-        }
+        },
     }
 });

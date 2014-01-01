@@ -74,7 +74,7 @@
                 parentBtm = parentTop + parent.innerHeight() + el.height();
 
                 els.css('position','relative');
-                el.addClass('in-motion').css( 'z-index', 1000);
+                el.addClass('in-motion grabbed').css( 'z-index', 1000);
                 parent.addClass('in-motion');
                 hasQueuedAni = false;
 
