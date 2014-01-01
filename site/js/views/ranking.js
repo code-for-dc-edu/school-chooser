@@ -57,6 +57,7 @@ define(
                         var dividerIndex = $('#ranking-table-view-divider').index();
                         $('#ranking-table-view li.item').each( function () {
                             var $el = $(this);
+                            $el.removeClass('grabbed');
                             if ($el.index() < dividerIndex) {
                                 $el.addClass('selected');
                             } else {
