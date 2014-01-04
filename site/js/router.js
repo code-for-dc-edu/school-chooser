@@ -32,7 +32,17 @@ define(
             this.showResultsView(this.session);
         },
 
-        navigateToView: function (index) {
+        cloneSession: function () {
+            var attributes = _.omit(this.session.attributes, 'hashid');
+            this.session = this.sessions.create(attributes);
+        },
+
+        navigateToView: function (index, currentIndex) {
+            if (currentIndex === 3) {
+                this.cloneSession();
+            } else {
+                this.session.save();
+            }
             switch (index) {
             case 2:
                 this.showRankingView(this.session);

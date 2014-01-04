@@ -108,7 +108,7 @@ define(
                 className = target.className,
                 index = parseInt(target.id.charAt(18), 10);
             if (className === "complete" || className === "next") {
-                this.router.navigateToView(index);
+                this.router.navigateToView(index, currentViewIndex);
             }
         }
 
