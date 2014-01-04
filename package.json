@@ -6,6 +6,9 @@
     "type": "git",
     "url": "https://github.com/code-for-dc-edu/school-chooser.git"
   },
+  "engines": {
+    "node": "0.10.x"
+  },
   "dependencies": {
     "express": "3.x",
     "request": "2.x",
