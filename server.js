@@ -118,7 +118,7 @@ var SessionSchema = new mongoose.Schema({
     }
 },
 {
-    toObject: {
+    toJSON: {
         transform: function (doc, ret, options) {
             ret.hashid = hasher.encryptHex(doc.id);
             delete ret._id;
@@ -126,9 +126,9 @@ var SessionSchema = new mongoose.Schema({
     }
 });
 
-SessionSchema.methods.findByHashid = function (hashid) {
+SessionSchema.statics.findByHashid = function (hashid, cb) {
     var id = hasher.decryptHex(hashid);
-    return this.model('Session').findById(id);
+    return this.findById(id, cb);
 };
 
 SessionSchema.pre('save', function (next) {

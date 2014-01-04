@@ -28,6 +28,15 @@ define(
             levelValid: false
         },
 
+        privateAttrs: [
+            'validationLevel',
+            'levelValid'
+        ],
+
+        toJSON: function(options) {
+            return _.omit(this.attributes, this.privateAttrs);
+        },
+
         initialize: function () {
             this.on('change:address', this.lookupAddress);
             this.on('change:grade', this.filterRankings);
@@ -71,20 +80,6 @@ define(
             } else {
                 this.set({'levelValid': true});
             }
-        },
-
-        save: function(attrs, options) {
-            options = options || {};
-
-            attrs = _.omit(attrs,
-                'results',
-                'validationLevel',
-                'levelValid'
-            );
-
-            options.data = JSON.stringify(attrs);
-
-            return Backbone.Model.prototype.save.call(this, attrs, options);
         },
 
         lookupAddress: function () {
