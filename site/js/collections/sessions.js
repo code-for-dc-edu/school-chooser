@@ -6,6 +6,7 @@ define(
     var Schools = Backbone.Collection.extend({
 
         model: Session,
+        url: '/api/sessions',
 
         initialize: function () {
 

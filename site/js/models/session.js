@@ -5,6 +5,8 @@ define(
     ], function (_, Backbone, Schools) {
     var Session = Backbone.Model.extend({
 
+        idAttribute: "hashid",
+
         defaults: {
             grade: '',
             address: '',
