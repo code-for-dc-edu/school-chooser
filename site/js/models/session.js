@@ -38,7 +38,6 @@ define(
         },
 
         parse: function (res, xhr) {
-            console.log(res);
             return {
                 hashid: res.hashid,
                 zonedSchools: res.zonedSchools
