@@ -131,9 +131,46 @@ SessionSchema.statics.findByHashid = function (hashid, cb) {
     return this.findById(id, cb);
 };
 
-SessionSchema.pre('save', function (next) {
+SessionSchema.pre('save', true, function (next, done) {
     if (this.zonedSchools.length === 0 && this.addressGISValid) {
-        // lookup zonedSchools
+        var session = this,
+            grade = parseInt(this.grade, 10),
+            server = (grade >= 9) ? 4 : (grade >= 6) ? 3 : 2,
+            url = 'http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_APPS/EBIS/MapServer/'
+                + server
+                + '/query?f=json&returnGeometry=false&geometry=%7B%22x%22%3A%22'
+                + this.xcoord
+                + '%22%2C%22y%22%3A%22'
+                + this.ycoord
+                + '%22%7D&geometryType=esriGeometryPoint&outFields=GIS_ID';
+
+        request(url, function (err, res, body) {
+            if (!err && res.statusCode === 200) {
+                var redirectUrl,
+                    json = JSON.parse(body),
+                    gisId = json.features[0].attributes["GIS_ID"],
+                    match = gisId.match(/dcps_(.*)/);
+
+                if (match) {
+                    session.zonedSchools.push(parseInt(match[1]));
+                    done();
+                } else {
+                    redirectUrl = "http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_APPS/EBIS/MapServer/5/query?f=json&where=CLOSED_GIS_ID%20%3D%20'"
+                        + gisId
+                        + "'&returnGeometry=false&outFields=CLOSED_GIS_ID%2CREDIRECT_GIS_ID";
+                    request(redirectUrl, function (err, res, body) {
+                        if (!err && res.statusCode === 200) {
+                            gisId = json.features[0].attributes["REDIRECT_GIS_ID"],
+                            match = gisId.match(/dcps_(.*)/);
+                            if (match) { session.zonedSchools.push(parseInt(match[1])); }
+                        }
+                        done();
+                    });
+                }
+            }
+        });
+    } else {
+        done();
     }
 
     next();

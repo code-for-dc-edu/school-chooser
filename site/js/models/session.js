@@ -37,6 +37,14 @@ define(
             return _.omit(this.attributes, this.privateAttrs);
         },
 
+        parse: function (res, xhr) {
+            console.log(res);
+            return {
+                hashid: res.hashid,
+                zonedSchools: res.zonedSchools
+            };
+        },
+
         initialize: function () {
             this.on('change:address', this.lookupAddress);
             this.on('change:grade', this.filterRankings);
@@ -123,8 +131,8 @@ define(
                 // if (!rankings.collegeEnrollment) { rankings.collegeEnrollment = 0; }
                 if (!rankings.graduationRate) { rankings.graduationRate = 0; }
             } else {
-                // rankings.collegeEnrollment = false;
-                rankings.graduationRate = false;
+                // rankings.collegeEnrollment = -1;
+                rankings.graduationRate = -1;
             }
 
             this.set({'rankings': rankings});

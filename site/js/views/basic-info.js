@@ -62,7 +62,7 @@ define(
             var newAddress = e.target.value,
                 currentAddress = this.model.get('address');
             if (newAddress !== currentAddress) {
-                this.model.set({'address': newAddress});
+                this.model.set({'address': newAddress, 'zonedSchools': []});
                 $(e.target).removeClass();
             }
         },
