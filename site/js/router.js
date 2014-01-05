@@ -20,6 +20,7 @@ define(
         },
 
         newSession: function () {
+            console.log("newSession");
             this.session = new Session();
             this.sessions.add(this.session);
             this.appView.setModel(this.session);
@@ -28,6 +29,11 @@ define(
 
         getSession: function (id) {
             this.session = this.sessions.get(id);
+            if (!this.session) {
+                this.session = new Session({ hashid: id });
+                this.sessions.add(this.session);
+                this.session.fetch();
+            }
             this.appView.setModel(this.session);
             this.showResultsView(this.session);
         },
@@ -40,8 +46,9 @@ define(
         navigateToView: function (index, currentIndex) {
             if (currentIndex === 3) {
                 this.cloneSession();
+                this.navigate('', {replace: true});
             } else {
-                this.session.save();
+                this.session.save(null, { saved: true });
             }
             switch (index) {
             case 2:
@@ -49,6 +56,7 @@ define(
                 break;
             case 3:
                 this.showResultsView(this.session);
+                this.navigate('results/' + this.session.id, {replace: true});
                 break;
             default:
                 this.showBasicInfoView(this.session);

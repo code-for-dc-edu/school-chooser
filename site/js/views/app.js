@@ -34,26 +34,28 @@ define(
         },
 
         render: function () {
-            var currentViewIndex = this.currentView.order,
-                nextViewReady = this.model.get('levelValid');
-            this.$progressViewLinks.each(function () {
-                var $el = $(this),
-                    index = parseInt($el.attr('id').charAt(18), 10);
+            if (this.currentView) {
+                var currentViewIndex = this.currentView.order,
+                    nextViewReady = this.model.get('levelValid');
+                this.$progressViewLinks.each(function () {
+                    var $el = $(this),
+                        index = parseInt($el.attr('id').charAt(18), 10);
 
-                if (index < currentViewIndex) {
-                    $el.attr('class','complete');
-                } else if (index === currentViewIndex) {
-                    $el.attr('class','active');
-                } else if (index === currentViewIndex + 1 ) {
-                    if (nextViewReady) {
-                        $el.attr('class','next');
+                    if (index < currentViewIndex) {
+                        $el.attr('class','complete');
+                    } else if (index === currentViewIndex) {
+                        $el.attr('class','active');
+                    } else if (index === currentViewIndex + 1 ) {
+                        if (nextViewReady) {
+                            $el.attr('class','next');
+                        } else {
+                            $el.attr('class','next disabled');
+                        }
                     } else {
-                        $el.attr('class','next disabled');
+                        $el.attr('class','');
                     }
-                } else {
-                    $el.attr('class','');
-                }
-            });
+                });
+            }
         },
 
         presentView: function (newView) {

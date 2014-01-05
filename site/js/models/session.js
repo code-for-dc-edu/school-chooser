@@ -37,11 +37,15 @@ define(
             return _.omit(this.attributes, this.privateAttrs);
         },
 
-        parse: function (res, xhr) {
-            return {
-                hashid: res.hashid,
-                zonedSchools: res.zonedSchools
-            };
+        parse: function (res, options) {
+            if (!options.saved) {
+                return res;
+            } else {
+                return {
+                    hashid: res.hashid,
+                    zonedSchools: res.zonedSchools
+                };
+            }
         },
 
         initialize: function () {
