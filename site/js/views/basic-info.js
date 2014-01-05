@@ -60,16 +60,19 @@ define(
 
         addressUpdate: function (e) {
             var newAddress = e.target.value,
-                currentAddress = this.model.get('address');
-            if (newAddress !== currentAddress) {
+                oldAddress = this.model.get('address');
+            if (newAddress !== oldAddress) {
                 this.model.set({'address': newAddress, 'zonedSchools': []});
                 $(e.target).removeClass();
             }
         },
 
         gradeUpdate: function (e) {
-            var grade = $(e.target).children(':selected').attr('value');
-            this.model.set({'grade': grade});
+            var newGrade = $(e.target).children(':selected').attr('value'),
+                oldGrade = this.model.get('grade');
+            if (newGrade !== oldGrade) {
+                this.model.set({'grade': newGrade, 'zonedSchools': []});
+            }
         },
 
         close: function () {

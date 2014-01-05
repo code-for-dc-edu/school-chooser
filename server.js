@@ -169,11 +169,12 @@ SessionSchema.pre('save', true, function (next, done) {
                 }
             }
         });
+
+        next();
     } else {
+        next();
         done();
     }
-
-    next();
 });
 
 var Session = mongoose.model('Session', SessionSchema);
@@ -207,8 +208,10 @@ app.post('/api/sessions', function (req, res) {
         rankings: req.body.rankings
     });
 
-    session.save();
-    return res.send(session);
+    return session.save(function (err) {
+        if (err) { console.log(err); }
+        return res.send(session);
+    });
 });
 
 app.put('/api/sessions/:hashid', function (req, res) {

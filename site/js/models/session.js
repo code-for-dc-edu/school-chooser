@@ -76,6 +76,7 @@ define(
                 })) {
                     invalid.push("rankings");
                 }
+                if (attrs.zonedSchools.length === 0) { invalid.push("zonedSchools") };
                 break;
             default:
                 break;
@@ -83,7 +84,7 @@ define(
 
             if (invalid.length > 0) {
                 this.set({'levelValid': false});
-                return invalid;
+                // return invalid;
             } else {
                 this.set({'levelValid': true});
             }
