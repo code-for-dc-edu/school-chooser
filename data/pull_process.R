@@ -16,6 +16,9 @@ school_codes <- read.table("school_codes.txt")[[1]]
 ov1 <- fromJSON("http://learndc.org/data/overview/school_1117_overview.JSON")
 pf1 <- fromJSON("http://learndc.org/data/profile/school_1117.JSON", simplifyDataFrame=FALSE)
 
+############################################
+# convert the overview to a simple structure
+
 ret <- with(ov1, list(
     code=org_code,
     name=org_name,
@@ -26,18 +29,55 @@ ret <- with(ov1, list(
     charter=charter
     ))
 
+######################################################
+# Convert the profile data to a racial diversity block
+# and a culture block
+
+
 lapply(pf1$profile$sections, function(x) x$id)
-ret <- with(pf1, append(ret, list(
-    )))
+
+getValue <- function(arrayOfKeyVals, keyname, keyval) {
+    for (kv in arrayOfKeyVals) {
+        if (kv$key[keyname] == keyval) {
+            return(as.numeric(kv$val))
+        }
+    }
+    return(NA)
+}
+makeDiversityBlock <- function(prof) {
+    # confirm that section 2 is the enrollment
+    sect <- prof$profile$sections[[2]]
+    stopifnot(sect$id == 'enrollment')
+    
+    # the keys that we care about are:
+    # grade=='All', year=='2012', and subgroup==?
+    ret <- list(val=c(asian=getValue(sect$data, "subgroup", "Asian"),
+                         africanAmerican=getValue(sect$data, "subgroup", "African American"),
+                         multiracial=getValue(sect$data, "subgroup", "Multi Racial"),
+                         hawaiianPacificIslander=0,
+                         white=getValue(sect$data, "subgroup", "White"),
+                         hispanic=getValue(sect$data, "subgroup", "Hispanic"),
+                         americanIndianAlaskaNative=0),
+                sd=0)
+    procDiversityBlock(ret)
+}
+procDiversityBlock <- function(ll) {
+    # proportion
+    ll$val <- ll$val / sum(ll$val)
+    # equitability: http://www.tiem.utk.edu/~gross/bioed/bealsmodules/simpsonDI.html
+    ll$sd <- 1/(sum(ll$val^2) * length(ll$val))
+    ll
+}
+makeDiversityBlock(pf1)
+
+##############################
+# Get the PCSB Equity data set
 
 pcsb_equity_url <- 'http://data.dcpcsb.org/resource/sxfs-2j93.json'
 pcsb_equity_json <- content(GET(pcsb_equity_url))
-# iterate through that list, pulling lat/lon from the address, then removing
-# that structure
+
+# iremove the non-flat part of the structure, then convert to a DF
 pcsb_equity_json <- llply(pcsb_equity_json, function(sch) {
-    sch$longitude <- sch$address$longitude
-    sch$latitude <- sch$address$latitude
-    sch$street <- fromJSON(sch$address$human_address)$address
     sch$address <- NULL
     sch
 })
