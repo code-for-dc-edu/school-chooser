@@ -1,19 +1,20 @@
-Code for DC Education: Phase II
-===============================
+Code for DC Education: School Chooser
+=====================================
 
-```
+Do you want to see this running? You can see it at [school-chooser.herokuapp.com](http://school-chooser.herokuapp.com/).
+
+Do you want to get your forked/cloned dev copy running? You'll need [`node`](http://nodejs.org/) (includes `npm`), [MongoDB](http://www.mongodb.org/), and (optionally, for development) [supervisor](https://github.com/isaacs/node-supervisor).
+
+```shell
+# Install dependencies
 npm install
+
+# Start mongodb in background
+mongod --fork
+
+# Start node server
 node server.js
-```
 
-Or keep things fresh with supervisor.
-
-```
+# Alternatively, start node server with re-load on file change
 supervisor server.js
-```
-
-You'll need a MongoDB instance running to persist data.
-
-```
-mongod
 ```
