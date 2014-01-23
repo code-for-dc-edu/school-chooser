@@ -13,8 +13,8 @@ school_codes <- read.table("school_codes.txt")[[1]]
 
 # get data from LearnDC
 
-ov1 <- fromJSON("http://learndc.org/data/overview/school_1117_overview.JSON")
-pf1 <- fromJSON("http://learndc.org/data/profile/school_1117.JSON", simplifyDataFrame=FALSE)
+ov1 <- jsonlite::fromJSON("http://learndc.org/data/overview/school_0405_overview.JSON")
+pf1 <- jsonlite::fromJSON("http://learndc.org/data/profile/school_0405.JSON", simplifyDataFrame=FALSE)
 
 ############################################
 # convert the overview to a simple structure
@@ -69,6 +69,26 @@ procDiversityBlock <- function(ll) {
     ll
 }
 makeDiversityBlock(pf1)
+
+makeCultureBlock <- function(prof) {
+    # confirm that section 2 is the enrollment
+    sect <- prof$profile$sections[[2]]
+    stopifnot(sect$id == 'enrollment')
+    
+    # the keys that we care about are:
+    # grade=='All', year=='2012', and subgroup==?
+    ret <- list(val=c(asian=getValue(sect$data, "subgroup", "Asian"),
+                      africanAmerican=getValue(sect$data, "subgroup", "African American"),
+                      multiracial=getValue(sect$data, "subgroup", "Multi Racial"),
+                      hawaiianPacificIslander=0,
+                      white=getValue(sect$data, "subgroup", "White"),
+                      hispanic=getValue(sect$data, "subgroup", "Hispanic"),
+                      americanIndianAlaskaNative=0),
+                sd=0)
+    procDiversityBlock(ret)
+}
+makeCultureBlock(pf1)
+
 
 ##############################
 # Get the PCSB Equity data set
