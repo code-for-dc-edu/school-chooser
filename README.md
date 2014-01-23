@@ -1,5 +1,5 @@
-# Code for DC Education
-# School Chooser
+Code for DC Edu: School Chooser
+===============================
 
 Do you want to see this running? You can see it at [school-chooser.herokuapp.com](http://school-chooser.herokuapp.com/).
 
