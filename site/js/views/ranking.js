@@ -34,17 +34,9 @@ define(
         },
 
         render: function () {
-            var rankings = _(this.model.get('rankings'))
-                    .pairs()
-                    .sortBy(function (pair) { return pair[1]; })
-                    .groupBy(function (pair) {
-                        var selected = pair[1] > 0 ? 'selected' : false,
-                            unselected = pair[1] === 0 ? 'unselected' : false;
-                        return selected || unselected;
-                    })
-                    .value(),
-                selectedItems = _.map(rankings.selected, function (pair) { return pair[0]; }),
-                unselectedItems = _.map(rankings.unselected, function (pair) { return pair[0]; });
+            var rankings = this.model.rankingItems(),
+                selectedItems = rankings.selected,
+                unselectedItems = rankings.unselected;
 
             this.$tableView
                 .html(this.tableViewTemplate({

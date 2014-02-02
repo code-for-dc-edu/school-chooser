@@ -142,6 +142,22 @@ define(
             this.set({'rankings': rankings});
         },
 
+        rankingItems: function () {
+            var rankings = _(this.get('rankings'))
+                    .pairs()
+                    .sortBy(function (pair) { return pair[1]; })
+                    .groupBy(function (pair) {
+                        var selected = pair[1] > 0 ? 'selected' : false,
+                            unselected = pair[1] === 0 ? 'unselected' : false;
+                        return selected || unselected;
+                    })
+                    .value(),
+                selected = _.map(rankings.selected, function (pair) { return pair[0]; }),
+                unselected = _.map(rankings.unselected, function (pair) { return pair[0]; });
+
+            return { 'selected': selected, 'unselected': unselected };
+        },
+
         getResults: function () {
             if (!this.results) {
                 var grade = this.get('grade'),

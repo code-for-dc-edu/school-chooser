@@ -2,8 +2,10 @@ define(
     ['jquery',
      'lodash',
      'backbone',
+     'i18n!nls/content',
+     'i18n!nls/ui-strings',
      'plugins/jquery-quickfit'
-    ], function ($, _, Backbone) {
+    ], function ($, _, Backbone, content, uiStrings) {
     var SchoolView = Backbone.View.extend({
 
         tagName: 'li',
@@ -19,20 +21,24 @@ define(
             this.id = 'school' + this.model.get('code');
             this.$el.attr('id', this.id);
 
-            this.$el.html(this.template({
-                school: this.model.attributes
-            }));
-
             if (this.model.get('zoned')) {
                 this.$el.addClass('zoned');
             }
+        },
+
+        render: function () {
+            $(window).off("resize." + this.id)
+
+            this.$el.html(this.template({
+                school: this.model.attributes,
+                uiStrings: uiStrings
+            }));
 
             var fittext = this.fittext();
             $(window).on("resize.school" + this.id, fittext);
             setTimeout(fittext,0);
-        },
 
-        render: function () {
+            return this;
         },
 
         fittext: function () {

@@ -91,11 +91,25 @@
             <p class="small"><%= content[item].forTheGeeks %></p>
         </script>
 
+        <script type="text/template" id="compare-controls-template">
+            <div class="hidden-controls">
+                <select id="compare-item">
+                    <option selected disabled hidden value=""></option>
+                    <% _.forEach(selectedItems, function(item) { %>
+                        <option value="<%= item %>">
+                            <%= content.items[item].name %>
+                        </option>
+                    <% }); %>
+                </select>
+            </div>
+            <button id="compare-controls-toggle"><%= uiStrings.showCompare %></button>
+        </script>
+
         <script type="text/template" id="school-view-template">
             <div class="teaser">
                 <span class="rank"><%= school.rank %></span>
                 <span class="name"><%= school.name %></span>
-                <% if (school.zoned) { %> <span class="zoned">Your zoned school</span> <% } %>
+                <% if (school.zoned) { %> <span class="zoned"><%= uiStrings.zoned %></span> <% } %>
             </div>
         </script>
 

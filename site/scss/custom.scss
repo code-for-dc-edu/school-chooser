@@ -272,7 +272,7 @@ div#wrapper {
     }
 }
 
-#basic-info-form-view {
+#basic-info-form-view, #compare-controls {
     padding: 0 11px;
 
     input,
@@ -285,6 +285,50 @@ div#wrapper {
     label {
         font-weight: 700;
     }
+}
+
+#compare-controls {
+    button {
+        display: block;
+        border: 0;
+        background: transparent;
+        text-align: left;
+        padding: 0;
+        margin: 0 0 11px 0;
+        font-family: 'Open Sans';
+        font-weight: 300;
+        font-size: 12px;
+        text-transform: uppercase;
+        color: #8b91a3;
+
+        &:focus {
+            outline: none;
+            text-decoration: underline;
+
+            &:before { text-decoration: none; }
+        }
+
+        &:hover {
+            color: #63c6db;
+        }
+
+        &:before {
+            display: inline-block;
+            content: "\f057";
+            font-family: FontAwesome;
+            font-style: normal;
+            font-weight: normal;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            padding-right: 3px;
+        }
+    }
+
+    select { margin-bottom: 3px; }
+
+    &.collapsed button:before { content: "\f036"; }
+
+    .hidden-controls { display: none; }
 }
 
 #basic-info-address {

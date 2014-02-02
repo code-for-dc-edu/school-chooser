@@ -769,15 +769,51 @@ div#wrapper {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
   cursor: move; }
 
-#basic-info-form-view {
+#basic-info-form-view, #compare-controls {
   padding: 0 11px; }
   #basic-info-form-view input,
-  #basic-info-form-view select {
+  #basic-info-form-view select, #compare-controls input,
+  #compare-controls select {
     width: 100%;
     margin-bottom: 1em;
     height: 22px; }
-  #basic-info-form-view label {
+  #basic-info-form-view label, #compare-controls label {
     font-weight: 700; }
+
+#compare-controls button {
+  display: block;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  padding: 0;
+  margin: 0 0 11px 0;
+  font-family: 'Open Sans';
+  font-weight: 300;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #8b91a3; }
+  #compare-controls button:focus {
+    outline: none;
+    text-decoration: underline; }
+    #compare-controls button:focus:before {
+      text-decoration: none; }
+  #compare-controls button:hover {
+    color: #63c6db; }
+  #compare-controls button:before {
+    display: inline-block;
+    content: "\f057";
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    padding-right: 3px; }
+#compare-controls select {
+  margin-bottom: 3px; }
+#compare-controls.collapsed button:before {
+  content: "\f036"; }
+#compare-controls .hidden-controls {
+  display: none; }
 
 #basic-info-address {
   position: relative;
