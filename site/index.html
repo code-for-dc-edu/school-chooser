@@ -52,7 +52,7 @@
         <script type="text/template" id="basic-info-form-view-template">
             <label for="basic-info-address"><%= uiStrings.address %></label><br />
             <input type="text" id="basic-info-address"
-                <% if(addressGISValid) { %> class="valid" <% } %>
+                <% if (addressGISValid) { %> class="valid" <% } %>
                 value="<%- address %>" /><br />
             <label for="basic-info-grade"><%= uiStrings.grade %></label><br />
             <select id="basic-info-grade">
@@ -94,8 +94,10 @@
         </script>
 
         <script type="text/template" id="school-view-template">
+            <% if (school.zoned) { %> <strong> <% } %>
             <span class="rank"><%= school.rank %></span>
             <span class="name"><%= school.name %></span>
+            <% if (school.zoned) { %> </strong> <% } %>
         </script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID.
