@@ -618,7 +618,7 @@ div#wrapper {
     border-top: 1px solid #d8dae1;
     border-bottom: 1px solid #d8dae1;
     padding-left: 33px;
-    overflow: hidden; }
+    white-space: nowrap; }
 
 #results-table-view li.item div.teaser {
   width: 100%;
