@@ -18,6 +18,10 @@ define(
             this.$el.html(this.template({
                 school: this.model.attributes
             }));
+
+            if (this.model.get('zoned')) {
+                this.$el.addClass('zoned');
+            }
         },
 
         render: function () {

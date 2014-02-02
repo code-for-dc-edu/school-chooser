@@ -1,245 +1,636 @@
-/*! HTML5 Boilerplate v4.3.0 | MIT License | http://h5bp.com/ */
+/*! normalize.css v1.1.3 | MIT License | git.io/normalize */
+/* ==========================================================================
+   HTML5 display definitions
+   ========================================================================== */
+/**
+ * Correct `block` display not defined in IE 6/7/8/9 and Firefox 3.
+ */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section,
+summary {
+  display: block; }
 
+/**
+ * Correct `inline-block` display not defined in IE 6/7/8/9 and Firefox 3.
+ */
+audio,
+canvas,
+video {
+  display: inline-block;
+  /* *display: inline; */
+  /* *zoom: 1; */ }
+
+/**
+ * Prevent modern browsers from displaying `audio` without controls.
+ * Remove excess height in iOS 5 devices.
+ */
+audio:not([controls]) {
+  display: none;
+  height: 0; }
+
+/**
+ * Address styling not present in IE 7/8/9, Firefox 3, and Safari 4.
+ * Known issue: no IE 6 support.
+ */
+[hidden] {
+  display: none; }
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+/**
+ * 1. Correct text resizing oddly in IE 6/7 when body `font-size` is set using
+ *    `em` units.
+ * 2. Prevent iOS text size adjust after orientation change, without disabling
+ *    user zoom.
+ */
+html {
+  font-size: 100%;
+  /* 1 */
+  -ms-text-size-adjust: 100%;
+  /* 2 */
+  -webkit-text-size-adjust: 100%;
+  /* 2 */ }
+
+/**
+ * Address `font-family` inconsistency between `textarea` and other form
+ * elements.
+ */
+html,
+button,
+input,
+select,
+textarea {
+  font-family: sans-serif; }
+
+/**
+ * Address margins handled incorrectly in IE 6/7.
+ */
+body {
+  margin: 0; }
+
+/* ==========================================================================
+   Links
+   ========================================================================== */
+/**
+ * Address `outline` inconsistency between Chrome and other browsers.
+ */
+a:focus {
+  outline: thin dotted; }
+
+/**
+ * Improve readability when focused and also mouse hovered in all browsers.
+ */
+a:active,
+a:hover {
+  outline: 0; }
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+/**
+ * Address font sizes and margins set differently in IE 6/7.
+ * Address font sizes within `section` and `article` in Firefox 4+, Safari 5,
+ * and Chrome.
+ */
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0; }
+
+h2 {
+  font-size: 1.5em;
+  margin: 0.83em 0; }
+
+h3 {
+  font-size: 1.17em;
+  margin: 1em 0; }
+
+h4 {
+  font-size: 1em;
+  margin: 1.33em 0; }
+
+h5 {
+  font-size: 0.83em;
+  margin: 1.67em 0; }
+
+h6 {
+  font-size: 0.67em;
+  margin: 2.33em 0; }
+
+/**
+ * Address styling not present in IE 7/8/9, Safari 5, and Chrome.
+ */
+abbr[title] {
+  border-bottom: 1px dotted; }
+
+/**
+ * Address style set to `bolder` in Firefox 3+, Safari 4/5, and Chrome.
+ */
+b,
+strong {
+  font-weight: bold; }
+
+blockquote {
+  margin: 1em 40px; }
+
+/**
+ * Address styling not present in Safari 5 and Chrome.
+ */
+dfn {
+  font-style: italic; }
+
+/**
+ * Address differences between Firefox and other browsers.
+ * Known issue: no IE 6/7 normalization.
+ */
+hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0; }
+
+/**
+ * Address styling not present in IE 6/7/8/9.
+ */
+mark {
+  background: #ff0;
+  color: #000; }
+
+/**
+ * Address margins set differently in IE 6/7.
+ */
+p,
+pre {
+  margin: 1em 0; }
+
+/**
+ * Correct font family set oddly in IE 6, Safari 4/5, and Chrome.
+ */
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, serif;
+  _font-family: 'courier new', monospace;
+  font-size: 1em; }
+
+/**
+ * Improve readability of pre-formatted text in all browsers.
+ */
+pre {
+  white-space: pre;
+  white-space: pre-wrap;
+  word-wrap: break-word; }
+
+/**
+ * Address CSS quotes not supported in IE 6/7.
+ */
+q {
+  quotes: none; }
+
+/**
+ * Address `quotes` property not supported in Safari 4.
+ */
+q:before,
+q:after {
+  content: '';
+  content: none; }
+
+/**
+ * Address inconsistent and variable font size in all browsers.
+ */
+small {
+  font-size: 80%; }
+
+/**
+ * Prevent `sub` and `sup` affecting `line-height` in all browsers.
+ */
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline; }
+
+sup {
+  top: -0.5em; }
+
+sub {
+  bottom: -0.25em; }
+
+/* ==========================================================================
+   Lists
+   ========================================================================== */
+/**
+ * Address margins set differently in IE 6/7.
+ */
+dl,
+menu,
+ol,
+ul {
+  margin: 1em 0; }
+
+dd {
+  margin: 0 0 0 40px; }
+
+/**
+ * Address paddings set differently in IE 6/7.
+ */
+menu,
+ol,
+ul {
+  padding: 0 0 0 40px; }
+
+/**
+ * Correct list images handled incorrectly in IE 7.
+ */
+nav ul,
+nav ol {
+  list-style: none;
+  list-style-image: none; }
+
+/* ==========================================================================
+   Embedded content
+   ========================================================================== */
+/**
+ * 1. Remove border when inside `a` element in IE 6/7/8/9 and Firefox 3.
+ * 2. Improve image quality when scaled in IE 7.
+ */
+img {
+  border: 0;
+  /* 1 */
+  -ms-interpolation-mode: bicubic;
+  /* 2 */ }
+
+/**
+ * Correct overflow displayed oddly in IE 9.
+ */
+svg:not(:root) {
+  overflow: hidden; }
+
+/* ==========================================================================
+   Figures
+   ========================================================================== */
+/**
+ * Address margin not present in IE 6/7/8/9, Safari 5, and Opera 11.
+ */
+figure {
+  margin: 0; }
+
+/* ==========================================================================
+   Forms
+   ========================================================================== */
+/**
+ * Correct margin displayed oddly in IE 6/7.
+ */
+form {
+  margin: 0; }
+
+/**
+ * Define consistent border, margin, and padding.
+ */
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em; }
+
+/**
+ * 1. Correct color not being inherited in IE 6/7/8/9.
+ * 2. Correct text not wrapping in Firefox 3.
+ * 3. Correct alignment displayed oddly in IE 6/7.
+ */
+legend {
+  border: 0;
+  /* 1 */
+  padding: 0;
+  white-space: normal;
+  /* 2 */
+  /* *margin-left: -7px; */
+  /* 3 */ }
+
+/**
+ * 1. Correct font size not being inherited in all browsers.
+ * 2. Address margins set differently in IE 6/7, Firefox 3+, Safari 5,
+ *    and Chrome.
+ * 3. Improve appearance and consistency in all browsers.
+ */
+button,
+input,
+select,
+textarea {
+  font-size: 100%;
+  /* 1 */
+  margin: 0;
+  /* 2 */
+  vertical-align: baseline;
+  /* 3 */
+  /* *vertical-align: middle; */
+  /* 3 */ }
+
+/**
+ * Address Firefox 3+ setting `line-height` on `input` using `!important` in
+ * the UA stylesheet.
+ */
+button,
+input {
+  line-height: normal; }
+
+/**
+ * Address inconsistent `text-transform` inheritance for `button` and `select`.
+ * All other form control elements do not inherit `text-transform` values.
+ * Correct `button` style inheritance in Chrome, Safari 5+, and IE 6+.
+ * Correct `select` style inheritance in Firefox 4+ and Opera.
+ */
+button,
+select {
+  text-transform: none; }
+
+/**
+ * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
+ *    and `video` controls.
+ * 2. Correct inability to style clickable `input` types in iOS.
+ * 3. Improve usability and consistency of cursor style between image-type
+ *    `input` and others.
+ * 4. Remove inner spacing in IE 7 without affecting normal text inputs.
+ *    Known issue: inner spacing remains in IE 6.
+ */
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button;
+  /* 2 */
+  cursor: pointer;
+  /* 3 */
+  /* *overflow: visible; */
+  /* 4 */ }
+
+/**
+ * Re-set default cursor for disabled elements.
+ */
+button[disabled],
+html input[disabled] {
+  cursor: default; }
+
+/**
+ * 1. Address box sizing set to content-box in IE 8/9.
+ * 2. Remove excess padding in IE 8/9.
+ * 3. Remove excess padding in IE 7.
+ *    Known issue: excess padding remains in IE 6.
+ */
+input[type="checkbox"],
+input[type="radio"] {
+  box-sizing: border-box;
+  /* 1 */
+  padding: 0;
+  /* 2 */
+  /* *height: 13px; */
+  /* 3 */
+  /* *width: 13px; */
+  /* 3 */ }
+
+/**
+ * 1. Address `appearance` set to `searchfield` in Safari 5 and Chrome.
+ * 2. Address `box-sizing` set to `border-box` in Safari 5 and Chrome
+ *    (include `-moz` to future-proof).
+ */
+input[type="search"] {
+  -webkit-appearance: textfield;
+  /* 1 */
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  /* 2 */
+  box-sizing: content-box; }
+
+/**
+ * Remove inner padding and search cancel button in Safari 5 and Chrome
+ * on OS X.
+ */
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none; }
+
+/**
+ * Remove inner padding and border in Firefox 3+.
+ */
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0; }
+
+/**
+ * 1. Remove default vertical scrollbar in IE 6/7/8/9.
+ * 2. Improve readability and alignment in all browsers.
+ */
+textarea {
+  overflow: auto;
+  /* 1 */
+  vertical-align: top;
+  /* 2 */ }
+
+/* ==========================================================================
+   Tables
+   ========================================================================== */
+/**
+ * Remove most spacing between table cells.
+ */
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 300;
+  src: local("Open Sans Light"), local("OpenSans-Light"), url(../fonts/Open%20Sans/300.woff) format("woff"); }
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local("Open Sans Bold"), local("OpenSans-Bold"), url(../fonts/Open%20Sans/700.woff) format("woff"); }
+
+/* Note that the remote version of the 800 weight grabs a subset representing digits 0-9 */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 800;
+  src: local("Open Sans Extrabold"), local("OpenSans-Extrabold"), url(../fonts/Open%20Sans/800.woff) format("woff"); }
+
+@font-face {
+  font-family: 'FontAwesome';
+  src: url(../fonts/font-awesome-4.0.3/fonts/fontawesome-webfont.eot?v=4.0.3);
+  src: url(../fonts/font-awesome-4.0.3/fonts/fontawesome-webfont.eot?#iefix&v=4.0.3) format("embedded-opentype"), url(../fonts/font-awesome-4.0.3/fonts/fontawesome-webfont.woff?v=4.0.3) format("woff"), url(../fonts/font-awesome-4.0.3/fonts/fontawesome-webfont.ttf?v=4.0.3) format("truetype"), url(../fonts/font-awesome-4.0.3/fonts/fontawesome-webfont.svg?v=4.0.3#fontawesomeregular) format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+/*! HTML5 Boilerplate v4.3.0 | MIT License | http://h5bp.com/ */
 /*
  * What follows is the result of much research on cross-browser styling.
  * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
  * Kroc Camen, and the H5BP dev community and team.
  */
-
 /* ==========================================================================
    Base styles: opinionated defaults
    ========================================================================== */
-
 *, *:before, *:after {
-    -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
-}
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box; }
 
 html,
 button,
 input,
 select,
 textarea {
-    color: #2a2b2c;
-}
+  color: #2a2b2c; }
 
 html {
-    font-size: 1em;
-    line-height: 1.4;
-}
+  font-size: 1em;
+  line-height: 1.4; }
 
 /*
  * Remove text-shadow in selection highlight: h5bp.com/i
  * These selection rule sets have to be separate.
  * Customize the background color to match your design.
  */
-
 ::-moz-selection {
-    background: #b3d4fc;
-    text-shadow: none;
-}
+  background: #b3d4fc;
+  text-shadow: none; }
 
 ::selection {
-    background: #b3d4fc;
-    text-shadow: none;
-}
+  background: #b3d4fc;
+  text-shadow: none; }
 
 /*
  * A better looking default horizontal rule
  */
-
 hr {
-    display: block;
-    height: 1px;
-    border: 0;
-    border-top: 1px solid #ccc;
-    margin: 1em 0;
-    padding: 0;
-}
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0; }
 
 /*
  * Remove the gap between images, videos, audio and canvas and the bottom of
  * their containers: h5bp.com/i/440
  */
-
 audio,
 canvas,
 img,
 video {
-    vertical-align: middle;
-}
+  vertical-align: middle; }
 
 /*
  * Remove default fieldset styles.
  */
-
 fieldset {
-    border: 0;
-    margin: 0;
-    padding: 0;
-}
+  border: 0;
+  margin: 0;
+  padding: 0; }
 
 /*
  * Allow only vertical resizing of textareas.
  */
-
 textarea {
-    resize: vertical;
-}
+  resize: vertical; }
 
 /* ==========================================================================
    Browse Happy prompt
    ========================================================================== */
-
 .browsehappy {
-    margin: 0.2em 0;
-    background: #ccc;
-    color: #000;
-    padding: 0.2em 0;
-}
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0; }
 
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
-
 html, body {
-    height: 100%;
-}
+  height: 100%; }
 
 body {
-    font-family: 'Open Sans';
-    font-weight: 300;
-    font-size: 14px;
-    background: #eee;
-}
+  font-family: 'Open Sans';
+  font-weight: 300;
+  font-size: 14px;
+  background: #eee; }
 
 .small {
-    font-size: .85em;
-}
+  font-size: .85em; }
 
 /* For development, gives us an iPhone-sized screen. */
 div#wrapper {
-    position: relative;
-    width: 320px;
-    height: 100%;
-    margin: 0 auto;
-    background: #fff;
-}
+  position: relative;
+  width: 320px;
+  height: 100%;
+  margin: 0 auto;
+  background: #fff; }
 
 #app {
-    position: relative;
-    overflow-x: hidden;
-    min-height: 100%;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
-}
+  position: relative;
+  overflow-x: hidden;
+  min-height: 100%;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none; }
 
 .app-view {
-    position: relative;
-    width: 100%;
-    padding: 11px 0 88px 0;
-    background: #fff;
-}
+  position: relative;
+  width: 100%;
+  padding: 11px 0 88px 0;
+  background: #fff; }
 
 #app h2 {
-    margin: 0;
-    padding: 0 11px;
-    font-size: 17px;
-}
+  margin: 0;
+  padding: 0 11px;
+  font-size: 17px; }
 
 #app p {
-    padding: 0 11px;
-}
+  padding: 0 11px; }
 
-#ranking-table-view ul {
-    margin: 0;
-    padding: 0;
-}
-
-#ranking-table-view li {
-    list-style: none;
-    position: relative;
-
-    padding: 0 11px;
-    height: 45px;
-    margin-bottom: -1px;
-    line-height: 44px;
-    font-weight: 700;
-
-    background: #fff;
-
-    cursor: default;
-}
-
-#ranking-table-view li.item span.name {
+.table-view ul {
+  margin: 0;
+  padding: 0; }
+.table-view li {
+  list-style: none;
+  position: relative;
+  padding: 0 11px;
+  height: 45px;
+  margin-bottom: -1px;
+  line-height: 44px;
+  font-weight: 700;
+  background: #fff;
+  cursor: default; }
+  .table-view li.item span.name {
     display: block;
     height: 100%;
     border-top: 1px solid #d8dae1;
     border-bottom: 1px solid #d8dae1;
     padding-left: 33px;
-}
+    overflow: hidden; }
 
-#ranking-table-view li.header-row div.placeholder {
-    transition: color 150ms, border-color 150ms, background 500ms;
-    -webkit-transition: color 150ms, border-color 150ms, background 500ms;
-    background: #d8dae1;
-    color: #2a2b2c;
-    font-weight: 300;
-    line-height: 38px;
-    height: 44px;
-    margin: 0 -11px;
-    padding: 0 8px;
-    border: 3px dashed transparent;
-}
-
-#ranking-table-view ul.in-motion li.header-row div.placeholder {
-    color: #ff6a30;
-    border-color: #ff6a30;
-}
-
-#ranking-table-view li.header-row.no-placeholder {
-    margin-top: -45px;
-}
-
-#ranking-table-view li.header-row.no-placeholder div.placeholder {
-    background: transparent !important;
-    border-color: transparent !important;
-    color: transparent !important;
-}
-
-#ranking-table-view li.header-row {
-    height: 66px;
-    z-index: 5;
-}
-
-#ranking-table-view li.header-row div {
-    background: #8b91a3;
-    color: white;
-    line-height: 22px;
-    height: 22px;
-    margin: 0 -11px;
-    padding: 0 11px;
-}
-
-#ranking-table-view li.item {
-    cursor: pointer;
-}
-
-#ranking-table-view li.item.selected {
-    z-index: 6;
-}
-
-#ranking-table-view li.item span.touch-target {
-    content: "";
+#results-table-view li.item div.teaser {
+  width: 100%;
+  height: 100%;
+  cursor: pointer; }
+  #results-table-view li.item div.teaser:hover span.name:after {
+    color: #63c6db; }
+#results-table-view li.item span.name {
+  padding-right: 22px; }
+  #results-table-view li.item span.name:after {
     display: block;
-    position: absolute;
-    top: 0; left: 0; width: 44px; height: 44px;
-    text-align: center;
-    cursor: move;
-}
-
-#ranking-table-view li.item:not(.selected) span.touch-target {
-    content: "\f0c9";
+    content: "\f054";
     font-family: FontAwesome;
     font-style: normal;
     font-weight: normal;
@@ -247,111 +638,183 @@ div#wrapper {
     color: #d8dae1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-}
+    position: absolute;
+    right: 14px;
+    top: 0;
+    line-height: 46px; }
+#results-table-view li.item span.rank {
+  display: block;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 34px;
+  height: 34px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 34px;
+  color: #fff;
+  background: #8b91a3;
+  -moz-border-radius: 44px;
+  -webkit-border-radius: 44px;
+  border-radius: 44px; }
+#results-table-view li.item.zoned span.name {
+  line-height: 29px; }
+#results-table-view li.item.zoned span.rank {
+  background: #9cdb63; }
+#results-table-view li.item span.zoned {
+  display: block;
+  position: absolute;
+  bottom: 7px;
+  left: 44px;
+  color: #9cdb63;
+  font-size: .85em;
+  line-height: 1em;
+  font-weight: 300;
+  text-transform: uppercase; }
 
-#ranking-table-view li.item:not(.selected) span.touch-target:before { content: "\f0c9"; }
-
+#ranking-table-view li.header-row {
+  height: 66px;
+  z-index: 5; }
+  #ranking-table-view li.header-row div {
+    background: #8b91a3;
+    color: white;
+    line-height: 22px;
+    height: 22px;
+    margin: 0 -11px;
+    padding: 0 11px; }
+    #ranking-table-view li.header-row div.placeholder {
+      transition: color 150ms, border-color 150ms, background 500ms;
+      -webkit-transition: color 150ms, border-color 150ms, background 500ms;
+      background: #d8dae1;
+      color: #2a2b2c;
+      font-weight: 300;
+      line-height: 38px;
+      height: 44px;
+      margin: 0 -11px;
+      padding: 0 8px;
+      border: 3px dashed transparent; }
+  #ranking-table-view li.header-row.no-placeholder {
+    margin-top: -45px; }
+    #ranking-table-view li.header-row.no-placeholder div.placeholder {
+      background: transparent !important;
+      border-color: transparent !important;
+      color: transparent !important; }
+#ranking-table-view li.item {
+  cursor: pointer; }
+  #ranking-table-view li.item.selected {
+    z-index: 6; }
+    #ranking-table-view li.item.selected span.touch-target {
+      color: #fff;
+      font-weight: 800;
+      font-size: 44px;
+      line-height: 42px; }
+    #ranking-table-view li.item.selected:nth-child(1) {
+      background: #9cdb63; }
+      #ranking-table-view li.item.selected:nth-child(1) span.touch-target:before {
+        content: "1"; }
+    #ranking-table-view li.item.selected:nth-child(2) {
+      background: #b0e282; }
+      #ranking-table-view li.item.selected:nth-child(2) span.touch-target:before {
+        content: "2"; }
+    #ranking-table-view li.item.selected:nth-child(3) {
+      background: #bfe899; }
+      #ranking-table-view li.item.selected:nth-child(3) span.touch-target:before {
+        content: "3"; }
+    #ranking-table-view li.item.selected:nth-child(4) {
+      background: #cdedb1; }
+      #ranking-table-view li.item.selected:nth-child(4) span.touch-target:before {
+        content: "4"; }
+    #ranking-table-view li.item.selected:nth-child(5) {
+      background: #d7f1c1; }
+      #ranking-table-view li.item.selected:nth-child(5) span.touch-target:before {
+        content: "5"; }
+    #ranking-table-view li.item.selected:nth-child(6) {
+      background: #e1f4d0; }
+      #ranking-table-view li.item.selected:nth-child(6) span.touch-target:before {
+        content: "6"; }
+    #ranking-table-view li.item.selected:nth-child(7) {
+      background: #ebf8e0; }
+      #ranking-table-view li.item.selected:nth-child(7) span.touch-target:before {
+        content: "7"; }
+  #ranking-table-view li.item:not(.selected) span.touch-target {
+    content: "\f0c9";
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    color: #d8dae1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale; }
+    #ranking-table-view li.item:not(.selected) span.touch-target:before {
+      content: "\f0c9"; }
+  #ranking-table-view li.item span.touch-target {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 44px;
+    height: 44px;
+    text-align: center;
+    cursor: move; }
+#ranking-table-view ul.in-motion li.header-row div.placeholder {
+  color: #ff6a30;
+  border-color: #ff6a30; }
 #ranking-table-view li.selected.item span.name,
 #ranking-table-view li.item.in-motion span.name {
-    border-top-color: transparent;
-    border-bottom-color: transparent;
-}
-
-#ranking-table-view li.selected.item span.touch-target {
-    color: #fff;
-    font-weight: 800;
-    font-size: 44px;
-    line-height: 41px;
-}
-
-#ranking-table-view li.selected.item:nth-child(1) { background: #9cdb63; }
-#ranking-table-view li.selected.item:nth-child(2) { background: #b0e282; }
-#ranking-table-view li.selected.item:nth-child(3) { background: #bfe899; }
-#ranking-table-view li.selected.item:nth-child(4) { background: #cdedb1; }
-#ranking-table-view li.selected.item:nth-child(5) { background: #d7f1c1; }
-#ranking-table-view li.selected.item:nth-child(6) { background: #e1f4d0; }
-#ranking-table-view li.selected.item:nth-child(7) { background: #ebf8e0; }
-
-#ranking-table-view li.selected.item:nth-child(1) span.touch-target:before { content: "1"; }
-#ranking-table-view li.selected.item:nth-child(2) span.touch-target:before { content: "2"; }
-#ranking-table-view li.selected.item:nth-child(3) span.touch-target:before { content: "3"; }
-#ranking-table-view li.selected.item:nth-child(4) span.touch-target:before { content: "4"; }
-#ranking-table-view li.selected.item:nth-child(5) span.touch-target:before { content: "5"; }
-#ranking-table-view li.selected.item:nth-child(6) span.touch-target:before { content: "6"; }
-#ranking-table-view li.selected.item:nth-child(7) span.touch-target:before { content: "7"; }
-
+  border-top-color: transparent;
+  border-bottom-color: transparent; }
 #ranking-table-view li.item.in-motion {
-    box-shadow: 0 5px 15px rgba(0,0,0,.5);
-    cursor: move;
-}
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  cursor: move; }
 
 #basic-info-form-view {
-    padding: 0 11px;
-}
-
-#basic-info-form-view input,
-#basic-info-form-view select {
+  padding: 0 11px; }
+  #basic-info-form-view input,
+  #basic-info-form-view select {
     width: 100%;
     margin-bottom: 1em;
-    height: 22px;
-}
-
-#basic-info-form-view label {
-    font-weight: 700;
-}
+    height: 22px; }
+  #basic-info-form-view label {
+    font-weight: 700; }
 
 #basic-info-address {
-    position: relative;
-    transition: all 150ms;
-    -webkit-transition: all 150ms;
-    padding: 0 2px;
-    background: #ebecf0;
-    border: 2px solid #d8dae1;
-    color: #2a2b2c;
-    -moz-border-radius: 2px;
-    -webkit-border-radius: 2px;
-    border-radius: 2px;
-    outline: none;
-    -webkit-appearance: none;
-}
-
-#basic-info-address.valid {
+  position: relative;
+  transition: all 150ms;
+  -webkit-transition: all 150ms;
+  padding: 0 2px;
+  background: #ebecf0;
+  border: 2px solid #d8dae1;
+  color: #2a2b2c;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  outline: none;
+  -webkit-appearance: none; }
+  #basic-info-address.valid {
     background: #e1f4d0;
-    border-color: #9cdb63;
-}
-
-#basic-info-address.invalid {
+    border-color: #9cdb63; }
+  #basic-info-address.invalid {
     color: #ff6a30;
-    border-color: #ff6a30;
-}
-
-#basic-info-address:focus {
+    border-color: #ff6a30; }
+  #basic-info-address:focus {
     background: #dff3f7;
     color: #2a2b2c;
-    border-color: #63c6db;
-}
-
-#basic-info-grade {
-}
+    border-color: #63c6db; }
 
 #app-progress-view {
-    padding: 11px;
-    position: fixed;
-    bottom: 0;
-    z-index: 100;
-}
-
-#app-progress-view ul {
+  padding: 11px;
+  position: fixed;
+  bottom: 0;
+  z-index: 100; }
+  #app-progress-view ul {
     margin: 0;
-    padding: 0;
-}
-
-#app-progress-view li {
+    padding: 0; }
+  #app-progress-view li {
     display: inline-block;
-    list-style: none;
-}
-
-#app-progress-view a {
+    list-style: none; }
+  #app-progress-view a {
     transition: all 150ms;
     -webkit-transition: all 150ms;
     position: relative;
@@ -360,175 +823,155 @@ div#wrapper {
     background: #d8dae1;
     text-decoration: none;
     color: #ecedf0;
-    color: rgba(255,255,255,.5);
+    color: rgba(255, 255, 255, 0.5);
     border-top: 3px solid transparent;
     border-bottom: 3px solid transparent;
     border-right: 1px solid transparent;
-    cursor: default;
-}
-
-#app-progress-view a span.number {
-    transition: all 150ms;
-    -webkit-transition: all 150ms;
-    font-size: 66px;
-    line-height: 56px;
-    font-weight: 800;
-}
-
-#app-progress-view a span.label {
-    transition: all 150ms;
-    -webkit-transition: all 150ms;
-    display: none;
-    opacity: 0;
-    position: absolute;
-    top: 15px; left: 35px;
-    color: #8b91a3;
-    font-weight: 700;
-    font-size: 21px;
-}
+    cursor: default; }
+    #app-progress-view a span.number {
+      transition: all 150ms;
+      -webkit-transition: all 150ms;
+      font-size: 66px;
+      line-height: 56px;
+      font-weight: 800; }
+    #app-progress-view a span.label {
+      transition: all 150ms;
+      -webkit-transition: all 150ms;
+      display: none;
+      opacity: 0;
+      position: absolute;
+      top: 15px;
+      left: 35px;
+      color: #8b91a3;
+      font-weight: 700;
+      font-size: 21px; }
 
 #app-progress-view-2 span.number:after {
-    transition: all 150ms;
-    -webkit-transition: all 150ms;
-    position: absolute;
-    top: 0; right: -30px; width: 0; height: 0;
-    content: ""; display: block;
-    border-top: 30px solid transparent;
-    border-bottom: 30px solid transparent;
-    border-left: 30px solid #d8dae1;
-    z-index: 15;
-}
+  transition: all 150ms;
+  -webkit-transition: all 150ms;
+  position: absolute;
+  top: 0;
+  right: -30px;
+  width: 0;
+  height: 0;
+  content: "";
+  display: block;
+  border-top: 30px solid transparent;
+  border-bottom: 30px solid transparent;
+  border-left: 30px solid #d8dae1;
+  z-index: 15; }
 
 #app-progress-view-2.active span.number:after,
 #app-progress-view-2.complete span.number:after {
-    border-left-color: transparent;
-}
+  border-left-color: transparent; }
 
 .no-touch #app-progress-view-2.next:not(.disabled):hover span.number:after {
-    border-left-color: #ff6a30;
-}
+  border-left-color: #ff6a30; }
 
 #app-progress-view-1 {
-    width: 83px;
-    padding-left: 32px;
-
-    -moz-border-radius-topleft: 66px;
-    -moz-border-radius-bottomleft: 66px;
-
-    -webkit-border-top-left-radius: 66px;
-    -webkit-border-bottom-left-radius: 66px;
-
-    border-top-left-radius: 66px;
-    border-bottom-left-radius: 66px;
-}
+  width: 83px;
+  padding-left: 32px;
+  -moz-border-radius-topleft: 66px;
+  -moz-border-radius-bottomleft: 66px;
+  -webkit-border-top-left-radius: 66px;
+  -webkit-border-bottom-left-radius: 66px;
+  border-top-left-radius: 66px;
+  border-bottom-left-radius: 66px; }
 
 #app-progress-view-2 {
-    width: 91px;
-    margin-left: 3px;
-    padding-left: 40px;
-}
+  width: 91px;
+  margin-left: 3px;
+  padding-left: 40px; }
 
 a#app-progress-view-3 {
-    width: 109px;
-    margin-left: 3px;
-    padding-left: 40px;
-
-    -moz-border-radius-topright: 66px;
-    -moz-border-radius-bottomright: 66px;
-
-    -webkit-border-top-right-radius: 66px;
-    -webkit-border-bottom-right-radius: 66px;
-
-    border-top-right-radius: 66px;
-    border-bottom-right-radius: 66px;
-
-    border-right-width: 3px;
-}
+  width: 109px;
+  margin-left: 3px;
+  padding-left: 40px;
+  -moz-border-radius-topright: 66px;
+  -moz-border-radius-bottomright: 66px;
+  -webkit-border-top-right-radius: 66px;
+  -webkit-border-bottom-right-radius: 66px;
+  border-top-right-radius: 66px;
+  border-bottom-right-radius: 66px;
+  border-right-width: 3px; }
 
 #app-progress-view-1:after,
 #app-progress-view-2:after {
-    transition: all 150ms;
-    -webkit-transition: all 150ms;
-    position: absolute;
-    top: -3px; right: -34px; width: 0; height: 0;
-    content: ""; display: block;
-    border-top: 33px solid transparent;
-    border-bottom: 33px solid transparent;
-    border-left: 33px solid #d8dae1;
-    z-index: 10;
-}
+  transition: all 150ms;
+  -webkit-transition: all 150ms;
+  position: absolute;
+  top: -3px;
+  right: -34px;
+  width: 0;
+  height: 0;
+  content: "";
+  display: block;
+  border-top: 33px solid transparent;
+  border-bottom: 33px solid transparent;
+  border-left: 33px solid #d8dae1;
+  z-index: 10; }
 
 #app-progress-view-2:before,
 #app-progress-view-3:before {
-    position: absolute;
-    top: -3px; left: 0; width: 0; height: 0;
-    content: ""; display: block;
-    border-top: 33px solid transparent;
-    border-bottom: 33px solid transparent;
-    border-left: 33px solid #fff;
-    z-index: 5;
-}
+  position: absolute;
+  top: -3px;
+  left: 0;
+  width: 0;
+  height: 0;
+  content: "";
+  display: block;
+  border-top: 33px solid transparent;
+  border-bottom: 33px solid transparent;
+  border-left: 33px solid #fff;
+  z-index: 5; }
 
 #app-progress-view a.complete {
-    background: #8b91a3;
-    color: #fff;
-    color: rgba(255,255,255,1);
-    cursor: pointer;
-}
+  background: #8b91a3;
+  color: #fff;
+  color: white;
+  cursor: pointer; }
 
 #app-progress-view-1.complete:after,
 #app-progress-view-2.complete:after {
-    border-left-color: #8b91a3;
-}
+  border-left-color: #8b91a3; }
 
 #app-progress-view a.active {
-    background: #ff6a30;
-    color: #fff;
-    color: rgba(255,255,255,1);
-}
+  background: #ff6a30;
+  color: #fff;
+  color: white; }
 
 #app-progress-view-1.active:after,
 #app-progress-view-2.active:after {
-    border-left-color: #ff6a30;
-}
+  border-left-color: #ff6a30; }
 
 #app-progress-view a.next span.label {
-    display: block;
-    opacity: 1;
-}
+  display: block;
+  opacity: 1; }
 
 #app-progress-view a.next:not(.disabled) span.label {
-    color: #ff6a30;
-}
+  color: #ff6a30; }
 
 #app-progress-view a.next:not(.disabled) {
-    border-top-color: #ff6a30;
-    border-right-color: #ff6a30;
-    border-bottom-color: #ff6a30;
-    cursor: pointer;
-}
+  border-top-color: #ff6a30;
+  border-right-color: #ff6a30;
+  border-bottom-color: #ff6a30;
+  cursor: pointer; }
 
 #app-progress-view-2.next:not(.disabled):after {
-    border-left-color: #ff6a30;
-}
+  border-left-color: #ff6a30; }
 
 .no-touch #app-progress-view a.next:not(.disabled):hover {
-    background: #ff6a30;
-}
+  background: #ff6a30; }
 
 .no-touch #app-progress-view a.next:not(.disabled):hover span.label {
-    color: #fff;
-}
+  color: #fff; }
 
 .no-touch #app-progress-view a.complete:hover span.number {
-    color: #d8dae1;
-}
-
+  color: #d8dae1; }
 
 /* ==========================================================================
    jQuery Modal
    ========================================================================== */
-
 .modal {
   display: none;
   width: 90%;
@@ -547,8 +990,7 @@ a#app-progress-view-3 {
   -moz-box-shadow: 0 0 10px #000;
   -o-box-shadow: 0 0 10px #000;
   -ms-box-shadow: 0 0 10px #000;
-  box-shadow: 0 0 10px #000;
-}
+  box-shadow: 0 0 10px #000; }
 
 .modal a.close-modal {
   position: absolute;
@@ -560,8 +1002,7 @@ a#app-progress-view-3 {
   height: 1em;
   line-height: 1em;
   overflow: hidden;
-  color: #8b91a3;
-}
+  color: #8b91a3; }
 
 .modal-spinner {
   display: none;
@@ -572,25 +1013,21 @@ a#app-progress-view-3 {
   left: 50%;
   margin-right: -32px;
   margin-top: -32px;
-  background: url(/img/spinner.gif) #111 no-repeat center center;
+  background: url(/img/spinner.gif) #111111 no-repeat center center;
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   -o-border-radius: 8px;
   -ms-border-radius: 8px;
-  border-radius: 8px;
-}
+  border-radius: 8px; }
 
 .modal h3, .modal h4 {
-    margin-bottom: 0px;
-}
+  margin-bottom: 0px; }
 
 .modal h4 {
-    font-size: .85em;
-}
+  font-size: .85em; }
 
 .modal p {
-    margin-top: 0;
-}
+  margin-top: 0; }
 
 .fa {
   display: inline-block;
@@ -599,84 +1036,68 @@ a#app-progress-view-3 {
   font-weight: normal;
   line-height: 1;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  -moz-osx-font-smoothing: grayscale; }
 
 .fa-times-circle:before {
-  content: "\f057";
-}
-
-
+  content: "\f057"; }
 
 /* ==========================================================================
    Helper classes
    ========================================================================== */
-
 /*
  * Image replacement
  */
-
 .ir {
-    background-color: transparent;
-    border: 0;
-    overflow: hidden;
-    /* IE 6/7 fallback */
-    /* *text-indent: -9999px; */
-}
+  background-color: transparent;
+  border: 0;
+  overflow: hidden;
+  /* IE 6/7 fallback */
+  /* *text-indent: -9999px; */ }
 
 .ir:before {
-    content: "";
-    display: block;
-    width: 0;
-    height: 150%;
-}
+  content: "";
+  display: block;
+  width: 0;
+  height: 150%; }
 
 /*
  * Hide from both screenreaders and browsers: h5bp.com/u
  */
-
 .hidden {
-    display: none !important;
-    visibility: hidden;
-}
+  display: none !important;
+  visibility: hidden; }
 
 /*
  * Hide only visually, but have it available for screenreaders: h5bp.com/v
  */
-
 .visuallyhidden {
-    border: 0;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
-}
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px; }
 
 /*
  * Extends the .visuallyhidden class to allow the element to be focusable
  * when navigated to via the keyboard: h5bp.com/p
  */
-
 .visuallyhidden.focusable:active,
 .visuallyhidden.focusable:focus {
-    clip: auto;
-    height: auto;
-    margin: 0;
-    overflow: visible;
-    position: static;
-    width: auto;
-}
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  width: auto; }
 
 /*
  * Hide visually and from screenreaders, but maintain layout
  */
-
 .invisible {
-    visibility: hidden;
-}
+  visibility: hidden; }
 
 /*
  * Clearfix: contain floats
@@ -689,94 +1110,78 @@ a#app-progress-view-3 {
  * 2. The use of `table` rather than `block` is only necessary if using
  *    `:before` to contain the top-margins of child elements.
  */
-
 .clearfix:before,
 .clearfix:after {
-    content: " "; /* 1 */
-    display: table; /* 2 */
-}
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */ }
 
 .clearfix:after {
-    clear: both;
-}
+  clear: both; }
 
 /*
  * For IE 6/7 only
  * Include this rule to trigger hasLayout and contain floats.
  */
-
 .clearfix {
-    /* *zoom: 1; */
-}
+  /* *zoom: 1; */ }
 
 /* ==========================================================================
    Print styles.
    Inlined to avoid required HTTP connection: h5bp.com/r
    ========================================================================== */
-
 @media print {
-    * {
-        background: transparent !important;
-        color: #000 !important; /* Black prints faster: h5bp.com/s */
-        box-shadow: none !important;
-        text-shadow: none !important;
-    }
+  * {
+    background: transparent !important;
+    color: #000 !important;
+    /* Black prints faster: h5bp.com/s */
+    box-shadow: none !important;
+    text-shadow: none !important; }
 
-    a,
-    a:visited {
-        text-decoration: underline;
-    }
+  a,
+  a:visited {
+    text-decoration: underline; }
 
-    a[href]:after {
-        content: " (" attr(href) ")";
-    }
+  a[href]:after {
+    content: " (" attr(href) ")"; }
 
-    abbr[title]:after {
-        content: " (" attr(title) ")";
-    }
+  abbr[title]:after {
+    content: " (" attr(title) ")"; }
 
-    /*
-     * Don't show links for images, or javascript/internal links
-     */
+  /*
+   * Don't show links for images, or javascript/internal links
+   */
+  .ir a:after,
+  a[href^="javascript:"]:after,
+  a[href^="#"]:after {
+    content: ""; }
 
-    .ir a:after,
-    a[href^="javascript:"]:after,
-    a[href^="#"]:after {
-        content: "";
-    }
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid; }
 
-    pre,
-    blockquote {
-        border: 1px solid #999;
-        page-break-inside: avoid;
-    }
+  thead {
+    display: table-header-group;
+    /* h5bp.com/t */ }
 
-    thead {
-        display: table-header-group; /* h5bp.com/t */
-    }
+  tr,
+  img {
+    page-break-inside: avoid; }
 
-    tr,
-    img {
-        page-break-inside: avoid;
-    }
+  img {
+    max-width: 100% !important; }
 
-    img {
-        max-width: 100% !important;
-    }
+  @page {
+    margin: 0.5cm; }
 
-    @page {
-        margin: 0.5cm;
-    }
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3; }
 
-    p,
-    h2,
-    h3 {
-        orphans: 3;
-        widows: 3;
-    }
-
-    h2,
-    h3 {
-        page-break-after: avoid;
-    }
-}
+  h2,
+  h3 {
+    page-break-after: avoid; } }

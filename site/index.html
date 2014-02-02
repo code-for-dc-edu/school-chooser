@@ -13,8 +13,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
         <meta name="apple-mobile-web-app-capable" content="yes">
 
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/fonts.css">
         <link rel="stylesheet" href="css/main.css">
 
         <script src="js/lib/modernizr-2.6.2.min.js"></script>
@@ -94,10 +92,11 @@
         </script>
 
         <script type="text/template" id="school-view-template">
-            <% if (school.zoned) { %> <strong> <% } %>
-            <span class="rank"><%= school.rank %></span>
-            <span class="name"><%= school.name %></span>
-            <% if (school.zoned) { %> </strong> <% } %>
+            <div class="teaser">
+                <span class="rank"><%= school.rank %></span>
+                <span class="name"><%= school.name %></span>
+                <% if (school.zoned) { %> <span class="zoned">Your zoned school</span> <% } %>
+            </div>
         </script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID.

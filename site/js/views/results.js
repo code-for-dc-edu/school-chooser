@@ -27,8 +27,10 @@ define(
                 view: 'results',
                 content: content
             }));
-            this.$schoolList = $('<ul id="school-list" class="table-view"></ul>')
+            this.$tableView = $('<div id="results-table-view" class="table-view"></div>')
                 .appendTo(this.$el);
+            this.$schoolList = $('<ul></ul>')
+                .appendTo(this.$tableView);
         },
 
         render: function () {

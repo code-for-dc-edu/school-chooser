@@ -29,7 +29,7 @@ define(
                 view: 'ranking',
                 content: content
             }));
-            this.$tableView = $('<div id="ranking-table-view"></div>')
+            this.$tableView = $('<div id="ranking-table-view" class="table-view"></div>')
                 .appendTo(this.$el);
         },
 
