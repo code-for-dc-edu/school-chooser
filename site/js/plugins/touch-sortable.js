@@ -48,7 +48,7 @@
 
             var items = parent.children(options.selector).longtouch(onStart);
 
-            var selectables = parent.children(options.selector).children(options.touchTarget)
+            var selectables = parent.children(options.selector).find(options.touchTarget)
                 .on(startEvent, onStart);
 
             /* If only one element we do nothing */
