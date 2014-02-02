@@ -142,12 +142,22 @@ define(
             this.set({'rankings': rankings});
         },
 
-        results: function () {
-            var grade = this.get('grade'),
-                nc = this.get('neighborhoodCluster'),
-                rankings = this.get('rankings');
+        getResults: function () {
+            if (!this.results) {
+                var grade = this.get('grade'),
+                    nc = this.get('neighborhoodCluster'),
+                    rankings = this.get('rankings'),
+                    zonedSchools = this.get('zonedSchools');
 
-            return this.schools.sorted(grade, nc, rankings);
+                this.results = this.schools.sorted(grade, nc, rankings);
+
+                _.forEach(this.results, function (school, i) {
+                    var zoned = _.include(zonedSchools, parseInt(school.attributes.code,10));
+                    school.set({ 'rank': i + 1, 'zoned': zoned });
+                });
+            }
+
+            return this.results;
         }
 
     });

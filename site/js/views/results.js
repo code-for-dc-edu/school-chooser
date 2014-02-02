@@ -2,8 +2,9 @@ define(
     ['jquery',
      'lodash',
      'backbone',
+     'views/school-view',
      'i18n!nls/content'
-    ], function ($, _, Backbone, content) {
+    ], function ($, _, Backbone, schoolView, content) {
     var ResultsView = Backbone.View.extend({
 
         tagName: 'div',
@@ -14,6 +15,9 @@ define(
 
         template: _.template($('#app-view-template').html()),
 
+        page: 0,
+        itemsPerPage: 10,
+
         events: {
 
         },
@@ -23,16 +27,26 @@ define(
                 view: 'results',
                 content: content
             }));
-            this.$schoolList = $('<ol id="school-list"></ol>')
+            this.$schoolList = $('<ul id="school-list" class="table-view"></ul>')
                 .appendTo(this.$el);
         },
 
         render: function () {
-            var schools = this.model.results(),
+            var results = this.model.getResults(),
+                schools = _.at(results, _.range(this.page * this.itemsPerPage, (this.page + 1) * this.itemsPerPage)),
                 $schoolList = this.$schoolList;
 
+            // Pull all zoned schools onto the first page of results
+
+            if (this.page === 0) {
+                schools = schools.concat(_(results).rest(this.itemsPerPage).filter(function (school) {
+                    return school.attributes.zoned;
+                }).value());
+            }
+
             _.forEach(schools, function (school) {
-                $schoolList.append('<li>' + school.attributes.name + '</li>');
+                var subview = new schoolView({ model: school });
+                $schoolList.append(subview.el);
             });
         },
 

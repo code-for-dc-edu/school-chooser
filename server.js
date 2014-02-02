@@ -83,7 +83,7 @@ SessionSchema.pre('save', true, function (next, done) {
     if (this.zonedSchools.length === 0 && this.addressGISValid) {
         var session = this,
             grade = parseInt(this.grade, 10),
-            server = (grade >= 9) ? 4 : (grade >= 6) ? 3 : 2,
+            server = (grade >= 9) ? 3 : (grade >= 6) ? 2 : 4,
             url = 'http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_APPS/EBIS/MapServer/'
                 + server
                 + '/query?f=json&returnGeometry=false&geometry=%7B%22x%22%3A%22'
