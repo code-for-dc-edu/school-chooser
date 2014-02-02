@@ -67,7 +67,7 @@ define(
                 $('#compare-item').val('');
             }
 
-            $('#compare-controls .hidden-controls').slideToggle(function () {
+            $('#compare-controls .hidden-controls').slideToggle(150, function () {
                 $('#compare-controls').toggleClass('collapsed');
 
                 if (!collapsed) {

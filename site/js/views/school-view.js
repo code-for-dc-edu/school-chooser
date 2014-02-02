@@ -35,7 +35,7 @@ define(
             }));
 
             var fittext = this.fittext();
-            $(window).on("resize.school" + this.id, fittext);
+            $(window).on("resize." + this.id, fittext);
             setTimeout(fittext,0);
 
             return this;
