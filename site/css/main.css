@@ -606,7 +606,7 @@ div#wrapper {
   list-style: none;
   position: relative;
   padding: 0 11px;
-  height: 45px;
+  min-height: 45px;
   margin-bottom: -1px;
   line-height: 44px;
   font-weight: 700;
@@ -614,18 +614,23 @@ div#wrapper {
   cursor: default; }
   .table-view li.item span.name {
     display: block;
-    height: 100%;
-    border-top: 1px solid #d8dae1;
-    border-bottom: 1px solid #d8dae1;
     padding-left: 33px;
     white-space: nowrap; }
+  .table-view li.item div.wrapper {
+    height: 100%;
+    width: 100%;
+    border-top: 1px solid #d8dae1;
+    border-bottom: 1px solid #d8dae1; }
 
-#results-table-view li.item div.teaser {
+#results-table-view li.item div.summary-view {
   width: 100%;
-  height: 100%;
+  height: 45px;
+  position: relative;
   cursor: pointer; }
-  #results-table-view li.item div.teaser:hover span.name:after {
+  #results-table-view li.item div.summary-view:hover span.name:after {
     color: #63c6db; }
+#results-table-view li.item div.detail-view {
+  display: none; }
 #results-table-view li.item span.name {
   padding-right: 22px; }
   #results-table-view li.item span.name:after {
@@ -639,14 +644,20 @@ div#wrapper {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     position: absolute;
-    right: 14px;
+    right: 3px;
     top: 0;
-    line-height: 46px; }
+    line-height: 46px;
+    transition: transform 400ms;
+    -webkit-transition: -webkit-transform 400ms; }
+#results-table-view li.item.expanded span.name:after {
+  transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -webkit-transform: rotate(90deg); }
 #results-table-view li.item span.rank {
   display: block;
   position: absolute;
   top: 5px;
-  left: 5px;
+  left: -6px;
   width: 34px;
   height: 34px;
   text-align: center;
@@ -666,7 +677,7 @@ div#wrapper {
   display: block;
   position: absolute;
   bottom: 7px;
-  left: 44px;
+  left: 33px;
   color: #9cdb63;
   font-size: .85em;
   line-height: 1em;
@@ -761,8 +772,8 @@ div#wrapper {
 #ranking-table-view ul.in-motion li.header-row div.placeholder {
   color: #ff6a30;
   border-color: #ff6a30; }
-#ranking-table-view li.selected.item span.name,
-#ranking-table-view li.item.in-motion span.name {
+#ranking-table-view li.selected.item div.wrapper,
+#ranking-table-view li.item.in-motion div.wrapper {
   border-top-color: transparent;
   border-bottom-color: transparent; }
 #ranking-table-view li.item.in-motion {

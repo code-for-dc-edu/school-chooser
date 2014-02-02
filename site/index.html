@@ -77,8 +77,10 @@
                 </li>
                 <% _.forEach(unselectedItems, function(item) { %>
                     <li class="item" data-name="<%= item %>">
-                        <span class="touch-target"></span>
-                        <span class="name"><%= content.items[item].name %></span>
+                        <div class="wrapper">
+                            <span class="touch-target"></span>
+                            <span class="name"><%= content.items[item].name %></span>
+                        </div>
                     </li>
                 <% }); %>
             </ul>
@@ -106,10 +108,15 @@
         </script>
 
         <script type="text/template" id="school-view-template">
-            <div class="teaser">
-                <span class="rank"><%= school.rank %></span>
-                <span class="name"><%= school.name %></span>
-                <% if (school.zoned) { %> <span class="zoned"><%= uiStrings.zoned %></span> <% } %>
+            <div class="wrapper">
+                <div class="summary-view">
+                    <span class="rank"><%= school.rank %></span>
+                    <span class="name"><%= school.name %></span>
+                    <% if (school.zoned) { %> <span class="zoned"><%= uiStrings.zoned %></span> <% } %>
+                </div>
+                <div class="detail-view">
+                    <h4>Detail view goes here</h4>
+                </div>
             </div>
         </script>
 

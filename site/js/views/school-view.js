@@ -14,7 +14,7 @@ define(
         template: _.template($('#school-view-template').html()),
 
         events: {
-
+            'click .summary-view': 'toggleDetailView'
         },
 
         initialize: function () {
@@ -46,6 +46,11 @@ define(
             return function () {
                 $schoolName.quickfit({ min: 8, max: 14, tolerance: 0.05, truncate: true });
             };
+        },
+
+        toggleDetailView: function () {
+            this.$el.toggleClass('expanded');
+            this.$('.detail-view').slideToggle();
         },
 
         close: function () {
