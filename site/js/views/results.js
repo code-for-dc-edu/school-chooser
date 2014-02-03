@@ -45,7 +45,8 @@ define(
         render: function () {
             var results = this.model.getResults(),
                 schools = _.at(results, _.range(this.page * this.itemsPerPage, (this.page + 1) * this.itemsPerPage)),
-                $schoolList = this.$schoolList;
+                $schoolList = this.$schoolList,
+                that = this;
 
             // Pull all zoned schools onto the first page of results
 
@@ -56,7 +57,12 @@ define(
             }
 
             _.forEach(schools, function (school) {
-                var subview = new schoolView({ model: school });
+                var subview = new schoolView({
+                    model: school,
+                    parent: that,
+                    selectedItems: that.model.rankingItems().selected,
+                    rankingArrays: that.model.getRankingArrays()
+                });
                 $schoolList.append(subview.render().el);
             });
         },

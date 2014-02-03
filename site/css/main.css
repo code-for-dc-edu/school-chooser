@@ -572,7 +572,7 @@ body {
 /* For development, gives us an iPhone-sized screen. */
 div#wrapper {
   position: relative;
-  max-width: 320px;
+  max-width: 480px;
   height: 100%;
   margin: 0 auto;
   background: #fff; }
@@ -632,7 +632,8 @@ div#wrapper {
   #results-table-view li.item div.summary-view:hover span.name:after {
     color: #63c6db; }
 #results-table-view li.item div.detail-view {
-  display: none; }
+  display: none;
+  padding-bottom: 22px; }
 #results-table-view li.item span.name {
   padding-right: 22px; }
   #results-table-view li.item span.name:after {
@@ -685,6 +686,16 @@ div#wrapper {
   line-height: 1em;
   font-weight: 300;
   text-transform: uppercase; }
+#results-table-view li.item h4 {
+  font-weight: 300;
+  color: #63c6db;
+  margin: 22px 0 0 0;
+  line-height: 1em; }
+#results-table-view li.item p.placeholder {
+  font-weight: 300;
+  padding: 0;
+  line-height: 1em;
+  margin: 0; }
 
 #ranking-table-view li.header-row {
   height: 66px;

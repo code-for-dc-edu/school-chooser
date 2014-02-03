@@ -174,6 +174,29 @@ define(
             }
 
             return this.results;
+        },
+
+        getRankingArrays: function () {
+            if (!this.rankingArrays) {
+                var results = this.getResults(),
+                    selectedItems = this.rankingItems().selected,
+                    rankingArrays;
+
+                rankingArrays = this.rankingArrays = {};
+
+                _.forEach(selectedItems, function (item) {
+                    rankingArrays[item] = [];
+
+                    _.forEach(results, function (school) {
+                        var sd = school.attributes[item].sd;
+                        if (sd) { rankingArrays[item].push(parseFloat(sd)); }
+                    });
+
+                    rankingArrays[item].sort(function (a, b) { return b-a; });
+                });
+            }
+
+            return this.rankingArrays;
         }
 
     });

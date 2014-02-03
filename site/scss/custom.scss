@@ -16,7 +16,7 @@ body {
 /* For development, gives us an iPhone-sized screen. */
 div#wrapper {
     position: relative;
-    max-width: 320px;
+    max-width: 480px;
     height: 100%;
     margin: 0 auto;
     background: #fff;
@@ -98,7 +98,10 @@ div#wrapper {
             }
         }
 
-        div.detail-view { display: none; }
+        div.detail-view {
+            display: none;
+            padding-bottom: 22px;
+        }
 
         span.name {
             padding-right: 22px;
@@ -162,6 +165,20 @@ div#wrapper {
             font-weight: 300;
             text-transform: uppercase;
 
+        }
+
+        h4 {
+            font-weight: 300;
+            color: #63c6db;
+            margin: 22px 0 0 0;
+            line-height: 1em;
+        }
+
+        p.placeholder {
+            font-weight: 300;
+            padding: 0;
+            line-height: 1em;
+            margin: 0;
         }
     }
 }

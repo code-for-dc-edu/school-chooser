@@ -14,16 +14,22 @@ define(
         template: _.template($('#school-view-template').html()),
 
         events: {
-            'click .summary-view': 'toggleDetailView'
+            'click .summary-view': 'summaryViewClick'
         },
 
-        initialize: function () {
+        initialize: function (options) {
+            this.parent = options.parent;
+            this.selectedItems = options.selectedItems;
+            this.rankingArrays = options.rankingArrays;
+
             this.id = 'school' + this.model.get('code');
             this.$el.attr('id', this.id);
 
             if (this.model.get('zoned')) {
                 this.$el.addClass('zoned');
             }
+
+            this.listenTo(this.parent, 'toggleDetailView', this.toggleDetailView);
         },
 
         render: function () {
@@ -31,6 +37,9 @@ define(
 
             this.$el.html(this.template({
                 school: this.model.attributes,
+                selectedItems: this.selectedItems,
+                rankingArrays: this.rankingArrays,
+                content: content,
                 uiStrings: uiStrings
             }));
 
@@ -48,9 +57,18 @@ define(
             };
         },
 
-        toggleDetailView: function () {
-            this.$el.toggleClass('expanded');
-            this.$('.detail-view').slideToggle();
+        summaryViewClick: function () {
+            this.parent.trigger('toggleDetailView', this.id)
+        },
+
+        toggleDetailView: function (id) {
+            if (id === this.id) {
+                this.$el.toggleClass('expanded');
+                this.$('.detail-view').slideToggle();
+            } else {
+                this.$el.removeClass('expanded');
+                this.$('.detail-view').slideUp();
+            }
         },
 
         close: function () {
