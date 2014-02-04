@@ -106,8 +106,6 @@ makeCultureDF <- function(prof) {
 }
 makeCultureDF(pf1)
 
-# TODO: with everyone's data, do appropriate normalization
-
 # hammer the server to get all the report card data, then loop through to 
 # build the appropriate structures
 
@@ -134,6 +132,16 @@ profiles <- llply(school_codes, function(pf) {
  
 culture_df <- ldply(profiles, function(pf) cbind(makeCultureDF(pf), code=pf$code))
 
+myRank <- function(x) rank(x, na.last='keep', ties.method='average')
+culture_df <- mutate(culture_df,
+                     attendance_rank = myRank(in_seat_attendance - state_in_seat_attendance),
+                     suspension_rank = myRank(state_suspended_1 - suspended_1),
+                     expulsions_rank = myRank(expulsions+1/state_expulsions),
+                     truancy_rank = myRank(truancy_state - truancy),
+                     mean_rank = (attendance_rank + suspension_rank + 
+                                      expulsions_rank + truancy_rank)/4)
+
+                     
 ##############################
 # Get the PCSB Equity data set
 
