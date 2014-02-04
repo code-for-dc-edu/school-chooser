@@ -101,6 +101,7 @@ div#wrapper {
         div.detail-view {
             display: none;
             padding-bottom: 22px;
+            margin-top: -11px;
         }
 
         span.name {
@@ -170,7 +171,7 @@ div#wrapper {
         h4 {
             font-weight: 300;
             color: #63c6db;
-            margin: 22px 0 0 0;
+            margin: 22px 0 11px 0;
             line-height: 1em;
         }
 
@@ -178,7 +179,7 @@ div#wrapper {
             font-weight: 300;
             padding: 0;
             line-height: 1em;
-            margin: 0;
+            margin: -11px 0 0 0;
         }
     }
 }

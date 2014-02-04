@@ -633,7 +633,8 @@ div#wrapper {
     color: #63c6db; }
 #results-table-view li.item div.detail-view {
   display: none;
-  padding-bottom: 22px; }
+  padding-bottom: 22px;
+  margin-top: -11px; }
 #results-table-view li.item span.name {
   padding-right: 22px; }
   #results-table-view li.item span.name:after {
@@ -689,13 +690,13 @@ div#wrapper {
 #results-table-view li.item h4 {
   font-weight: 300;
   color: #63c6db;
-  margin: 22px 0 0 0;
+  margin: 22px 0 11px 0;
   line-height: 1em; }
 #results-table-view li.item p.placeholder {
   font-weight: 300;
   padding: 0;
   line-height: 1em;
-  margin: 0; }
+  margin: -11px 0 0 0; }
 
 #ranking-table-view li.header-row {
   height: 66px;
