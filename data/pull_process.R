@@ -8,6 +8,7 @@ library(jsonlite)
 library(httr)
 library(plyr)
 library(stringr)
+library(reshape2)
 
 school_codes <- read.table("school_codes.txt")[[1]]
 
@@ -155,4 +156,27 @@ pcsb_equity_json <- llply(pcsb_equity_json, function(sch) {
 })
 equity <- ldply(pcsb_equity_json, function(x) as.data.frame(x))
 
+# computing diversity from the equity DF
+race_cols <- c('hispanic_latino', 'black_non_hispanic', 'asian', 
+               'multiracial', 'white_non_hispanic', 
+               'native_american_alaskan', 'pacific_hawaiian')
+equity_race <- equity[,race_cols]
+equity_race <- colwise(function(x) as.numeric(x)/100)(equity_race)
+equity_race$simpson_di <- 1/rowSums(as.matrix(equity_race)^2) * ncol(equity_race)
+equity_race$simpson_di_rank <- myRank(equity_race$simpson_di)
+equity_race$code <- equity$school_code
+
+
+# pull commute data
+commute_url <- "http://ec2-54-235-58-226.compute-1.amazonaws.com/storage/f/2013-06-01T15%3A23%3A20.103Z/commute-data-denorm.json"
+commute_df <- as.data.frame(jsonlite::fromJSON(commute_url))
+
+# turn into the appropriate data structure
+buildCommuteStruct <- function(df, code) {
+    ret <- dlply(subset(df, school_code==code), 'cluster', function(rr) {
+        list(val=rr$count)
+    })
+    attr(ret, 'split_labels') <- NULL
+    ret
+}
 
