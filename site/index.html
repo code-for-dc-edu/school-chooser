@@ -13,8 +13,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
         <meta name="apple-mobile-web-app-capable" content="yes">
 
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/fonts.css">
         <link rel="stylesheet" href="css/main.css">
 
         <script src="js/lib/modernizr-2.6.2.min.js"></script>
@@ -52,7 +50,7 @@
         <script type="text/template" id="basic-info-form-view-template">
             <label for="basic-info-address"><%= uiStrings.address %></label><br />
             <input type="text" id="basic-info-address"
-                <% if(addressGISValid) { %> class="valid" <% } %>
+                <% if (addressGISValid) { %> class="valid" <% } %>
                 value="<%- address %>" /><br />
             <label for="basic-info-grade"><%= uiStrings.grade %></label><br />
             <select id="basic-info-grade">
@@ -79,8 +77,10 @@
                 </li>
                 <% _.forEach(unselectedItems, function(item) { %>
                     <li class="item" data-name="<%= item %>">
-                        <span class="touch-target"></span>
-                        <span class="name"><%= content.items[item].name %></span>
+                        <div class="wrapper">
+                            <span class="touch-target"></span>
+                            <span class="name"><%= content.items[item].name %></span>
+                        </div>
                     </li>
                 <% }); %>
             </ul>
@@ -91,6 +91,44 @@
             <p><%= content[item].definition %></p>
             <h4><%= uiStrings.forTheGeeks %></h4>
             <p class="small"><%= content[item].forTheGeeks %></p>
+        </script>
+
+        <script type="text/template" id="compare-controls-template">
+            <div class="hidden-controls">
+                <select id="compare-item">
+                    <option selected disabled hidden value=""></option>
+                    <% _.forEach(selectedItems, function(item) { %>
+                        <option value="<%= item %>">
+                            <%= content.items[item].name %>
+                        </option>
+                    <% }); %>
+                </select>
+            </div>
+            <button id="compare-controls-toggle"><%= uiStrings.showCompare %></button>
+        </script>
+
+        <script type="text/template" id="school-view-template">
+            <div class="wrapper">
+                <div class="summary-view">
+                    <span class="rank"><%= school.rank %></span>
+                    <span class="name"><%= school.name %></span>
+                    <% if (school.zoned) { %> <span class="zoned"><%= uiStrings.zoned %></span> <% } %>
+                </div>
+                <div class="detail-view">
+                    <% _.forEach(selectedItems, function(item) { %>
+                        <h4 class="<%= item %>-title">
+                            <%= content.items[item].name %>
+                        </h4>
+                        <p class="<%= item %>-rank placeholder">
+                            This school is ranked
+                            #<%= _.indexOf(rankingArrays[item],parseFloat(school[item].sd)) + 1 %>
+                            out of
+                            <%= rankingArrays[item].length %>
+                            schools by this measure.
+                        </p>
+                    <% }); %>
+                </div>
+            </div>
         </script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID.

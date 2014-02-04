@@ -142,12 +142,61 @@ define(
             this.set({'rankings': rankings});
         },
 
-        results: function () {
-            var grade = this.get('grade'),
-                nc = this.get('neighborhoodCluster'),
-                rankings = this.get('rankings');
+        rankingItems: function () {
+            var rankings = _(this.get('rankings'))
+                    .pairs()
+                    .sortBy(function (pair) { return pair[1]; })
+                    .groupBy(function (pair) {
+                        var selected = pair[1] > 0 ? 'selected' : false,
+                            unselected = pair[1] === 0 ? 'unselected' : false;
+                        return selected || unselected;
+                    })
+                    .value(),
+                selected = _.map(rankings.selected, function (pair) { return pair[0]; }),
+                unselected = _.map(rankings.unselected, function (pair) { return pair[0]; });
 
-            return this.schools.sorted(grade, nc, rankings);
+            return { 'selected': selected, 'unselected': unselected };
+        },
+
+        getResults: function () {
+            if (!this.results) {
+                var grade = this.get('grade'),
+                    nc = this.get('neighborhoodCluster'),
+                    rankings = this.get('rankings'),
+                    zonedSchools = this.get('zonedSchools');
+
+                this.results = this.schools.sorted(grade, nc, rankings);
+
+                _.forEach(this.results, function (school, i) {
+                    var zoned = _.include(zonedSchools, parseInt(school.attributes.code,10));
+                    school.set({ 'rank': i + 1, 'zoned': zoned });
+                });
+            }
+
+            return this.results;
+        },
+
+        getRankingArrays: function () {
+            if (!this.rankingArrays) {
+                var results = this.getResults(),
+                    selectedItems = this.rankingItems().selected,
+                    rankingArrays;
+
+                rankingArrays = this.rankingArrays = {};
+
+                _.forEach(selectedItems, function (item) {
+                    rankingArrays[item] = [];
+
+                    _.forEach(results, function (school) {
+                        var sd = school.attributes[item].sd;
+                        if (sd) { rankingArrays[item].push(parseFloat(sd)); }
+                    });
+
+                    rankingArrays[item].sort(function (a, b) { return b-a; });
+                });
+            }
+
+            return this.rankingArrays;
         }
 
     });

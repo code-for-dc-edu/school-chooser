@@ -20,7 +20,6 @@ define(
         },
 
         newSession: function () {
-            console.log("newSession");
             this.session = new Session();
             this.sessions.add(this.session);
             this.appView.setModel(this.session);

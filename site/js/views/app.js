@@ -25,6 +25,10 @@ define(
                 .html(this.progressViewTemplate({ uiStrings: uiStrings }))
                 .appendTo(this.$el);
             this.$progressViewLinks = this.$('#app-progress-view a');
+
+            var adjustFixedWidth = this.adjustFixedWidth();
+            adjustFixedWidth();
+            $(window).on('resize.app', adjustFixedWidth);
         },
 
         setModel: function (model) {
@@ -112,6 +116,13 @@ define(
             if (className === "complete" || className === "next") {
                 this.router.navigateToView(index, currentViewIndex);
             }
+        },
+
+        adjustFixedWidth: function () {
+            var $progressView = this.$progressView;
+            return function () {
+                $progressView.width($progressView.parent().width());
+            };
         }
 
     });
