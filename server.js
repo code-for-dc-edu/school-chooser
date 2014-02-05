@@ -48,6 +48,7 @@ mongoose.connect(mongoURL, function (err, res) {
 
 // Sessions
 var SessionSchema = new mongoose.Schema({
+    gaVisitorID: String,
     grade: String,
     address: String,
     addressGISValid: Boolean,
@@ -146,6 +147,7 @@ app.get('/api/sessions/:hashid', function (req, res) {
 
 app.post('/api/sessions', function (req, res) {
     var session = new Session({
+        gaVisitorID: req.body.gaVisitorID,
         grade: req.body.grade,
         address: req.body.address,
         addressGISValid: req.body.addressGISValid,
@@ -164,6 +166,7 @@ app.post('/api/sessions', function (req, res) {
 
 app.put('/api/sessions/:hashid', function (req, res) {
     return Session.findByHashid(req.params.hashid, function (err, session) {
+        session.gaVisitorID = req.body.gaVisitorID;
         session.grade = req.body.grade;
         session.address = req.body.address;
         session.addressGISValid = req.body.addressGISValid;

@@ -2,7 +2,8 @@ require.config({
     paths: {
         'backbone': 'lib/backbone-1.1.0.min',
         'jquery': 'lib/jquery-1.10.2.min',
-        'lodash': 'lib/lodash-2.4.0.min'
+        'lodash': 'lib/lodash-2.4.0.min',
+        'utils': 'lib/utils'
     },
     map: {
         '*': {
@@ -27,6 +28,7 @@ require(
     ], function ($, _, Backbone, AppRouter) {
     $(function () {
         window.app.router = new AppRouter();
+        window.app.GUID = this.GUID;
         Backbone.history.start();
     });
 });
