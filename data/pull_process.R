@@ -71,7 +71,7 @@ procDiversityBlock <- function(ll) {
 }
 makeDiversityBlock(pf1)
 
-# culture is based on withdrawal, suspension, attendance, unexclused absenses
+# culture is based on attendance, suspension, truancy, and withdrawal
 # first, get those numbers from one school
 # then, separately, normalize all schools
 
@@ -83,25 +83,26 @@ makeCultureDF <- function(prof) {
     tru <- prof$profile$sections[[6]]
     att <- prof$profile$sections[[7]]
     sus <- prof$profile$sections[[8]]
-    exp <- prof$profile$sections[[9]]
+    #exp <- prof$profile$sections[[9]]
     myew <- prof$profile$sections[[10]]
     stopifnot(tru$id == 'unexcused_absences')
-    stopifnot(att$id == 'attendance'); stopifnot(sus$id == 'suspensions')
-    stopifnot(exp$id == 'expulsions'); stopifnot(myew$id == 'mid_year_entry_and_withdrawal')
+    stopifnot(att$id == 'attendance'); 
+    stopifnot(sus$id == 'suspensions')
+    #stopifnot(exp$id == 'expulsions'); 
+    stopifnot(myew$id == 'mid_year_entry_and_withdrawal')
     
     # extract and put into a DF for later processing
     #myew_val <- getValue(myew$data, "month", 5)
-    ret <- data.frame(in_seat_attendance=try_default(n2na(att$data[[1]]$val$in_seat_attendance), NA),
-                      state_in_seat_attendance=try_default(n2na(att$data[[1]]$val$state_in_seat_attendance), NA),
-                      suspended_1=try_default(sus$data[[1]]$val$suspended_1, NA),
-                      state_suspended_1=try_default(sus$data[[1]]$val$state_suspended_1, NA),
-                      expulsions=try_default(exp$data[[1]]$val$expulsions, NA),
-                      state_expulsions=try_default(exp$data[[1]]$val$state_expulsions, NA),
-                      myew=try_default(getValue(myew$data, "month", 5)$net_cumulative, NA),
-                      truancy=n20(try_default(tru$data[[1]]$val$`16-25_days`, NULL)) + 
-                          n20(try_default(tru$data[[1]]$val$more_than_25_days, NULL)),
-                      truancy_state=n20(try_default(tru$data[[1]]$val$`state_16-25_days`, NULL)) + 
-                          n20(try_default(tru$data[[1]]$val$state_more_than_25_days, NULL))
+    withdrawals <- try_default(sum(laply(myew$data, function(dd) dd$val$withdrawal)), 0)
+    ret <- data.frame(attendanceRate=1-try_default(n2na(att$data[[1]]$val$in_seat_attendance), NA),
+                      state_attendanceRate=1-try_default(n2na(att$data[[1]]$val$state_in_seat_attendance), NA),
+                      suspensionRate=try_default(sus$data[[1]]$val$suspended_1, NA),
+                      state_suspensionRate=try_default(sus$data[[1]]$val$state_suspended_1, NA),
+                      midyearWithdrawal=withdrawals,
+                      truancyRate=(n20(try_default(tru$data[[1]]$val$`16-25_days`, NULL)) + 
+                          n20(try_default(tru$data[[1]]$val$more_than_25_days, NULL)))/100,
+                      state_truancyRate=(n20(try_default(tru$data[[1]]$val$`state_16-25_days`, NULL)) + 
+                          n20(try_default(tru$data[[1]]$val$state_more_than_25_days, NULL)))/100
                       )
     ret
 }
@@ -133,14 +134,13 @@ profiles <- llply(school_codes, function(pf) {
  
 culture_df <- ldply(profiles, function(pf) cbind(makeCultureDF(pf), code=pf$code))
 
-myRank <- function(x) rank(x, na.last='keep', ties.method='average')
+#myRank <- function(x) rank(x, na.last='keep', ties.method='average')
+# compute the mean of the normalized values for the four parts of culture
+zscore <- function(x) (x-mean(x, na.rm=TRUE))/sd(x, na.rm=TRUE)
 culture_df <- mutate(culture_df,
-                     attendance_rank = myRank(in_seat_attendance - state_in_seat_attendance),
-                     suspension_rank = myRank(state_suspended_1 - suspended_1),
-                     expulsions_rank = myRank(expulsions+1/state_expulsions),
-                     truancy_rank = myRank(truancy_state - truancy),
-                     mean_rank = (attendance_rank + suspension_rank + 
-                                      expulsions_rank + truancy_rank)/4)
+                     mean_zscore=(zscore(attendanceRate) + zscore(suspensionRate) +
+                                  zscore(midyearWithdrawal) + zscore(truancyRate))/4)
+
 
                      
 ##############################
@@ -164,6 +164,7 @@ equity_race <- equity[,race_cols]
 equity_race <- colwise(function(x) as.numeric(x)/100)(equity_race)
 equity_race$simpson_di <- 1/rowSums(as.matrix(equity_race)^2) * ncol(equity_race)
 equity_race$simpson_di_rank <- myRank(equity_race$simpson_di)
+equity_race$simpson_di_z <- zscore(equity_race$simpson_di)
 equity_race$code <- equity$school_code
 
 
@@ -179,4 +180,7 @@ buildCommuteStruct <- function(df, code) {
     attr(ret, 'split_labels') <- NULL
     ret
 }
+
+# now, put it all togeter
+
 
