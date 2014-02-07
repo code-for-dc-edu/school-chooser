@@ -67,8 +67,10 @@
             <ul>
                 <% _.forEach(selectedItems, function(item) { %>
                     <li class="selected item" data-name="<%= item %>">
-                        <span class="touch-target"></span>
-                        <span class="name"><%= content.items[item].name %></span>
+                        <div class="wrapper">
+                            <span class="touch-target"></span>
+                            <span class="name"><%= content.items[item].name %></span>
+                        </div>
                     </li>
                 <% }); %>
                 <li id="ranking-table-view-divider" class="header-row <% if(selectedItems.length > 0) { %> no-placeholder <% } %>">
