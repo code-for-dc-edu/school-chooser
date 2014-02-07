@@ -80,6 +80,7 @@ overviews <- llply(school_codes, function(sc) {
         charter=charter
     ))
 }, .progress='time')
+names(overviews) <- as.character(school_codes)
 
 pf_fmt <- "http://learndc.org/data/profile/school_%04d.JSON"
 profiles <- llply(school_codes, function(pf) {
@@ -96,6 +97,14 @@ culture_df <- mutate(culture_df,
                      mean_zscore=(zscore(attendanceRate) + zscore(suspensionRate) +
                                   zscore(midyearWithdrawal) + zscore(truancyRate))/4)
 # we'll turn this into a JSON structure later on...
+buildCultureStruct <- function(df, code) {
+    with(df[df$code==code,], 
+         list(schoolCulture=list(val=list(attendanceRate=attendanceRate,
+                                          suspensionRate=suspensionRate,
+                                          truancyRate=truancyRate,
+                                          midyearWithdrawal=midyearWithdrawal),
+                                 zscore=mean_zscore)))
+}
                      
 ###################################################################
 # Get the PCSB Equity data set
@@ -137,6 +146,10 @@ buildCommuteStruct <- function(df, code) {
 }
 
 ###################################################################
-# now, put it all togeter
+# now, put it all together
 
-
+makeOneSchoolStruct <- function(school_code) {
+    c(overviews[[as.character(school_code)]],
+      list(studentsFromMyNeighborhood=buildCommuteStruct(commute_df, school_code)),
+      buildCultureStruct(culture_df, school_code))
+}
