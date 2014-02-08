@@ -38,15 +38,14 @@ getValue <- function(arrayOfKeyVals, keyname, keyval, result_numeric=FALSE) {
 # given a single school's profile, extract culture info into a data.frame
 makeCultureDF <- function(prof) {
     # confirm that we have the right sections
-    tru <- prof$profile$sections[[6]]
-    att <- prof$profile$sections[[7]]
-    sus <- prof$profile$sections[[8]]
-    myew <- prof$profile$sections[[10]]
-    stopifnot(tru$id == 'unexcused_absences')
-    stopifnot(att$id == 'attendance'); 
-    stopifnot(sus$id == 'suspensions')
-    stopifnot(myew$id == 'mid_year_entry_and_withdrawal')
-    
+	## map sections by name -- tts
+	names(prof$profile$sections) <- unlist(lapply(prof$profile$sections, function(x){x$id}))
+	
+    tru <- prof$profile$sections['unexcused_absences']
+    att <- prof$profile$sections['attendance']
+    sus <- prof$profile$sections['suspensions']
+    myew <- prof$profile$sections['mid_year_entry_and_withdrawal']
+
     # extract and put into a DF for later processing
     withdrawals <- try_default(sum(laply(myew$data, function(dd) dd$val$withdrawal)), 0)
     # there's a bunch of crap here to deal with failure modes...
