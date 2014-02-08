@@ -79,7 +79,7 @@ overviews <- llply(school_codes, function(sc) {
         profile=external_report_card,
         charter=charter
     ))
-}, .progress='time')
+})
 names(overviews) <- as.character(school_codes)
 
 pf_fmt <- "http://learndc.org/data/profile/school_%04d.JSON"
@@ -87,7 +87,7 @@ profiles <- llply(school_codes, function(pf) {
     pf_json <- jsonlite::fromJSON(sprintf(pf_fmt, pf), simplifyDataFrame=FALSE)
     pf_json$code <- pf
     pf_json
-}, .progress='time')
+})
  
 ###################################################################
 # OK, now we've got the data, so process it into culture blocks
@@ -172,7 +172,6 @@ race_cols <- c('hispanic_latino', 'black_non_hispanic', 'asian',
 equity_race <- equity[,race_cols]
 equity_race <- colwise(function(x) as.numeric(x)/100)(equity_race)
 equity_race$simpson_di <- 1/rowSums(as.matrix(equity_race)^2) * ncol(equity_race)
-equity_race$simpson_di_rank <- myRank(equity_race$simpson_di)
 equity_race$simpson_di_z <- zscore(equity_race$simpson_di)
 equity_race$code <- equity$school_code
 # we'll convert this to JSON later too...
