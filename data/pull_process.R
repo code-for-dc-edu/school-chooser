@@ -130,6 +130,17 @@ equity_race$simpson_di_rank <- myRank(equity_race$simpson_di)
 equity_race$simpson_di_z <- zscore(equity_race$simpson_di)
 equity_race$code <- equity$school_code
 # we'll convert this to JSON later too...
+buildDiversityStruct <- function(df, sc) {
+    with(df[df$code==sc,], 
+         list(racialDiversity=list(val=list(asian=asian,
+                                            africanAmerican=black_non_hispanic,
+                                            multiracial=multiracial,
+                                            hawaiianPacificIslander=pacific_hawaiian,
+                                            white=white_non_hispanic,
+                                            hispanic=hispanic_latino,
+                                            americanIndianAlaskaNative=native_american_alaskan),
+                                 zscore=simpson_di_z)))
+}
 
 ###################################################################
 # pull commute data
@@ -151,5 +162,9 @@ buildCommuteStruct <- function(df, code) {
 makeOneSchoolStruct <- function(school_code) {
     c(overviews[[as.character(school_code)]],
       list(studentsFromMyNeighborhood=buildCommuteStruct(commute_df, school_code)),
-      buildCultureStruct(culture_df, school_code))
+      buildCultureStruct(culture_df, school_code),
+      buildDiversityStruct(equity_race, school_code))
+    # TODO: grad rate (from where??)
+    # TODO: academic growth
 }
+cat(toJSON(makeOneSchoolStruct(313)))
