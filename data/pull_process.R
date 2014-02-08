@@ -114,8 +114,10 @@ buildCultureStruct <- function(df, code) {
 makeGraduationDF <- function(profiles) {
     ldply(profiles, function(pf) {
         sections <- pf$report_card$sections
-        grad_rate <- try_default(with(sections[[7]]$data[[1]]$val, graduates/cohort_size),
-                                 NA, quiet=TRUE)
+        grad_rate <- try_default({
+                sect <- which(laply(sections, function(x) x$id == 'graduation'))
+                with(sections[[sect]]$data[[1]]$val, graduates/cohort_size)
+            }, NA, quiet=TRUE)
         data.frame(school_code=pf$code, grad_rate=grad_rate)
     })
 }
@@ -125,6 +127,29 @@ buildGradStruct <- function(df, sc) {
     with(df[df$school_code==sc,], 
          list(graduationRate=list(val=grad_rate,
                                    zscore=grad_zscore)))
+}
+
+###################################################################
+# extract academic growth scores
+
+# foreach school, pull the academic growth section from the report card 
+# and put into a DF
+makeAcademicGrowthDF <- function(profiles) {
+    ldply(profiles, function(pf) {
+        sections <- pf$report_card$sections
+        read_score <- try_default(sections[[1]]$data[[1]]$subgroups[[1]]$read_score,
+                                 NA, quiet=TRUE)
+        math_score <- try_default(sections[[1]]$data[[1]]$subgroups[[1]]$math_score,
+                                  NA, quiet=TRUE)
+        data.frame(school_code=pf$code, read_score=read_score, math_score=math_score)
+    })
+}
+growth_df <- makeAcademicGrowthDF(profiles)
+growth_df$growth_zscore <- (zscore(growth_df$read_score) + zscore(growth_df$math_score))/2
+buildGrowthStruct <- function(df, sc) {
+    with(df[df$school_code==sc,], 
+         list(academicGrowth=list(val=list(math=math_score, reading=read_score),
+                                  zscore=growth_zscore)))
 }
 
 ###################################################################
@@ -185,8 +210,9 @@ makeOneSchoolStruct <- function(school_code) {
       list(studentsFromMyNeighborhood=buildCommuteStruct(commute_df, school_code)),
       buildCultureStruct(culture_df, school_code),
       buildDiversityStruct(equity_race, school_code),
-      buildGradStruct(grad_df, school_code))
-    # TODO: academic growth
+      buildGradStruct(grad_df, school_code),
+      buildGrowthStruct(growth_df, school_code))
 }
 cat(toJSON(makeOneSchoolStruct(313)))
 cat(toJSON(makeOneSchoolStruct(101)))
+cat(toJSON(makeOneSchoolStruct(402)))
