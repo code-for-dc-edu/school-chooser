@@ -121,13 +121,13 @@
                         <h4 class="<%= item %>-title">
                             <%= content.items[item].name %>
                         </h4>
-                        <p class="<%= item %>-rank placeholder">
-                            This school is ranked
+                        <div class="<%= item %>-rank">
+                            <p class="placeholder">This school is ranked
                             #<%= _.indexOf(rankingArrays[item],parseFloat(school[item].sd)) + 1 %>
                             out of
                             <%= rankingArrays[item].length %>
-                            schools by this measure.
-                        </p>
+                            schools by this measure.</p>
+                        </div>
                     <% }); %>
                 </div>
             </div>

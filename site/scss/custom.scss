@@ -170,8 +170,9 @@ div#wrapper {
 
         h4 {
             font-weight: 300;
+            font-size: 17px;
             color: #63c6db;
-            margin: 22px 0 11px 0;
+            margin: 22px 0 3px 0;
             line-height: 1em;
         }
 
@@ -674,4 +675,36 @@ a#app-progress-view-3 {
 
 .fa-times-circle:before {
   content: "\f057";
+}
+
+.rubber-bullet-chart {
+    width: 100%;
+
+    .databg-0 { fill: #d8dae0; }
+    .databg-1 { fill: #e2e3e8; }
+    .databg-2 { fill: #ebecef; }
+    .divider { stroke: #fff; stroke-width: 2; }
+    .bar, .circle { fill: #60c7d9; }
+    .label {
+        fill: #fff;
+        text-anchor: middle;
+        alignment-baseline: central;
+    }
+
+    .bg-labels {
+        position: relative;
+        font-size: 12px;
+        line-height: 0;
+        color: #d8dae0;
+        text-transform: uppercase;
+
+        span {
+            display: block;
+            position: absolute;
+            top: -9px;
+
+            &.lt { left: 0; }
+            &.gt { right: 0; }
+        }
+    }
 }

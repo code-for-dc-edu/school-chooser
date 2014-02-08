@@ -9,6 +9,8 @@ define({
         "forTheGeeks": "For the Geeks",
         "zoned": "Your zoned school",
         "showCompare": "Compare these schools",
-        "hideCompare": "Hide comparison"
+        "hideCompare": "Hide comparison",
+        "belowAvg": "Below Average",
+        "aboveAvg": "Above Average"
     }
 });

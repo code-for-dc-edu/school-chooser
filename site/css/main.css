@@ -689,8 +689,9 @@ div#wrapper {
   text-transform: uppercase; }
 #results-table-view li.item h4 {
   font-weight: 300;
+  font-size: 17px;
   color: #63c6db;
-  margin: 22px 0 11px 0;
+  margin: 22px 0 3px 0;
   line-height: 1em; }
 #results-table-view li.item p.placeholder {
   font-weight: 300;
@@ -1104,6 +1105,38 @@ a#app-progress-view-3 {
 
 .fa-times-circle:before {
   content: "\f057"; }
+
+.rubber-bullet-chart {
+  width: 100%; }
+  .rubber-bullet-chart .databg-0 {
+    fill: #d8dae0; }
+  .rubber-bullet-chart .databg-1 {
+    fill: #e2e3e8; }
+  .rubber-bullet-chart .databg-2 {
+    fill: #ebecef; }
+  .rubber-bullet-chart .divider {
+    stroke: #fff;
+    stroke-width: 2; }
+  .rubber-bullet-chart .bar, .rubber-bullet-chart .circle {
+    fill: #60c7d9; }
+  .rubber-bullet-chart .label {
+    fill: #fff;
+    text-anchor: middle;
+    alignment-baseline: central; }
+  .rubber-bullet-chart .bg-labels {
+    position: relative;
+    font-size: 12px;
+    line-height: 0;
+    color: #d8dae0;
+    text-transform: uppercase; }
+    .rubber-bullet-chart .bg-labels span {
+      display: block;
+      position: absolute;
+      top: -9px; }
+      .rubber-bullet-chart .bg-labels span.lt {
+        left: 0; }
+      .rubber-bullet-chart .bg-labels span.gt {
+        right: 0; }
 
 /* ==========================================================================
    Helper classes
