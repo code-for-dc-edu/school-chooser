@@ -213,6 +213,9 @@ makeOneSchoolStruct <- function(school_code) {
       buildGradStruct(grad_df, school_code),
       buildGrowthStruct(growth_df, school_code))
 }
-cat(toJSON(makeOneSchoolStruct(313)))
-cat(toJSON(makeOneSchoolStruct(101)))
-cat(toJSON(makeOneSchoolStruct(402)))
+# cat(toJSON(makeOneSchoolStruct(313)))
+# cat(toJSON(makeOneSchoolStruct(101)))
+# cat(toJSON(makeOneSchoolStruct(402)))
+
+cat(toJSON(llply(school_codes, function(sc) makeOneSchoolStruct(sc))))
+
