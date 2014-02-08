@@ -105,7 +105,28 @@ buildCultureStruct <- function(df, code) {
                                           midyearWithdrawal=midyearWithdrawal),
                                  zscore=mean_zscore)))
 }
-                     
+
+###################################################################
+# extract graduation rates
+
+# foreach school, pull the graduation section from the report card 
+# and put into a DF
+makeGraduationDF <- function(profiles) {
+    ldply(profiles, function(pf) {
+        sections <- pf$report_card$sections
+        grad_rate <- try_default(with(sections[[7]]$data[[1]]$val, graduates/cohort_size),
+                                 NA, quiet=TRUE)
+        data.frame(school_code=pf$code, grad_rate=grad_rate)
+    })
+}
+grad_df <- makeGraduationDF(profiles)
+grad_df$grad_zscore <- zscore(grad_df$grad_rate)
+buildGradStruct <- function(df, sc) {
+    with(df[df$school_code==sc,], 
+         list(graduationRate=list(val=grad_rate,
+                                   zscore=grad_zscore)))
+}
+
 ###################################################################
 # Get the PCSB Equity data set
 
@@ -163,8 +184,9 @@ makeOneSchoolStruct <- function(school_code) {
     c(overviews[[as.character(school_code)]],
       list(studentsFromMyNeighborhood=buildCommuteStruct(commute_df, school_code)),
       buildCultureStruct(culture_df, school_code),
-      buildDiversityStruct(equity_race, school_code))
-    # TODO: grad rate (from where??)
+      buildDiversityStruct(equity_race, school_code),
+      buildGradStruct(grad_df, school_code))
     # TODO: academic growth
 }
 cat(toJSON(makeOneSchoolStruct(313)))
+cat(toJSON(makeOneSchoolStruct(101)))
