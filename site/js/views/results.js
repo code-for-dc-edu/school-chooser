@@ -21,7 +21,8 @@ define(
         itemsPerPage: 10,
 
         events: {
-            'click #compare-controls-toggle': 'toggleCompareControls'
+            'click #compare-controls-toggle': 'toggleCompareControls',
+            'change #compare-item': 'compareItem'
         },
 
         initialize: function () {
@@ -40,6 +41,8 @@ define(
                 .appendTo(this.$el);
             this.$schoolList = $('<ul></ul>')
                 .appendTo(this.$tableView);
+
+            this.on('toggleDetailView', this.closeCompareControls);
         },
 
         render: function () {
@@ -68,9 +71,9 @@ define(
         },
 
         toggleCompareControls: function () {
-            var collapsed = $('#compare-controls').hasClass('collapsed')
+            var collapsed = $('#compare-controls').hasClass('collapsed');
             if (!collapsed) {
-                $('#compare-item').val('');
+                $('#compare-item').val('').change();
             }
 
             $('#compare-controls .hidden-controls').slideToggle(150, function () {
@@ -83,6 +86,22 @@ define(
                     $('#compare-item').focus();
                 }
             });
+        },
+
+        closeCompareControls: function () {
+            var collapsed = $('#compare-controls').hasClass('collapsed');
+            if (!collapsed) {
+                $('#compare-item').val('');
+                $('#compare-controls .hidden-controls').slideUp(150, function () {
+                    $('#compare-controls').addClass('collapsed');
+                    $('#compare-controls-toggle').text(uiStrings.showCompare);
+                });
+            }
+        },
+
+        compareItem: function (e) {
+            var item = $(e.target).children(':selected').attr('value');
+            this.trigger('compareItem', item);
         },
 
         close: function () {

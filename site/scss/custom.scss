@@ -100,7 +100,7 @@ div#wrapper {
 
         div.detail-view {
             display: none;
-            padding-bottom: 22px;
+            padding-bottom: 11px;
             margin-top: -11px;
         }
 
@@ -172,8 +172,12 @@ div#wrapper {
             font-weight: 300;
             font-size: 17px;
             color: #63c6db;
-            margin: 22px 0 3px 0;
+            margin: 22px 0 -15px 0;
             line-height: 1em;
+        }
+
+        div.item-rank {
+            margin-top: 18px;
         }
 
         p.placeholder {

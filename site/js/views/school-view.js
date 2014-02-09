@@ -15,6 +15,9 @@ define(
 
         template: _.template($('#school-view-template').html()),
 
+        expanded: false,
+        detailViewShown: false,
+
         events: {
             'click .summary-view': 'summaryViewClick'
         },
@@ -32,6 +35,7 @@ define(
             }
 
             this.listenTo(this.parent, 'toggleDetailView', this.toggleDetailView);
+            this.listenTo(this.parent, 'compareItem', this.compareItem);
         },
 
         render: function () {
@@ -50,8 +54,8 @@ define(
 
             this.rbChart = RubberBulletChart()
                 .width($('#app').width() - 22)
-                .transitionDuration(1000)
-                .transitionDelay(200);
+                .transitionDuration(900)
+                .transitionDelay(100);
             var rbChart = this.rbChart;
 
             var sel = d3.select(this.el);
@@ -85,24 +89,158 @@ define(
         },
 
         toggleDetailView: function (id) {
-            var rbChart = this.rbChart;
-
             if (id === this.id) {
-                if (this.$el.hasClass('expanded')) {
+                if (this.expanded) {
+
+                    // The user has asked to close our detail view.
+
+                    this.expanded = false;
                     this.$el.removeClass('expanded');
+
+                    this.detailViewShown = false;
                     this.$('.detail-view').slideUp();
                 } else {
+
+                    // The user wants to open our detail view.
+
+                    this.expanded = true;
                     this.$el.addClass('expanded');
 
-                    d3.select(this.el)
-                        .selectAll('.rubber-bullet-chart')
-                        .call(rbChart, true);
+                    if (this.detailViewShown) {
 
-                    this.$('.detail-view').slideDown();
+                        // Some parts of our detail view are already showing.
+
+                        d3.select(this.el)
+                            .selectAll('.rubber-bullet-chart:not(.compare-target)')
+                            .call(this.rbChart, true);
+
+                        $(this.$compareTarget
+                            .prevAll()
+                            .get().reverse())
+                            .wrapAll('<div class="expander"></div>')
+                            .parent()
+                            .hide();
+
+                        this.$compareTarget
+                            .next()
+                            .nextAll()
+                            .wrapAll('<div class="expander"></div>')
+                            .parent()
+                            .hide();
+
+                        this.$('.expander .item-title').show();
+                        this.$('.expander .item-rank').show();
+                        this.$('.expander .item-detail').hide();
+
+                        this.$('.expander')
+                            .slideDown(function () {
+                                $(this).children().unwrap();
+                            });
+
+                        this.$compareTarget.removeClass('compare-target');
+                        this.$compareTarget = null;
+                    } else {
+
+                        // Our detail view is closed, so opening it is simple.
+
+                        d3.select(this.el)
+                            .selectAll('.rubber-bullet-chart')
+                            .call(this.rbChart, true);
+
+                        this.$('.item-title').show();
+                        this.$('.item-rank').show();
+                        this.$('.item-detail').hide();
+
+                        this.detailViewShown = true;
+                        this.$('.detail-view').slideDown();
+                    }
                 }
             } else {
+
+                // The user has opened another school's detail view, so we should close ours.
+
+                this.expanded = false;
                 this.$el.removeClass('expanded');
+
+                this.detailViewShown = false;
                 this.$('.detail-view').slideUp();
+            }
+        },
+
+        compareItem: function (item) {
+            console.log(item);
+            if (item !== '') {
+                if (this.expanded) {
+
+                    // Our school is currently expanded, so we need to hide everything but the compare item.
+
+                    this.expanded = false;
+                    this.$el.removeClass('expanded');
+
+                    this.$compareTarget = this.$('.' + item + '-rank')
+                        .addClass('compare-target');
+
+                    $(this.$compareTarget
+                        .prevAll()
+                        .get().reverse())
+                        .wrapAll('<div class="expander"></div>');
+
+                    this.$compareTarget
+                        .next()
+                        .nextAll()
+                        .wrapAll('<div class="expander"></div>');
+
+                    this.$('.expander')
+                        .slideUp(function () {
+                            $(this).children().hide().unwrap();
+                        });
+                } else {
+                    if (this.detailViewShown) {
+
+                        // Something is already being compared, so we need to hide it.
+
+                        this.$compareTarget
+                            .removeClass('compare-target')
+                            .next()
+                            .addBack()
+                            .hide();
+
+                        this.$compareTarget = this.$('.' + item + '-rank')
+                            .addClass('compare-target');
+
+                        d3.select(this.el)
+                            .selectAll('.rubber-bullet-chart.compare-target')
+                            .call(this.rbChart, true);
+
+                        this.$compareTarget.show();
+                    } else {
+
+                        // We have a clean slate. We'll show our item and then reveal the detail view.
+
+                        this.$('.detail-view').children().hide();
+                        this.$compareTarget = this.$('.' + item + '-rank')
+                            .show()
+                            .addClass('compare-target');
+
+                        d3.select(this.el)
+                            .selectAll('.rubber-bullet-chart.compare-target')
+                            .call(this.rbChart, true);
+
+                        this.detailViewShown = true;
+                        this.$('.detail-view').slideDown();
+                    }
+                }
+            } else {
+
+                // We're no longer comparing things, so let's clean up.
+
+                this.detailViewShown = false;
+                this.$('.detail-view').slideUp();
+
+                if (this.$compareTarget) {
+                    this.$compareTarget.removeClass('compare-target');
+                    this.$compareTarget = null;
+                }
             }
         },
 

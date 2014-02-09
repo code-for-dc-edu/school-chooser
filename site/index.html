@@ -118,15 +118,18 @@
                 </div>
                 <div class="detail-view">
                     <% _.forEach(selectedItems, function(item) { %>
-                        <h4 class="<%= item %>-title">
+                        <h4 id="<%= school.code %>-<%= item %>-title" class="<%= item %>-title item-title">
                             <%= content.items[item].name %>
                         </h4>
-                        <div class="<%= item %>-rank">
+                        <div id="<%= school.code %>-<%= item %>-rank" class="<%= item %>-rank item-rank">
                             <p class="placeholder">This school is ranked
                             #<%= _.indexOf(rankingArrays[item],parseFloat(school[item].sd)) + 1 %>
                             out of
                             <%= rankingArrays[item].length %>
                             schools by this measure.</p>
+                        </div>
+                        <div id="<%= school.code %>-<%= item %>-detail" class="<%= item %>-detail item-detail">
+                            <p>Details go here</p>
                         </div>
                     <% }); %>
                 </div>
