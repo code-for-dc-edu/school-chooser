@@ -23,6 +23,7 @@ define(
             this.session = new Session();
             this.sessions.add(this.session);
             this.appView.setModel(this.session);
+            this.appView.model.set({'gaVisitorID': window.app.GUID});
             this.showBasicInfoView(this.session);
         },
 

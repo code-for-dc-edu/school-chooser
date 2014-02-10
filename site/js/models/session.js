@@ -8,6 +8,7 @@ define(
         idAttribute: "hashid",
 
         defaults: {
+            gaVisitorID: '',
             grade: '',
             address: '',
             addressGISValid: false,
