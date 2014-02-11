@@ -168,7 +168,6 @@ define(
         },
 
         compareItem: function (item) {
-            console.log(item);
             if (item !== '') {
                 if (this.expanded) {
 
