@@ -700,6 +700,12 @@ div#wrapper {
   padding: 0;
   line-height: 1em;
   margin: -11px 0 0 0; }
+#results-table-view li.item .item-detail {
+  margin: 0; }
+  #results-table-view li.item .item-detail p {
+    margin: 0;
+    padding: 0;
+    font-weight: 300; }
 
 #ranking-table-view li.header-row {
   height: 66px;
