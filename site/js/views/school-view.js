@@ -19,7 +19,9 @@ define(
         detailViewShown: false,
 
         events: {
-            'click .summary-view': 'summaryViewClick'
+            'click .summary-view': 'summaryViewClick',
+            'click .item-title': 'itemDetailClick',
+            'click .item-rank': 'itemDetailClick'
         },
 
         initialize: function (options) {
@@ -35,6 +37,7 @@ define(
             }
 
             this.listenTo(this.parent, 'toggleDetailView', this.toggleDetailView);
+            this.listenTo(this.parent, 'toggleItemDetailView', this.toggleItemDetailView);
             this.listenTo(this.parent, 'compareItem', this.compareItem);
         },
 
@@ -240,6 +243,25 @@ define(
                     this.$compareTarget.removeClass('compare-target');
                     this.$compareTarget = null;
                 }
+            }
+        },
+
+        itemDetailClick: function (e) {
+            var targetID = e.currentTarget.id.split('-'),
+                detailID = targetID[0] + '-' + targetID[1] + '-detail';
+
+            this.parent.trigger('toggleItemDetailView', detailID)
+        },
+
+        toggleItemDetailView: function (id) {
+            var idComponents = id.split('-'),
+                code = idComponents[0],
+                item = idComponents[1];
+            if (code === this.model.get('code')) {
+                this.$('.item-detail:not(.' + item + '-detail)').slideUp();
+                this.$('#' + id).slideToggle();
+            } else {
+                this.$('.item-detail').slideUp();
             }
         },
 
