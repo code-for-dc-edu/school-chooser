@@ -9,6 +9,7 @@ library(httr)
 library(plyr)
 library(stringr)
 library(reshape2)
+library(RCurl)
 
 school_codes <- read.table("school_codes.txt")[[1]]
 
@@ -39,25 +40,23 @@ getValue <- function(arrayOfKeyVals, keyname, keyval, result_numeric=FALSE) {
 makeCultureDF <- function(prof) {
     # confirm that we have the right sections
 	## map sections by name -- tts
-	names(prof$profile$sections) <- unlist(lapply(prof$profile$sections, function(x){x$id}))
-	
-    tru <- prof$profile$sections['unexcused_absences']
-    att <- prof$profile$sections['attendance']
-    sus <- prof$profile$sections['suspensions']
-    myew <- prof$profile$sections['mid_year_entry_and_withdrawal']
+    tru <- prof$all_data$unexcused_absences
+    myew <- prof$all_data['mid_year_entry_and_withdrawal']
 
+    att <- ifelse(length(prof$all_data$attendance$data)==0, NA, prof$all_data$attendance$data[[1]]$val$in_seat_attendance)    
+    sus <- ifelse(length(prof$all_data$suspensions$data)==0, NA, prof$all_data$suspensions$data[[1]]$val$suspended_1)
+    tru <- ifelse(length(prof$all_data$unexcused_absences$data)==0, NA, (try_default(prof$all_data$unexcused_absences$data[[1]]$val$`16-25_days`, NULL) + try_default(prof$all_data$unexcused_absences$data[[1]]$val$more_than_25_days, NULL))/100)
+    
     # extract and put into a DF for later processing
-    withdrawals <- try_default(sum(laply(myew$data, function(dd) dd$val$withdrawal)), 0)
+    withdrawals <- try_default(sum(laply(prof$all_data$mid_year_entry_and_withdrawal$data, function(dd) ifelse(!is.null(dd$val$withdrawal), dd$val$withdrawal, 0))), 0)
     # there's a bunch of crap here to deal with failure modes...
-    ret <- data.frame(attendanceRate=1-try_default(n2na(att$data[[1]]$val$in_seat_attendance), NA),
-                      state_attendanceRate=1-try_default(n2na(att$data[[1]]$val$state_in_seat_attendance), NA),
-                      suspensionRate=try_default(sus$data[[1]]$val$suspended_1, NA),
-                      state_suspensionRate=try_default(sus$data[[1]]$val$state_suspended_1, NA),
+    scode <- ifelse(!is.null(prof$code), prof$code, 0)
+    
+    ret <- data.frame(school_code = scode,
+                      attendanceRate=att,
+                      suspensionRate=sus,
                       midyearWithdrawal=withdrawals,
-                      truancyRate=(n20(try_default(tru$data[[1]]$val$`16-25_days`, NULL)) + 
-                          n20(try_default(tru$data[[1]]$val$more_than_25_days, NULL)))/100,
-                      state_truancyRate=(n20(try_default(tru$data[[1]]$val$`state_16-25_days`, NULL)) + 
-                          n20(try_default(tru$data[[1]]$val$state_more_than_25_days, NULL)))/100
+                      truancyRate=tru
                       )
     ret
 }
@@ -81,20 +80,36 @@ overviews <- llply(school_codes, function(sc) {
 })
 names(overviews) <- as.character(school_codes)
 
-pf_fmt <- "http://learndc.org/data/profile/school_%04d.JSON"
+pf_fmt <- "http://www.learndc.org/data/profile/school_%04d.JSON"
+
 profiles <- llply(school_codes, function(pf) {
-    pf_json <- jsonlite::fromJSON(sprintf(pf_fmt, pf), simplifyDataFrame=FALSE)
-    pf_json$code <- pf
-    pf_json
+    try_url <- sprintf(pf_fmt, pf)
+    if(url.exists(try_url)){
+        pf_json <- jsonlite::fromJSON(try_url, simplifyDataFrame=FALSE)
+        pf_json$code <- pf
+        pf_json$all_data <- c(pf_json$report_card$sections, pf_json$profile$sections)
+        pf_json$report_card <- NULL
+        pf_json$profile <- NULL
+        names(pf_json$all_data) <- unlist(lapply(pf_json$all_data, function(x){x$id}))
+        pf_json
+    }
 })
- 
+
 ###################################################################
 # OK, now we've got the data, so process it into culture blocks
 
-culture_df <- ldply(profiles, function(pf) cbind(makeCultureDF(pf), code=pf$code))
+culture_df <- ldply(profiles, function(pf) makeCultureDF(pf))
+
+optimal <- data.frame(attendanceRate=max(culture_df$attendanceRate, na.rm=TRUE), 
+    suspensionRate=min(culture_df$suspensionRate, na.rm=TRUE), 
+    midyearWithdrawal=min(culture_df$midyearWithdrawal, na.rm=TRUE), 
+    truancyRate=min(culture_df$truancyRate, na.rm=TRUE))
+## this ends up being 1, 0, 0, 0... lesson learned
+    
 culture_df <- mutate(culture_df,
-                     mean_zscore=(zscore(attendanceRate) + zscore(suspensionRate) +
-                                  zscore(midyearWithdrawal) + zscore(truancyRate))/4)
+    mean_dist = sqrt((1-attendanceRate)^2 + suspensionRate^2 + midyearWithdrawal^2 + truancyRate^2),
+    mean_zscore=zscore(mean_dist))
+                                  
 # we'll turn this into a JSON structure later on...
 buildCultureStruct <- function(df, code) {
     with(df[df$code==code,], 
@@ -104,6 +119,8 @@ buildCultureStruct <- function(df, code) {
                                           midyearWithdrawal=midyearWithdrawal),
                                  zscore=mean_zscore)))
 }
+
+
 
 ###################################################################
 # extract graduation rates
@@ -135,15 +152,20 @@ buildGradStruct <- function(df, sc) {
 # and put into a DF
 makeAcademicGrowthDF <- function(profiles) {
     ldply(profiles, function(pf) {
-        sections <- pf$report_card$sections
-        read_score <- try_default(sections[[1]]$data[[1]]$subgroups[[1]]$read_score,
+        mgp_chunk <- pf$all_data$mgp_scores
+        names(mgp_chunk$data) <- unlist(lapply(mgp_chunk$data, function(x){paste(x$key$subject, x$key$subgroup, x$key$year, sep="_")}))
+        
+        read_score <- try_default(n2na(mgp_chunk$data$`Reading_All_2012`$val$mgp_1yr),
                                  NA, quiet=TRUE)
-        math_score <- try_default(sections[[1]]$data[[1]]$subgroups[[1]]$math_score,
+        math_score <- try_default(n2na(mgp_chunk$data$`Math_All_2012`$val$mgp_1yr),
                                   NA, quiet=TRUE)
-        data.frame(school_code=pf$code, read_score=read_score, math_score=math_score)
+        scode <- ifelse(!is.null(pf$code), pf$code, 0)
+        data.frame(school_code= scode, read_score=read_score, math_score=math_score)
     })
 }
+
 growth_df <- makeAcademicGrowthDF(profiles)
+
 growth_df$growth_zscore <- (zscore(growth_df$read_score) + zscore(growth_df$math_score))/2
 buildGrowthStruct <- function(df, sc) {
     with(df[df$school_code==sc,], 
