@@ -24,11 +24,9 @@ define(
             transitionDuration = 400,
             transitionDelay = 0;
 
-        chart = function (selection, rankArr, transition) {
+        chart = function (selection, transition) {
             var myTransitionDuration,
                 myTransitionDelay;
-
-            if (!_.isArray(rankArr)) { transition = rankArr; }
 
             if (transition) {
                 myTransitionDuration = transitionDuration;
@@ -46,8 +44,8 @@ define(
                     circle,
                     label;
 
-                d = d > 3 ? 3 : d;
-                d = d < -3 ? -3 : d;
+                d.zscore = d.zscore > 3 ? 3 : d.zscore;
+                d.zscore = d.zscore < -3 ? -3 : d.zscore;
                 d = [d];
 
                 sel = d3.select(this)
@@ -128,7 +126,7 @@ define(
                         .attr('y', height / 2)
                         .attr('class', 'label')
                         .text(function (d) {
-                            return _.indexOf(rankArr, d) + 1;
+                            return _.indexOf(d.rankArr, d.zscore) + 1;
                         });
                 }
 
@@ -151,19 +149,19 @@ define(
                     .duration(myTransitionDuration)
                     .delay(myTransitionDelay)
                     .attr('width', function (d) {
-                        return (d + 3) * width/6;
+                        return (d.zscore + 3) * width/6;
                     });
                 circle.transition()
                     .duration(myTransitionDuration)
                     .delay(myTransitionDelay)
                     .attr('cx', function (d) {
-                        return (d + 3) * width/6;
+                        return (d.zscore + 3) * width/6;
                     });
                 label.transition()
                     .duration(myTransitionDuration)
                     .delay(myTransitionDelay)
                     .attr('x', function (d) {
-                        return (d + 3) * width/6;
+                        return (d.zscore + 3) * width/6;
                     });
             });
         };

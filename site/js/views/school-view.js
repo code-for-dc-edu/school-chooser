@@ -64,8 +64,11 @@ define(
             var sel = d3.select(this.el);
             _.forEach(this.selectedItems, function (item) {
                 sel.select('.' + item + '-rank')
-                    .datum(parseFloat(schoolAttrs[item].sd))
-                    .call(rbChart, rankingArrays[item]);
+                    .datum({
+                        zscore: parseFloat(schoolAttrs[item].sd),
+                        rankArr: rankingArrays[item]
+                    })
+                    .call(rbChart);
             });
 
             var fittext = this.fittext();
