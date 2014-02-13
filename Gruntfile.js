@@ -96,7 +96,8 @@ module.exports = function(grunt)
                                 'jquery',
                                 'lodash',
                                 'backbone',
-                                'i18n'
+                                'i18n',
+                                'i18n!nls/content'
                             ]
                         },
                         {
@@ -105,7 +106,8 @@ module.exports = function(grunt)
                                 'jquery',
                                 'lodash',
                                 'backbone',
-                                'i18n'
+                                'i18n',
+                                'i18n!nls/content'
                             ]
                         },
                         {
@@ -114,7 +116,8 @@ module.exports = function(grunt)
                                 'jquery',
                                 'lodash',
                                 'backbone',
-                                'i18n'
+                                'i18n',
+                                'i18n!nls/content'
                             ]
                         }
                     ]

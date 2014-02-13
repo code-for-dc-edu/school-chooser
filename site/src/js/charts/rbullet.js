@@ -2,8 +2,8 @@ define(
     ['jquery',
      'lodash',
      'd3',
-     'i18n!nls/ui-strings'
-    ], function ($, _, d3, uiStrings) {
+     'i18n!nls/content'
+    ], function ($, _, d3, content) {
     'use strict';
 
     var rubberBulletChart = function () {
@@ -66,10 +66,10 @@ define(
                     $(this).append(
                         '<div class="bg-labels">' +
                         '<span class="lt">' +
-                        uiStrings.belowAvg +
+                        content.belowAvg +
                         '</span>' +
                         '<span class="gt">' +
-                        uiStrings.aboveAvg +
+                        content.aboveAvg +
                         '</span>' +
                         '</div>'
                     );

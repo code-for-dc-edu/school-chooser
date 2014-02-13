@@ -3,10 +3,9 @@ define(
      'lodash',
      'backbone',
      'i18n!nls/content',
-     'i18n!nls/ui-strings',
      'plugins/touch-sortable',
      'plugins/jquery-modal/jquery.modal'
-    ], function ($, _, Backbone, content, uiStrings) {
+    ], function ($, _, Backbone, content) {
     'use strict';
 
     var RankingView = Backbone.View.extend({
@@ -94,8 +93,7 @@ define(
                 $modal = $('<div class="modal" id="' + item + '"></div>')
                     .html(this.modalTemplate({
                         item: item,
-                        content: content.items,
-                        uiStrings: uiStrings
+                        content: content
                     }));
                 $('body').append($modal);
                 $modal.modal();

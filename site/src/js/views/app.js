@@ -3,8 +3,8 @@ define(
      'lodash',
      'backbone',
      'models/session',
-     'i18n!nls/ui-strings'
-    ], function ($, _, Backbone, Session, uiStrings) {
+     'i18n!nls/content'
+    ], function ($, _, Backbone, Session, content) {
     'use strict';
 
     var AppView = Backbone.View.extend({
@@ -24,7 +24,7 @@ define(
             }
 
             this.$progressView = $('<div id="app-progress-view"></div>')
-                .html(this.progressViewTemplate({ uiStrings: uiStrings }))
+                .html(this.progressViewTemplate({ content: content }))
                 .appendTo(this.$el);
             this.$progressViewLinks = this.$('#app-progress-view a');
 

@@ -40,7 +40,7 @@
                     <li>
                         <a id="app-progress-view-<%= i + 1 %>">
                             <span class="number"><%= i + 1 %></span>
-                            <span class="label"><%= uiStrings.next %></span>
+                            <span class="label"><%= content.next %></span>
                         </a>
                     </li>
                 <% }); %>
@@ -48,16 +48,16 @@
         </script>
 
         <script type="text/template" id="basic-info-form-view-template">
-            <label for="basic-info-address"><%= uiStrings.address %></label><br />
+            <label for="basic-info-address"><%= content.address %></label><br />
             <input type="text" id="basic-info-address"
                 <% if (addressGISValid) { %> class="valid" <% } %>
                 value="<%- address %>" /><br />
-            <label for="basic-info-grade"><%= uiStrings.grade %></label><br />
+            <label for="basic-info-grade"><%= content.grade %></label><br />
             <select id="basic-info-grade">
                 <option selected disabled hidden value=""></option>
                 <% _.forEach(grades, function(grade) { %>
                     <option value="<%= grade %>" <% if(grade === selectedGrade) { %> selected <% } %>>
-                        <%= isNaN(grade) ? uiStrings[grade] : parseInt(grade, 10) %>
+                        <%= isNaN(grade) ? content[grade] : parseInt(grade, 10) %>
                     </option>
                 <% }); %>
             </select>
@@ -89,10 +89,10 @@
         </script>
 
         <script type="text/template" id="modal-template">
-            <h3><%= content[item].name %></h3>
-            <p><%= content[item].definition %></p>
-            <h4><%= uiStrings.forTheGeeks %></h4>
-            <p class="small"><%= content[item].forTheGeeks %></p>
+            <h3><%= content.items[item].name %></h3>
+            <p><%= content.items[item].definition %></p>
+            <h4><%= content.forTheGeeks %></h4>
+            <p class="small"><%= content.items[item].forTheGeeks %></p>
         </script>
 
         <script type="text/template" id="compare-controls-template">
@@ -106,7 +106,7 @@
                     <% }); %>
                 </select>
             </div>
-            <button id="compare-controls-toggle"><%= uiStrings.showCompare %></button>
+            <button id="compare-controls-toggle"><%= content.showCompare %></button>
         </script>
 
         <script type="text/template" id="school-view-template">
@@ -114,7 +114,7 @@
                 <div class="summary-view">
                     <span class="rank"><%= school.rank %></span>
                     <span class="name"><%= school.name %></span>
-                    <% if (school.zoned) { %> <span class="zoned"><%= uiStrings.zoned %></span> <% } %>
+                    <% if (school.zoned) { %> <span class="zoned"><%= content.zoned %></span> <% } %>
                 </div>
                 <div class="detail-view">
                     <% _.forEach(selectedItems, function(item) { %>

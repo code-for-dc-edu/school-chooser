@@ -5,9 +5,8 @@ define(
      'd3',
      'charts/rbullet',
      'i18n!nls/content',
-     'i18n!nls/ui-strings',
      'plugins/jquery-quickfit'
-    ], function ($, _, Backbone, d3, rubberBulletChart, content, uiStrings) {
+    ], function ($, _, Backbone, d3, rubberBulletChart, content) {
     'use strict';
 
     var SchoolView = Backbone.View.extend({
@@ -53,8 +52,7 @@ define(
                 school: schoolAttrs,
                 selectedItems: this.selectedItems,
                 rankingArrays: this.rankingArrays,
-                content: content,
-                uiStrings: uiStrings
+                content: content
             }));
 
             this.rbChart = rubberBulletChart()

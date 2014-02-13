@@ -2,9 +2,8 @@ define(
     ['jquery',
      'lodash',
      'backbone',
-     'i18n!nls/content',
-     'i18n!nls/ui-strings'
-    ], function ($, _, Backbone, content, uiStrings) {
+     'i18n!nls/content'
+    ], function ($, _, Backbone, content) {
     'use strict';
 
     var BasicInfoView = Backbone.View.extend({
@@ -56,7 +55,7 @@ define(
                 addressGISValid: addressGISValid,
                 selectedGrade: grade,
                 grades: grades,
-                uiStrings: uiStrings
+                content: content
             }));
         },
 

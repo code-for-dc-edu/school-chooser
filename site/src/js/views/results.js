@@ -3,9 +3,8 @@ define(
      'lodash',
      'backbone',
      'views/school-view',
-     'i18n!nls/content',
-     'i18n!nls/ui-strings'
-    ], function ($, _, Backbone, SchoolView, content, uiStrings) {
+     'i18n!nls/content'
+    ], function ($, _, Backbone, SchoolView, content) {
     'use strict';
 
     var ResultsView = Backbone.View.extend({
@@ -35,8 +34,7 @@ define(
             this.$compareControls = $('<div id="compare-controls" class="collapsed"></div>')
                 .html(this.compareControlsTemplate({
                     selectedItems: this.model.rankingItems().selected,
-                    content: content,
-                    uiStrings: uiStrings
+                    content: content
                 }))
                 .appendTo(this.$el);
             this.$tableView = $('<div id="results-table-view" class="table-view"></div>')
@@ -82,9 +80,9 @@ define(
                 $('#compare-controls').toggleClass('collapsed');
 
                 if (!collapsed) {
-                    $('#compare-controls-toggle').text(uiStrings.showCompare);
+                    $('#compare-controls-toggle').text(content.showCompare);
                 } else {
-                    $('#compare-controls-toggle').text(uiStrings.hideCompare);
+                    $('#compare-controls-toggle').text(content.hideCompare);
                     $('#compare-item').focus();
                 }
             });
@@ -96,7 +94,7 @@ define(
                 $('#compare-item').val('');
                 $('#compare-controls .hidden-controls').slideUp(150, function () {
                     $('#compare-controls').addClass('collapsed');
-                    $('#compare-controls-toggle').text(uiStrings.showCompare);
+                    $('#compare-controls-toggle').text(content.showCompare);
                 });
             }
         },
