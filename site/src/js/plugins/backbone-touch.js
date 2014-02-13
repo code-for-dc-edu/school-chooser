@@ -6,7 +6,7 @@
 
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
-        define(['underscore', 'backbone'], factory);
+        define(['lodash', 'backbone'], factory);
     } else {
         // Browser globals
         factory(_, Backbone);

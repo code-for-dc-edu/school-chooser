@@ -12,9 +12,15 @@ npm install
 # Start mongodb in background
 mongod --fork
 
+# Run grunt
+grunt dev
+
 # Start node server
 node server.js
 
 # Alternatively, start node server with re-load on file change
 supervisor server.js
+
+# If you're making changes, you might want to have grunt pay attention
+grunt watch
 ```

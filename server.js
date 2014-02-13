@@ -29,7 +29,7 @@ app.configure(function () {
     app.use(app.router);
 
     //Where to serve static content
-    app.use(express.static(application_root + '/site'));
+    app.use(express.static(application_root + '/site/dist'));
 
     //Show all errors in development
     app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
