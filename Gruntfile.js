@@ -47,12 +47,6 @@ module.exports = function(grunt)
                 src: ['favicon.ico','apple-touch-icon-precomposed.png','robots.txt'],
                 dest: '<%= distDir %>'
             },
-            scripts_to_dist: {
-                expand:true,
-                cwd:'<%= srcDir %>',
-                src: ['**/*.js'],
-                dest: '<%= distDir %>'
-            },
             scripts_to_temp: {
                 expand:true,
                 cwd:'<%= srcDir %>',
@@ -64,13 +58,14 @@ module.exports = function(grunt)
             on_start: ['<%= distDir %>'],
             on_finish: ['<%= tempDir %>']
         },
+        requireJSOptimise: 'uglify2',
         requirejs: {
             compile: {
                 options: {
                     keepBuildDir: true,
                     removeCombined: true,
                     generateSourceMaps:false,
-                    optimize: 'uglify2',
+                    optimize: '<%= requireJSOptimise %>',
                     uglify2: {
                         mangle:true
                     },
@@ -141,7 +136,7 @@ module.exports = function(grunt)
             },
             scripts: {
                 files: ['<%= srcDir %>/**/*.js'],
-                tasks: ['scripts_to_dist'],
+                tasks: ['setup-dev','scripts','clean:on_finish'],
                 options: {
                     nospawn: false
                 }
@@ -163,26 +158,22 @@ module.exports = function(grunt)
         }
     });
 
+    grunt.registerTask('setup-dev', 'Development settings', function()
+    {
+        grunt.config.set('requireJSOptimise', 'none');
+    });
+
+    grunt.registerTask('scripts', ['copy:scripts_to_temp','requirejs']);
     grunt.registerTask('default', [
         'clean:on_start',
         'copy:html',
         'copy:data',
         'copy:fonts',
         'copy:misc_files',
-        'copy:scripts_to_temp',
-        'requirejs',
+        'scripts',
         'sass',
         'clean:on_finish'
     ]);
     grunt.registerTask('heroku', ['default']);
-    grunt.registerTask('dev', [
-        'clean:on_start',
-        'copy:html',
-        'copy:data',
-        'copy:fonts',
-        'copy:misc_files',
-        'copy:scripts_to_dist',
-        'sass',
-        'clean:on_finish'
-    ]);
+    grunt.registerTask('dev', ['setup-dev','default']);
 };
