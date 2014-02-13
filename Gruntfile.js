@@ -14,9 +14,9 @@ module.exports = function(grunt)
         tempDir: 'site/temp',
         sass:{
             dist:{
-                options:{
-                    style: 'compressed'
-                },
+                // options:{
+                //     outputStyle: 'compressed'
+                // },
                 files:{
                     '<%= distDir %>/css/main.css': '<%= srcDir %>/scss/main.scss'
                 }
@@ -136,7 +136,7 @@ module.exports = function(grunt)
             },
             scripts: {
                 files: ['<%= srcDir %>/**/*.js'],
-                tasks: ['setup-dev','scripts','clean:on_finish'],
+                tasks: ['setup-dev','scripts'],
                 options: {
                     nospawn: false
                 }
@@ -163,16 +163,19 @@ module.exports = function(grunt)
         grunt.config.set('requireJSOptimise', 'none');
     });
 
-    grunt.registerTask('scripts', ['copy:scripts_to_temp','requirejs']);
+    grunt.registerTask('scripts', [
+        'copy:scripts_to_temp',
+        'requirejs',
+        'clean:on_finish'
+    ]);
     grunt.registerTask('default', [
         'clean:on_start',
+        'sass',
         'copy:html',
         'copy:data',
         'copy:fonts',
         'copy:misc_files',
-        'scripts',
-        'sass',
-        'clean:on_finish'
+        'scripts'
     ]);
     grunt.registerTask('heroku', ['default']);
     grunt.registerTask('dev', ['setup-dev','default']);
