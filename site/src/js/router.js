@@ -5,11 +5,13 @@ define(
      'models/session',
      'collections/sessions'
     ], function (_, Backbone, AppView, Session, Sessions) {
+    'use strict';
+
     var AppRouter = Backbone.Router.extend({
 
         routes: {
-            "": "newSession",
-            "results/:id": "getSession"
+            '': 'newSession',
+            'results/:id': 'getSession'
         },
 
         initialize: function (options) {

@@ -5,7 +5,9 @@ define(
      'views/school-view',
      'i18n!nls/content',
      'i18n!nls/ui-strings'
-    ], function ($, _, Backbone, schoolView, content, uiStrings) {
+    ], function ($, _, Backbone, SchoolView, content, uiStrings) {
+    'use strict';
+
     var ResultsView = Backbone.View.extend({
 
         tagName: 'div',
@@ -60,7 +62,7 @@ define(
             }
 
             _.forEach(schools, function (school) {
-                var subview = new schoolView({
+                var subview = new SchoolView({
                     model: school,
                     parent: that,
                     selectedItems: that.model.rankingItems().selected,

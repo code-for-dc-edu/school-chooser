@@ -5,6 +5,8 @@ define(
      'models/session',
      'i18n!nls/ui-strings'
     ], function ($, _, Backbone, Session, uiStrings) {
+    'use strict';
+
     var AppView = Backbone.View.extend({
 
         el: '#app',
@@ -63,6 +65,7 @@ define(
         },
 
         presentView: function (newView) {
+            var $newView;
 
             newView.render();
 
@@ -86,7 +89,7 @@ define(
         },
 
         transition: function ($newView, direction) {
-            var currentView = this.currentView
+            var currentView = this.currentView,
                 $currentView = currentView.$el,
                 width = $currentView.width();
 
@@ -113,7 +116,7 @@ define(
                 target = e.currentTarget,
                 className = target.className,
                 index = parseInt(target.id.charAt(18), 10);
-            if (className === "complete" || className === "next") {
+            if (className === 'complete' || className === 'next') {
                 this.router.navigateToView(index, currentViewIndex);
             }
         },

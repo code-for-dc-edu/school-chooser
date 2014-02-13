@@ -3,6 +3,8 @@ define(
      'backbone',
      'models/school'
     ], function (_, Backbone, School) {
+    'use strict';
+
     var Schools = Backbone.Collection.extend({
 
         model: School,
@@ -14,10 +16,9 @@ define(
 
         sorted: function (grade, nc, rankings) {
             this.fetch();
-            var i,
-                selected = _.transform(rankings, function (result, value, key)
+            var selected = _.transform(rankings, function (result, value, key)
                     {
-                        if (value > 0) { return result[key] = value };
+                        if (value > 0) { result[key] = value; return result; }
                     }),
                 n = _.keys(selected).length,
                 weights = _(selected).transform(function (result, value, key)

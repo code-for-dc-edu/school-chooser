@@ -3,6 +3,8 @@ define(
      'backbone',
      'models/session'
     ], function (_, Backbone, Session) {
+    'use strict';
+
     var Schools = Backbone.Collection.extend({
 
         model: Session,

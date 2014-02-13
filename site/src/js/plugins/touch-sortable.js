@@ -1,18 +1,20 @@
 // Modified version of touch-sortable.js | MIT License | docubuzz.github.io/touch-sortable.js
 
 (function (factory) {
+    'use strict';
     if (typeof define === 'function' && define.amd) {
         define(['jquery'], factory);
     } else {
         factory(jQuery);
     }
 }(function ($) {
-    "use strict";
+    'use strict';
     $.fn.longtouch = function (callback, timeout) {
         var touchDevice = ('ontouchstart' in document.documentElement),
-            startEvents = touchDevice ? "touchstart" : "mousedown",
-            endEvents = touchDevice ? "touchend touchcancel" : "mouseup"
-            timeout = timeout || 500;
+            startEvents = touchDevice ? 'touchstart' : 'mousedown',
+            endEvents = touchDevice ? 'touchend touchcancel' : 'mouseup';
+        
+        timeout = timeout || 500;
 
         $(this).bind(startEvents, function (event) {
             var initialEvent = event,
@@ -46,9 +48,11 @@
                 .attr('unselectable', 'on')
                 .on('selectstart', false);
 
-            var items = parent.children(options.selector).longtouch(onStart);
+            parent.children(options.selector)
+                .longtouch(onStart);
 
-            var selectables = parent.children(options.selector).find(options.touchTarget)
+            parent.children(options.selector)
+                .find(options.touchTarget)
                 .on(startEvent, onStart);
 
             /* If only one element we do nothing */
@@ -69,7 +73,7 @@
                 e.stopPropagation();
                 e = e.originalEvent.touches ? e.originalEvent : e;
                 el = $(e.touches ? e.touches[0].target : e.target);
-                if (!el.is('li')) el = el.closest('li');
+                if (!el.is('li')) { el = el.closest('li'); }
                 parentTop = parent.position().top;
                 parentBtm = parentTop + parent.innerHeight() + el.height();
 
@@ -128,8 +132,8 @@
 
                 /* Re-order the list once item crosses over the neighboring elements */
                 if ((positionDelta < -elHeight || (elHeader && positionDelta < -options.itemHeight)) && el.prev().length) {
-                        if (!els.filter(':animated').length) {
-                            hasQueuedAni = true;
+                    if (!els.filter(':animated').length) {
+                        hasQueuedAni = true;
                             
                         /* Animate and swap */
                         if (elHeader && el.prevAll('.item').length === 0 ) {
@@ -205,10 +209,10 @@
                 
                 function complete() {
                     el.animate({
-                        'top': "-=" + el.css('top')
+                        'top': '-=' + el.css('top')
                     }, 150, function () {
                         el.css({'top':'', 'z-index':''}).removeClass('in-motion');
-                        els.css('position','');                        
+                        els.css('position','');
                         if (options.onComplete) {
                             options.onComplete(el);
                         }
@@ -228,5 +232,5 @@
                 }
             }
         });
-    };  
+    };
 }));

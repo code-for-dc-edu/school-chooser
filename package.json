@@ -22,5 +22,8 @@
     "grunt-contrib-copy": "~0.4.1",
     "grunt-contrib-clean": "~0.4.1",
     "grunt-sass": "~0.10.0"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "~0.8.0"
   }
 }

@@ -1,11 +1,14 @@
 define(
-    ['lodash',
+    ['jquery',
+     'lodash',
      'backbone',
      'collections/schools'
-    ], function (_, Backbone, Schools) {
+    ], function ($, _, Backbone, Schools) {
+    'use strict';
+
     var Session = Backbone.Model.extend({
 
-        idAttribute: "hashid",
+        idAttribute: 'hashid',
 
         defaults: {
             gaVisitorID: '',
@@ -34,7 +37,7 @@ define(
             'levelValid'
         ],
 
-        toJSON: function(options) {
+        toJSON: function() {
             return _.omit(this.attributes, this.privateAttrs);
         },
 
@@ -68,20 +71,20 @@ define(
 
             switch (attrs.validationLevel) {
             case 1:
-                if (!attrs.grade) { invalid.push("grade") };
+                if (!attrs.grade) { invalid.push('grade'); }
                 if (!attrs.address) {
-                    invalid.push("address");
+                    invalid.push('address');
                 } else if (!attrs.addressGISValid) {
-                    invalid.push("addressGISValid");
+                    invalid.push('addressGISValid');
                 }
                 break;
             case 2:
                 if (!_.find(attrs.rankings, function (ranking) {
                     return ranking > 0;
                 })) {
-                    invalid.push("rankings");
+                    invalid.push('rankings');
                 }
-                if (attrs.zonedSchools.length === 0) { invalid.push("zonedSchools") };
+                if (attrs.zonedSchools.length === 0) { invalid.push('zonedSchools'); }
                 break;
             default:
                 break;

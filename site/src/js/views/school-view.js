@@ -7,7 +7,9 @@ define(
      'i18n!nls/content',
      'i18n!nls/ui-strings',
      'plugins/jquery-quickfit'
-    ], function ($, _, Backbone, d3, RubberBulletChart, content, uiStrings) {
+    ], function ($, _, Backbone, d3, rubberBulletChart, content, uiStrings) {
+    'use strict';
+
     var SchoolView = Backbone.View.extend({
 
         tagName: 'li',
@@ -45,7 +47,7 @@ define(
             var schoolAttrs = this.model.attributes,
                 rankingArrays = this.rankingArrays;
 
-            $(window).off("resize." + this.id)
+            $(window).off('resize.' + this.id);
 
             this.$el.html(this.template({
                 school: schoolAttrs,
@@ -55,7 +57,7 @@ define(
                 uiStrings: uiStrings
             }));
 
-            this.rbChart = RubberBulletChart()
+            this.rbChart = rubberBulletChart()
                 .width($('#app').width() - 22)
                 .transitionDuration(900)
                 .transitionDelay(100);
@@ -74,8 +76,8 @@ define(
             var fittext = this.fittext();
             setTimeout(fittext,0);
 
-            $(window).on("resize." + this.id, fittext);
-            $(window).on("resize." + this.id, function () {
+            $(window).on('resize.' + this.id, fittext);
+            $(window).on('resize.' + this.id, function () {
                 sel.selectAll('.rubber-bullet-chart')
                     .call(rbChart);
             });
@@ -91,7 +93,7 @@ define(
         },
 
         summaryViewClick: function () {
-            this.parent.trigger('toggleDetailView', this.id)
+            this.parent.trigger('toggleDetailView', this.id);
         },
 
         toggleDetailView: function (id) {
@@ -253,7 +255,7 @@ define(
             var targetID = e.currentTarget.id.split('-'),
                 detailID = targetID[0] + '-' + targetID[1] + '-detail';
 
-            this.parent.trigger('toggleItemDetailView', detailID)
+            this.parent.trigger('toggleItemDetailView', detailID);
         },
 
         toggleItemDetailView: function (id) {
@@ -269,7 +271,7 @@ define(
         },
 
         close: function () {
-            $(window).off("resize." + this.id)
+            $(window).off('resize.' + this.id);
             this.remove();
             this.unbind();
         }

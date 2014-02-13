@@ -7,6 +7,8 @@ module.exports = function(grunt)
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-clean');
 
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+
     grunt.initConfig
     ({
         srcDir: 'site/src',
@@ -50,7 +52,7 @@ module.exports = function(grunt)
             scripts_to_temp: {
                 expand:true,
                 cwd:'<%= srcDir %>',
-                src: ['**/*.js'],
+                src: ['js/**/*.js'],
                 dest: '<%= tempDir %>'
             }
         },
@@ -119,6 +121,19 @@ module.exports = function(grunt)
                 }
             }
         },
+        jshint:{
+            files: [
+                'Gruntfile.js',
+                '<%= srcDir %>/js/**/*.js'
+            ],
+            options: {
+                jshintrc: true,
+                ignores: [
+                    '<%= srcDir %>/js/i18n.js',
+                    '<%= srcDir %>/js/lib/**/*.js',
+                    '<%= srcDir %>/js/plugins/**/*.js'
+                ] }
+        },
         watch: {
             gruntFile: {
                 files: ['Gruntfile.js'],
@@ -135,8 +150,8 @@ module.exports = function(grunt)
                 }
             },
             scripts: {
-                files: ['<%= srcDir %>/**/*.js'],
-                tasks: ['setup-dev','scripts'],
+                files: ['<%= srcDir %>/js/**/*.js'],
+                tasks: ['setup-dev','jshint','scripts'],
                 options: {
                     nospawn: false
                 }
@@ -178,5 +193,5 @@ module.exports = function(grunt)
         'scripts'
     ]);
     grunt.registerTask('heroku', ['default']);
-    grunt.registerTask('dev', ['setup-dev','default']);
+    grunt.registerTask('dev', ['setup-dev','jshint','default']);
 };

@@ -4,7 +4,9 @@ define(
      'd3',
      'i18n!nls/ui-strings'
     ], function ($, _, d3, uiStrings) {
-    var RubberBulletChart = function () {
+    'use strict';
+
+    var rubberBulletChart = function () {
         var chart,
 
             bgboxes = [
@@ -36,10 +38,11 @@ define(
                 myTransitionDelay = 0;
             }
 
-            selection.each(function (d, i) {
+            selection.each(function (d) {
                 var sel,
                     svg,
                     bg,
+                    divider,
                     bar,
                     circle,
                     label;
@@ -61,12 +64,12 @@ define(
                         .remove();
 
                     $(this).append(
-                        '<div class="bg-labels">' + 
-                        '<span class="lt">' + 
-                        uiStrings.belowAvg + 
+                        '<div class="bg-labels">' +
+                        '<span class="lt">' +
+                        uiStrings.belowAvg +
                         '</span>' +
-                        '<span class="gt">' + 
-                        uiStrings.aboveAvg + 
+                        '<span class="gt">' +
+                        uiStrings.aboveAvg +
                         '</span>' +
                         '</div>'
                     );
@@ -168,42 +171,42 @@ define(
 
         // Get/set properties
         chart.width = function(value) {
-            if (!arguments.length) return width;
+            if (!arguments.length) { return width; }
             width = value;
             return chart;
         };
 
         chart.height = function(value) {
-            if (!arguments.length) return height;
+            if (!arguments.length) { return height; }
             height = value;
             return chart;
         };
 
         chart.barHeight = function(value) {
-            if (!arguments.length) return barHeight;
+            if (!arguments.length) { return barHeight; }
             barHeight = value;
             return chart;
         };
 
         chart.circleRadius = function(value) {
-            if (!arguments.length) return circleRadius;
+            if (!arguments.length) { return circleRadius; }
             circleRadius = value;
             return chart;
         };
 
         chart.transitionDuration = function(value) {
-            if (!arguments.length) return transitionDuration;
+            if (!arguments.length) { return transitionDuration; }
             transitionDuration = value;
             return chart;
         };
 
         chart.transitionDelay = function(value) {
-            if (!arguments.length) return transitionDelay;
+            if (!arguments.length) { return transitionDelay; }
             transitionDelay = value;
             return chart;
         };
 
         return chart;
-    }
-    return RubberBulletChart;
+    };
+    return rubberBulletChart;
 });

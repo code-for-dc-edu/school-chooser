@@ -5,6 +5,8 @@ define(
      'i18n!nls/content',
      'i18n!nls/ui-strings'
     ], function ($, _, Backbone, content, uiStrings) {
+    'use strict';
+
     var BasicInfoView = Backbone.View.extend({
 
         tagName: 'div',

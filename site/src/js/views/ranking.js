@@ -7,6 +7,8 @@ define(
      'plugins/touch-sortable',
      'plugins/jquery-modal/jquery.modal'
     ], function ($, _, Backbone, content, uiStrings) {
+    'use strict';
+
     var RankingView = Backbone.View.extend({
 
         tagName: 'div',
@@ -58,7 +60,7 @@ define(
                         });
                     },
                     onComplete: function () {
-                        $('#ranking-table-view').trigger("update");
+                        $('#ranking-table-view').trigger('update');
                     }
                 });
         },
@@ -96,7 +98,7 @@ define(
                         uiStrings: uiStrings
                     }));
                 $('body').append($modal);
-                $modal.modal()
+                $modal.modal();
 
             }
         },
