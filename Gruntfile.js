@@ -75,10 +75,10 @@ module.exports = function(grunt)
                     baseUrl: '<%= tempDir %>/js',
                     dir:'<%= distDir %>/js',
                     paths: {
-                        'backbone': 'lib/backbone-1.1.0.min',
-                        'jquery': 'lib/jquery-1.10.2.min',
-                        'lodash': 'lib/lodash-2.4.0.min',
-                        'd3': 'lib/d3.v3.min'
+                        'backbone': 'lib/backbone-1.1.1',
+                        'jquery': 'lib/jquery-1.11.0',
+                        'lodash': 'lib/lodash-2.4.1.compat',
+                        'd3': 'lib/d3-3.4.1'
                     },
                     shim: {
                         'backbone': {
