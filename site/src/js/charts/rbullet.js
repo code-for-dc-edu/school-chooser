@@ -127,10 +127,7 @@ define(
                         .enter()
                         .append('text')
                         .attr('y', height / 2)
-                        .attr('class', 'label')
-                        .text(function (d) {
-                            return _.indexOf(d.rankArr, d.zscore) + 1;
-                        });
+                        .attr('class', 'label');
                 }
 
                 if (transition) {
@@ -165,6 +162,17 @@ define(
                     .delay(myTransitionDelay)
                     .attr('x', function (d) {
                         return (d.zscore + 3) * width/6;
+                    })
+                    .tween('text', function (d) {
+                        var reversedRankArr = _.clone(d.rankArr).reverse(),
+                        i = function (t) {
+                            if (t === 1) {
+                                return _.indexOf(d.rankArr, d.zscore) + 1;
+                            } else {
+                                return reversedRankArr.length - _.sortedIndex(reversedRankArr, (d.zscore + 3) * t - 3);
+                            }
+                        };
+                        return function (t) { this.textContent = i(t); };
                     });
             });
         };
