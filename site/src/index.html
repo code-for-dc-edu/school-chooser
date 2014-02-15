@@ -123,7 +123,7 @@
                         </h4>
                         <div id="<%= school.code %>-<%= item %>-rank" class="<%= item %>-rank item-rank">
                             <p class="placeholder">This school is ranked
-                            #<%= _.indexOf(rankingArrays[item],parseFloat(school[item].sd)) + 1 %>
+                            #<%= _.indexOf(rankingArrays[item],parseFloat(school[item].zscore)) + 1 %>
                             out of
                             <%= rankingArrays[item].length %>
                             schools by this measure.</p>

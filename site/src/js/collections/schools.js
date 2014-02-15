@@ -40,7 +40,7 @@ define(
                         var score = 0;
                         _.forEach(weights, function (weight) {
                             var value = school.attributes[weight[0]];
-                            if (value && value.sd) { score += value.sd * weight[1]; }
+                            if (value && value.zscore) { score += value.zscore * weight[1]; }
                         });
                         return -score;
                     })
