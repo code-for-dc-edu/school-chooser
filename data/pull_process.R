@@ -94,6 +94,7 @@ profiles <- llply(school_codes, function(pf) {
         pf_json
     }
 })
+profiles <- Filter(function(x) length(x)>0, profiles)
 
 ###################################################################
 # OK, now we've got the data, so process it into culture blocks
