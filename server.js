@@ -107,8 +107,10 @@ SessionSchema.pre('save', true, function (next, done) {
                     redirectUrl = "http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_APPS/EBIS/MapServer/5/query?f=json&where=CLOSED_GIS_ID%20%3D%20'"
                         + gisId
                         + "'&returnGeometry=false&outFields=CLOSED_GIS_ID%2CREDIRECT_GIS_ID";
+
                     request(redirectUrl, function (err, res, body) {
                         if (!err && res.statusCode === 200) {
+                            json = JSON.parse(body),
                             gisId = json.features[0].attributes["REDIRECT_GIS_ID"],
                             match = gisId.match(/dcps_(.*)/);
                             if (match) { session.zonedSchools.push(parseInt(match[1])); }
