@@ -60,13 +60,15 @@ define(
             }
 
             _.forEach(schools, function (school) {
-                var subview = new SchoolView({
-                    model: school,
-                    parent: that,
-                    selectedItems: that.model.rankingItems().selected,
-                    rankingArrays: that.model.getRankingArrays()
-                });
-                $schoolList.append(subview.render().el);
+                if (school) {
+                    var subview = new SchoolView({
+                        model: school,
+                        parent: that,
+                        selectedItems: that.model.rankingItems().selected,
+                        rankingArrays: that.model.getRankingArrays()
+                    });
+                    $schoolList.append(subview.render().el);
+                }
             });
         },
 
