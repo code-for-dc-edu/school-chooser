@@ -118,8 +118,8 @@ culture_df <- join(culture_df, pcsb_std_mvmt)
 na20 <- function(x) { x[is.na(x)] <- 0; x }
 
 culture_df <- mutate(culture_df,
-    mean_dist = sqrt(na20(1-attendanceRate)^2 + na20(suspensionRate)^2 + 
-                         na20(midyearWithdrawal)^2 + na20(truancyRate)^2),
+    mean_dist = sqrt(na20(attendanceRate)^2 + na20(1-suspensionRate)^2 + 
+                         na20(1-midyearWithdrawal)^2 + na20(1-truancyRate)^2),
     mean_zscore=zscore(mean_dist))
                                   
 # we'll turn this into a JSON structure later on...
