@@ -241,7 +241,8 @@ makeOneSchoolStruct <- function(school_code) {
 }
 # cat(toJSON(makeOneSchoolStruct(313)))
 # cat(toJSON(makeOneSchoolStruct(101)))
-cat(str_replace_all(toJSON(makeOneSchoolStruct(1117)), "\"NA\"", "null"))
+# cat(str_replace_all(toJSON(makeOneSchoolStruct(1117)), "\"NA\"", "null"))
 
-cat(jsonlite::toJSON(llply(school_codes, function(sc) makeOneSchoolStruct(sc))))
+out_json <- toJSON(llply(school_codes, function(sc) makeOneSchoolStruct(sc)))
+cat(str_replace_all(out_json, "\"NA\"", "null"))
 
