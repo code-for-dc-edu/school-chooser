@@ -62,7 +62,7 @@ var SessionSchema = new mongoose.Schema({
         graduationRate: Number,
         instructionalStaffPerStudent: Number,
         racialDiversity: Number,
-        schoolCulture: Number,
+        schoolClimate: Number,
         studentsFromMyNeighborhood: Number
     }
 },
