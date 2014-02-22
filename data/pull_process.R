@@ -130,10 +130,11 @@ buildCultureStruct <- function(df, code) {
 # and put into a DF
 makeGraduationDF <- function(profiles) {
     ldply(profiles, function(pf) {
-        sections <- pf$report_card$sections
+        #sections <- pf$report_card$sections
         grad_rate <- try_default({
-                sect <- which(laply(sections, function(x) x$id == 'graduation'))
-                with(sections[[sect]]$data[[1]]$val, graduates/cohort_size)
+            with(pf$all_data$graduation$data[[1]]$val, graduates/cohort_size)
+#                 sect <- which(laply(sections, function(x) x$id == 'graduation'))
+#                 with(sections[[sect]]$data[[1]]$val, graduates/cohort_size)
             }, NA, quiet=TRUE)
         data.frame(school_code=pf$code, grad_rate=grad_rate)
     })
