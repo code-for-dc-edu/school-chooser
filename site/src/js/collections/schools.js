@@ -34,7 +34,15 @@ define(
                     })
                     .each(function (school)
                     {
-                        school.attributes.studentsFromMyNeighborhood = school.attributes.studentsFromMyNeighborhood[nc];
+                        var myCluster = school.attributes.studentsFromMyNeighborhood[nc];
+                        if (myCluster) {
+                            school.attributes.studentsFromMyNeighborhood = myCluster;
+                        } else {
+                            school.attributes.studentsFromMyNeighborhood = {
+                                'val': 0,
+                                'zscore': -1
+                            };
+                        }
                     })
                     .sortBy(function (school) {
                         var score = 0;
