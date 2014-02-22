@@ -30,7 +30,16 @@ define(
                     .value(),
                 results = _(this.models).filter(function (school)
                     {
-                        return _.include(school.attributes.grades, grade);
+                        var exactMatch,
+                            anotherMatch = false;
+
+                        exactMatch = _.include(school.attributes.grades, grade);
+
+                        if (grade.charAt(0) === '0') {
+                            anotherMatch = _.include(school.attributes.grades, grade.charAt(1));
+                        }
+
+                        return exactMatch || anotherMatch;
                     })
                     .each(function (school)
                     {
