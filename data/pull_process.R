@@ -213,11 +213,15 @@ buildDiversityStruct <- function(df, sc) {
 # pull commute data
 commute_url <- "http://ec2-54-235-58-226.compute-1.amazonaws.com/storage/f/2013-06-01T15%3A23%3A20.103Z/commute-data-denorm.json"
 commute_df <- as.data.frame(jsonlite::fromJSON(commute_url))
+commute_df <- mutate(commute_df,
+                     cluster=ifelse(is.na(cluster), 0, cluster)
+                     )
 
 # turn into the appropriate data structure
 buildCommuteStruct <- function(df, code) {
     ret <- dlply(subset(df, school_code==code), 'cluster', function(rr) {
-        list(val=rr$count)
+        list(val=rr$count,
+             zscore=if (rr$count>0) 1 else 0)
     })
     attr(ret, 'split_labels') <- NULL
     ret
@@ -236,7 +240,7 @@ makeOneSchoolStruct <- function(school_code) {
 }
 # cat(toJSON(makeOneSchoolStruct(313)))
 # cat(toJSON(makeOneSchoolStruct(101)))
-# cat(toJSON(makeOneSchoolStruct(402)))
+cat(str_replace_all(toJSON(makeOneSchoolStruct(1117)), "\"NA\"", "null"))
 
-cat(toJSON(llply(school_codes, function(sc) makeOneSchoolStruct(sc))))
+cat(jsonlite::toJSON(llply(school_codes, function(sc) makeOneSchoolStruct(sc))))
 
