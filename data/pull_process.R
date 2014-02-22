@@ -168,9 +168,9 @@ makeAcademicGrowthDF <- function(profiles) {
         mgp_chunk <- pf$all_data$mgp_scores
         names(mgp_chunk$data) <- unlist(lapply(mgp_chunk$data, function(x){paste(x$key$subject, x$key$subgroup, x$key$year, sep="_")}))
         
-        read_score <- try_default(n2na(mgp_chunk$data$`Reading_All_2012`$val$mgp_1yr),
+        read_score <- try_default(n2na(mgp_chunk$data$`Reading_All_2013`$val$mgp_1yr),
                                  NA, quiet=TRUE)
-        math_score <- try_default(n2na(mgp_chunk$data$`Math_All_2012`$val$mgp_1yr),
+        math_score <- try_default(n2na(mgp_chunk$data$`Math_All_2013`$val$mgp_1yr),
                                   NA, quiet=TRUE)
         scode <- ifelse(!is.null(pf$code), pf$code, 0)
         data.frame(school_code= scode, read_score=read_score, math_score=math_score)
