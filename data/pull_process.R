@@ -97,18 +97,29 @@ profiles <- llply(school_codes, function(pf) {
 profiles <- Filter(function(x) length(x)>0, profiles)
 
 ###################################################################
-# OK, now we've got the data, so process it into culture blocks
+# pull culture info
+
+pcsb_std_mvmt_url <- 'http://data.dcpcsb.org/resource/9j8s-xudb.json'
+pcsb_std_mvmt <- jsonlite::fromJSON(pcsb_std_mvmt_url)
+pcsb_std_mvmt <- with(pcsb_std_mvmt, 
+                      data.frame(school_code=school_code, midyearWithdrawal=as.numeric(may_withdrawal_school_score)))
 
 culture_df <- ldply(profiles, function(pf) makeCultureDF(pf))
+# replace midyearWithdrawal with the version from PCSB
+culture_df$midyearWithdrawal <- NULL
+culture_df <- join(culture_df, pcsb_std_mvmt)
 
-optimal <- data.frame(attendanceRate=max(culture_df$attendanceRate, na.rm=TRUE), 
-    suspensionRate=min(culture_df$suspensionRate, na.rm=TRUE), 
-    midyearWithdrawal=min(culture_df$midyearWithdrawal, na.rm=TRUE), 
-    truancyRate=min(culture_df$truancyRate, na.rm=TRUE))
-## this ends up being 1, 0, 0, 0... lesson learned
-    
+# optimal <- data.frame(attendanceRate=max(culture_df$attendanceRate, na.rm=TRUE), 
+#     suspensionRate=min(culture_df$suspensionRate, na.rm=TRUE), 
+#     midyearWithdrawal=min(culture_df$midyearWithdrawal, na.rm=TRUE), 
+#     truancyRate=min(culture_df$truancyRate, na.rm=TRUE))
+# ## this ends up being 1, 0, 0, 0... lesson learned
+
+na20 <- function(x) { x[is.na(x)] <- 0; x }
+
 culture_df <- mutate(culture_df,
-    mean_dist = sqrt((1-attendanceRate)^2 + suspensionRate^2 + midyearWithdrawal^2 + truancyRate^2),
+    mean_dist = sqrt(na20(1-attendanceRate)^2 + na20(suspensionRate)^2 + 
+                         na20(midyearWithdrawal)^2 + na20(truancyRate)^2),
     mean_zscore=zscore(mean_dist))
                                   
 # we'll turn this into a JSON structure later on...
