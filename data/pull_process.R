@@ -113,8 +113,8 @@ culture_df <- mutate(culture_df,
                                   
 # we'll turn this into a JSON structure later on...
 buildCultureStruct <- function(df, code) {
-    with(df[df$code==code,], 
-         list(schoolCulture=list(val=list(attendanceRate=attendanceRate,
+    with(df[df$school_code==code,], 
+         list(schoolClimate=list(val=list(attendanceRate=attendanceRate,
                                           suspensionRate=suspensionRate,
                                           truancyRate=truancyRate,
                                           midyearWithdrawal=midyearWithdrawal),
