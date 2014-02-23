@@ -96,7 +96,7 @@ pf_fmt <- "http://www.learndc.org/data/profile/school_%04d.JSON"
 profiles <- llply(school_codes, function(pf) {
     try_url <- sprintf(pf_fmt, pf)
     if(url.exists(try_url)){
-        pf_json <- jsonlite::fromJSON(try_url, simplifyDataFrame=FALSE, encoding='UTF-8')
+        pf_json <- jsonlite::fromJSON(try_url, simplifyDataFrame=FALSE)
         pf_json$code <- pf
         pf_json$all_data <- c(pf_json$report_card$sections, pf_json$profile$sections)
         pf_json$report_card <- NULL
@@ -106,6 +106,8 @@ profiles <- llply(school_codes, function(pf) {
     }
 })
 profiles <- Filter(function(x) length(x)>0, profiles)
+
+
 
 assessment_data <- lapply(profiles, function(x){
     assm_chunk <- lapply(x$all_data$dccas$data, function(y){
@@ -124,8 +126,6 @@ assessment_data <- lapply(profiles, function(x){
     })
     return(do.call(rbind.data.frame, assm_chunk))
 })
-
-
 
 ## Write to Output
 mainDir <- getwd()
@@ -147,21 +147,18 @@ for(i in 1:length(assessment_data)){
 }
 
 ## One Table
-
 one_table <- data.frame()
-
 for(i in 1:length(assessment_data)){  
     if(nrow(assessment_data[[i]]) > 0){
         one_table <- rbind(one_table, data.frame(school_code=profiles[[i]]$code, school_name=profiles[[i]]$org_name, assessment_data[[i]]))        
     }
 }
 
-one_assm_chunk <- do.call(rbind.data.frame, one_table)
+one_assm_chunk <- one_table
 
+write.csv(one_assm_chunk, "dccas_one_chunk.csv", row.names=FALSE)
 
 ### Get Enrollment Data
-
-
 enrollment_data <- lapply(profiles, function(x){
     assm_chunk <- lapply(x$all_data$enrollment$data, function(y){
         data.frame(year=y$key$year,
@@ -172,7 +169,6 @@ enrollment_data <- lapply(profiles, function(x){
     return(do.call(rbind.data.frame, assm_chunk))
 })
 
-
 for(i in 1:length(enrollment_data)){  
     filename <- gsub("/", "-","enrollment " %+% GetSchoolNames(i) %+% ".csv")
     
@@ -182,13 +178,13 @@ for(i in 1:length(enrollment_data)){
     }    
 }
 
-
 one_table <- data.frame()
-
-for(i in 1:length(enrollment_data)){  
+for(i in 1:length(enrollment_data)){
     if(nrow(enrollment_data[[i]]) > 0){
         one_table <- rbind(one_table, data.frame(school_code=profiles[[i]]$code, school_name=profiles[[i]]$org_name, enrollment_data[[i]]))        
     }
 }
 
-one_enr_chunk <- do.call(rbind.data.frame, one_table)
+one_enr_chunk <- one_table
+write.csv(one_enr_chunk, "enrollment_one_chunk.csv", row.names=FALSE)
+
