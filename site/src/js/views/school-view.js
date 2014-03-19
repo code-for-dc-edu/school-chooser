@@ -65,7 +65,7 @@ define(
             _.forEach(this.selectedItems, function (item) {
                 sel.select('.' + item + '-rank')
                     .datum({
-                        zscore: parseFloat(schoolAttrs[item].zscore),
+                        zscore: schoolAttrs[item].zscore,
                         rankArr: rankingArrays[item]
                     })
                     .call(rbChart);
