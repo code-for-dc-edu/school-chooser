@@ -97,24 +97,35 @@ profiles <- llply(school_codes, function(pf) {
 profiles <- Filter(function(x) length(x)>0, profiles)
 
 ###################################################################
-# OK, now we've got the data, so process it into culture blocks
+# pull culture info
+
+pcsb_std_mvmt_url <- 'http://data.dcpcsb.org/resource/9j8s-xudb.json'
+pcsb_std_mvmt <- jsonlite::fromJSON(pcsb_std_mvmt_url)
+pcsb_std_mvmt <- with(pcsb_std_mvmt, 
+                      data.frame(school_code=school_code, midyearWithdrawal=as.numeric(may_withdrawal_school_score)))
 
 culture_df <- ldply(profiles, function(pf) makeCultureDF(pf))
+# replace midyearWithdrawal with the version from PCSB
+culture_df$midyearWithdrawal <- NULL
+culture_df <- join(culture_df, pcsb_std_mvmt)
 
-optimal <- data.frame(attendanceRate=max(culture_df$attendanceRate, na.rm=TRUE), 
-    suspensionRate=min(culture_df$suspensionRate, na.rm=TRUE), 
-    midyearWithdrawal=min(culture_df$midyearWithdrawal, na.rm=TRUE), 
-    truancyRate=min(culture_df$truancyRate, na.rm=TRUE))
-## this ends up being 1, 0, 0, 0... lesson learned
-    
+# optimal <- data.frame(attendanceRate=max(culture_df$attendanceRate, na.rm=TRUE), 
+#     suspensionRate=min(culture_df$suspensionRate, na.rm=TRUE), 
+#     midyearWithdrawal=min(culture_df$midyearWithdrawal, na.rm=TRUE), 
+#     truancyRate=min(culture_df$truancyRate, na.rm=TRUE))
+# ## this ends up being 1, 0, 0, 0... lesson learned
+
+na20 <- function(x) { x[is.na(x)] <- 0; x }
+
 culture_df <- mutate(culture_df,
-    mean_dist = sqrt((1-attendanceRate)^2 + suspensionRate^2 + midyearWithdrawal^2 + truancyRate^2),
+    mean_dist = sqrt(na20(attendanceRate)^2 + na20(1-suspensionRate)^2 + 
+                         na20(1-midyearWithdrawal)^2 + na20(1-truancyRate)^2),
     mean_zscore=zscore(mean_dist))
                                   
 # we'll turn this into a JSON structure later on...
 buildCultureStruct <- function(df, code) {
-    with(df[df$code==code,], 
-         list(schoolCulture=list(val=list(attendanceRate=attendanceRate,
+    with(df[df$school_code==code,], 
+         list(schoolClimate=list(val=list(attendanceRate=attendanceRate,
                                           suspensionRate=suspensionRate,
                                           truancyRate=truancyRate,
                                           midyearWithdrawal=midyearWithdrawal),
@@ -130,10 +141,11 @@ buildCultureStruct <- function(df, code) {
 # and put into a DF
 makeGraduationDF <- function(profiles) {
     ldply(profiles, function(pf) {
-        sections <- pf$report_card$sections
+        #sections <- pf$report_card$sections
         grad_rate <- try_default({
-                sect <- which(laply(sections, function(x) x$id == 'graduation'))
-                with(sections[[sect]]$data[[1]]$val, graduates/cohort_size)
+            with(pf$all_data$graduation$data[[1]]$val, graduates/cohort_size)
+#                 sect <- which(laply(sections, function(x) x$id == 'graduation'))
+#                 with(sections[[sect]]$data[[1]]$val, graduates/cohort_size)
             }, NA, quiet=TRUE)
         data.frame(school_code=pf$code, grad_rate=grad_rate)
     })
@@ -156,9 +168,9 @@ makeAcademicGrowthDF <- function(profiles) {
         mgp_chunk <- pf$all_data$mgp_scores
         names(mgp_chunk$data) <- unlist(lapply(mgp_chunk$data, function(x){paste(x$key$subject, x$key$subgroup, x$key$year, sep="_")}))
         
-        read_score <- try_default(n2na(mgp_chunk$data$`Reading_All_2012`$val$mgp_1yr),
+        read_score <- try_default(n2na(mgp_chunk$data$`Reading_All_2013`$val$mgp_1yr),
                                  NA, quiet=TRUE)
-        math_score <- try_default(n2na(mgp_chunk$data$`Math_All_2012`$val$mgp_1yr),
+        math_score <- try_default(n2na(mgp_chunk$data$`Math_All_2013`$val$mgp_1yr),
                                   NA, quiet=TRUE)
         scode <- ifelse(!is.null(pf$code), pf$code, 0)
         data.frame(school_code= scode, read_score=read_score, math_score=math_score)
@@ -213,11 +225,15 @@ buildDiversityStruct <- function(df, sc) {
 # pull commute data
 commute_url <- "http://ec2-54-235-58-226.compute-1.amazonaws.com/storage/f/2013-06-01T15%3A23%3A20.103Z/commute-data-denorm.json"
 commute_df <- as.data.frame(jsonlite::fromJSON(commute_url))
+commute_df <- mutate(commute_df,
+                     cluster=ifelse(is.na(cluster), 0, cluster)
+                     )
 
 # turn into the appropriate data structure
 buildCommuteStruct <- function(df, code) {
     ret <- dlply(subset(df, school_code==code), 'cluster', function(rr) {
-        list(val=rr$count)
+        list(val=rr$count,
+             zscore=if (rr$count>0) 1 else 0)
     })
     attr(ret, 'split_labels') <- NULL
     ret
@@ -236,7 +252,8 @@ makeOneSchoolStruct <- function(school_code) {
 }
 # cat(toJSON(makeOneSchoolStruct(313)))
 # cat(toJSON(makeOneSchoolStruct(101)))
-# cat(toJSON(makeOneSchoolStruct(402)))
+# cat(str_replace_all(toJSON(makeOneSchoolStruct(1117)), "\"NA\"", "null"))
 
-cat(toJSON(llply(school_codes, function(sc) makeOneSchoolStruct(sc))))
+out_json <- toJSON(llply(school_codes, function(sc) makeOneSchoolStruct(sc)))
+cat(str_replace_all(out_json, "\"NA\"", "null"))
 

@@ -52,7 +52,7 @@ define({
                 "definition": "",
                 "forTheGeeks": ""
             },
-            "schoolCulture": {
+            "schoolClimate": {
                 "name": "School Climate",
                 "definition": "",
                 "forTheGeeks": ""

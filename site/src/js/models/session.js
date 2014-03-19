@@ -25,7 +25,7 @@ define(
                 graduationRate: 0,
                 // instructionalStaffPerStudent: 0,
                 racialDiversity: 0,
-                schoolCulture: 0,
+                schoolClimate: 0,
                 studentsFromMyNeighborhood: 0
             },
             validationLevel: 0,
@@ -192,8 +192,8 @@ define(
                     rankingArrays[item] = [];
 
                     _.forEach(results, function (school) {
-                        var sd = school.attributes[item].sd;
-                        if (sd) { rankingArrays[item].push(parseFloat(sd)); }
+                        var zscore = school.attributes[item].zscore;
+                        if (zscore) { rankingArrays[item].push(parseFloat(zscore)); }
                     });
 
                     rankingArrays[item].sort(function (a, b) { return b-a; });

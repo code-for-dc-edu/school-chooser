@@ -30,17 +30,34 @@ define(
                     .value(),
                 results = _(this.models).filter(function (school)
                     {
-                        return _.include(school.attributes.grades, grade);
+                        var exactMatch,
+                            anotherMatch = false;
+
+                        exactMatch = _.include(school.attributes.grades, grade);
+
+                        if (grade.charAt(0) === '0') {
+                            anotherMatch = _.include(school.attributes.grades, grade.charAt(1));
+                        }
+
+                        return exactMatch || anotherMatch;
                     })
                     .each(function (school)
                     {
-                        school.attributes.studentsFromMyNeighborhood = school.attributes.studentsFromMyNeighborhood[nc];
+                        var myCluster = school.attributes.studentsFromMyNeighborhood[nc];
+                        if (myCluster) {
+                            school.attributes.studentsFromMyNeighborhood = myCluster;
+                        } else {
+                            school.attributes.studentsFromMyNeighborhood = {
+                                'val': 0,
+                                'zscore': -1
+                            };
+                        }
                     })
                     .sortBy(function (school) {
                         var score = 0;
                         _.forEach(weights, function (weight) {
                             var value = school.attributes[weight[0]];
-                            if (value && value.sd) { score += value.sd * weight[1]; }
+                            if (value && value.zscore) { score += value.zscore * weight[1]; }
                         });
                         return -score;
                     })

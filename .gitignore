@@ -3,6 +3,7 @@
 node_modules/
 data/output/
 .env
+.env_disabled
 .sass-cache/
 # Compiled source #
 ###################
