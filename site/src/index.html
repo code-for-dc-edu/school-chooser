@@ -129,8 +129,12 @@
                             schools by this measure.</p>
                         </div>
                         <div id="<%= school.code %>-<%= item %>-detail" class="<%= item %>-detail item-detail">
+                            
+
+                            <%var details=school[item].val;%>
                             <% switch (item) { case 'academicGrowth': %>
-                                <p>The math MGP is <%= school[item].val.math %>. The reading MGP is <%= school[item].val.reading %>.</p>
+
+                                <p>The math MGP is <%= details.math %>. The reading MGP is <%= details.reading %>.</p>
                             <% break; case 'collegeEnrollment': %>
                                 <p>Details go here.</p>
                             <% break; case 'graduationRate': %>
@@ -140,9 +144,19 @@
                             <% break; case 'racialDiversity': %>
                                 <p>Details go here.</p>
                             <% break; case 'schoolClimate': %>
-                                <p>Details go here.</p>
+                                <ul class="details-list">           
+                                    <li>Attendance rate: <%=details.attendanceRate%>%
+                                        </li>
+                                    <li>Suspension rate: <%=details.suspensionRate%>%
+                                        </li>
+                                    <li>Truancy rate: <%=details.truancyRate%>%
+                                        </li>
+                                    <li>Mid-year withdrawal rate: <%=details.midyearWithdrawal%>%
+                                        </li>
+                                </ul>                                
+                                
                             <% break; case 'studentsFromMyNeighborhood': %>
-                                <p><%= school[item].val === -1 ? 'Between one and nine' : school[item].val %> students from your neighborhood attend this school.</p>
+                                <p><%= details === -1 ? 'Between one and nine' : details %> students from your neighborhood attend this school.</p>
                             <% break; } %>
                         </div>
                     <% }); %>
