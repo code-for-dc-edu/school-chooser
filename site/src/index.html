@@ -130,7 +130,6 @@
                         </div>
                         <div id="<%= school.code %>-<%= item %>-detail" class="<%= item %>-detail item-detail">
                             
-
                             <%var details=school[item].val;%>
                             <% switch (item) { case 'academicGrowth': %>
 
@@ -143,15 +142,17 @@
                                 <p>Details go here.</p>
                             <% break; case 'racialDiversity': %>
                                 <p>Details go here.</p>
-                            <% break; case 'schoolClimate': %>
-                                <ul class="details-list">           
-                                    <li>Attendance rate: <%=details.attendanceRate%>%
+                            <% break; case 'schoolClimate': 
+
+                                <ul class="details-list"> 
+
+                                    <li>Attendance rate: <%=app.utils.percentage(details.attendanceRate)%>
                                         </li>
-                                    <li>Suspension rate: <%=details.suspensionRate%>%
+                                    <li>Suspension rate: <%=app.utils.percentage(details.suspensionRate)%>
                                         </li>
-                                    <li>Truancy rate: <%=details.truancyRate%>%
+                                    <li>Truancy rate: <%=app.utils.percentage(details.truancyRate)%>
                                         </li>
-                                    <li>Mid-year withdrawal rate: <%=details.midyearWithdrawal%>%
+                                    <li>Mid-year withdrawal rate: <%=app.utils.percentage(details.midyearWithdrawal)%>
                                         </li>
                                 </ul>                                
                                 
