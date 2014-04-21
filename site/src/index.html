@@ -141,8 +141,24 @@
                             <% break; case 'instructionalStaffPerStudent': %>
                                 <p>Details go here.</p>
                             <% break; case 'racialDiversity': %>
-                                <p>Details go here.</p>
-                            <% break; case 'schoolClimate': 
+                                <ul class="details-list">
+                                    <li>Asian: <%=app.utils.percentage(details.asian)%>
+                                    </li>
+                                    <li>African American: <%=app.utils.percentage(details.africanAmerican)%>
+                                    </li>
+                                    <li>Multiracial: <%=app.utils.percentage(details.multiracial)%>
+                                    </li>
+                                    <li>Hawaiian/Pacific Islander: <%=app.utils.percentage(details.multiracial)%>
+                                    </li>
+                                    <li>Caucausian: <%=app.utils.percentage(details.white)%>
+                                    </li>
+                                    <li>Hispanic: <%=app.utils.percentage(details.hispanic)%>
+                                    </li>
+                                    <li>American Indian/Alaskan Native: <%=app.utils.percentage(details.amerianIndianAlaskaNative)%>
+                                    </li>
+                                </ul>
+
+                            <% break; case 'schoolClimate': %>
 
                                 <ul class="details-list"> 
 
