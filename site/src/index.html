@@ -129,8 +129,12 @@
                             schools by this measure.</p>
                         </div>
                         <div id="<%= school.code %>-<%= item %>-detail" class="<%= item %>-detail item-detail">
+                            <%var details=school[item].val;%>
                             <% switch (item) { case 'academicGrowth': %>
-                                <p>The math MGP is <%= school[item].val.math %>. The reading MGP is <%= school[item].val.reading %>.</p>
+                                <%if(details){%>
+                                <p><%if(details.math || details.math===0){%>The math MGP is <%= details.math %>. <%}if(details.reading || details.reading===0){%>The reading MGP is <%= details.reading %>.<%}%>
+                                <%}else{%>Sorry! We have no Academic academicGrowth data for this school.<%}%>
+                                    </p>
                             <% break; case 'collegeEnrollment': %>
                                 <p>Details go here.</p>
                             <% break; case 'graduationRate': %>
@@ -138,11 +142,40 @@
                             <% break; case 'instructionalStaffPerStudent': %>
                                 <p>Details go here.</p>
                             <% break; case 'racialDiversity': %>
-                                <p>Details go here.</p>
+                                <%if(details){%>
+                                <ul class="details-list">
+                                    <li>Asian: <%=app.utils.percentage(details.asian)%>
+                                    </li>
+                                    <li>African American: <%=app.utils.percentage(details.africanAmerican)%>
+                                    </li>
+                                    <li>Multiracial: <%=app.utils.percentage(details.multiracial)%>
+                                    </li>
+                                    <li>Hawaiian/Pacific Islander: <%=app.utils.percentage(details.multiracial)%>
+                                    </li>
+                                    <li>Caucausian: <%=app.utils.percentage(details.white)%>
+                                    </li>
+                                    <li>Hispanic: <%=app.utils.percentage(details.hispanic)%>
+                                    </li>
+                                    <li>American Indian/Alaskan Native: <%=app.utils.percentage(details.americanIndianAlaskaNative)%>
+                                    </li>
+                                </ul>
+                                <%}else{%>Sorry! We have no racial diversity details for this school <%}%>
                             <% break; case 'schoolClimate': %>
-                                <p>Details go here.</p>
-                            <% break; case 'studentsFromMyNeighborhood': %>
-                                <p><%= school[item].val === -1 ? 'Between one and nine' : school[item].val %> students from your neighborhood attend this school.</p>
+                                <%if(details){%>
+                                <ul class="details-list"> 
+                                    <li>Attendance rate: <%=app.utils.percentage(details.attendanceRate)%>
+                                        </li>
+                                    <%if(details.attendanceRate || details.attendanceRate===0){%>
+                                    <li>Suspension rate: <%=app.utils.percentage(details.suspensionRate)%>
+                                        </li><%}%>
+                                    <%if(details.attendanceRate || details.attendanceRate===0){%>
+                                    <li>Truancy rate: <%=app.utils.percentage(details.truancyRate)%>
+                                        </li><%}%>
+                                    <%if(details.attendanceRate || details.attendanceRate===0){%>
+                                    <li>Mid-year withdrawal rate: <%=app.utils.percentage(details.midyearWithdrawal)%>
+                                        </li><%}%>
+                                </ul>                                
+                                <%}else{%>Sorry! We have no school climate details for this school.<%}%>
                             <% break; } %>
                         </div>
                     <% }); %>
