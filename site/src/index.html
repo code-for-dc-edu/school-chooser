@@ -176,6 +176,10 @@
                                         </li><%}%>
                                 </ul>                                
                                 <%}else{%>Sorry! We have no school climate details for this school.<%}%>
+                            <% break; case 'studentsFromMyNeighborhood': %>
+                                 <%if(details){%>
+                                 <p><%= details=== -1 ? 'Between one and nine' : details %> students from your neighborhood attend this school.</p>
+                                 <%}%>
                             <% break; } %>
                         </div>
                     <% }); %>
