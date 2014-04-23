@@ -57,18 +57,25 @@ define(
 			.attr('class',function(d){ return d.data.shortName? 'vis'+d.data.shortName : '';});
 
 		//Labels
-		arcs.append('text')
+		var labels=svg.append('g')
+			.attr('transform', 'translate(' + options.outerRadius + ',' + options.outerRadius + ')');
+
+		labels.selectAll('text')
+			.data(pieLayout(dataset))
+			.enter()
+			.append('text')
 			.attr('transform', function(d) {
 				return 'translate(' + arc.centroid(d) + ')';
 			})
 			.attr('text-anchor', 'middle')
 			.text(function(d) {
-			var text='';
-			if(d.value>0.06){
-				text=d.data.label || '';
-			}
-			return text;
-		}).attr('class','pie-text');
+				var text='';
+				if(d.value>0.06){
+					text=d.data.label || '';
+				}
+				return text;
+			}).attr('class','pie-text');
+
 	};
 	return pie;
 });

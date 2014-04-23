@@ -74,7 +74,7 @@ define(
                     .call(rbChart);
             });
             var racialDiversityData=utils.valsObjToArr(schoolAttrs.racialDiversity.val);
-            sel.select('#race-pie-container').call(pie, racialDiversityData);
+            sel.select('#race-pie-container').call(pie, racialDiversityData,{w:200,h:200});
             var fittext = this.fittext();
             setTimeout(fittext,0);
 
