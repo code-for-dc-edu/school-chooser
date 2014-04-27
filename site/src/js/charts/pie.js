@@ -58,7 +58,7 @@ define(
 
 		//Labels
 		var labels=svg.append('g')
-			.attr('transform', 'translate(' + options.outerRadius + ',' + options.outerRadius + ')');
+			.attr('transform', 'translate(' + (parseInt(options.outerRadius)+6) + ',' + options.outerRadius + ')');
 
 		labels.selectAll('text')
 			.data(pieLayout(dataset))
