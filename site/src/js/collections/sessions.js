@@ -5,7 +5,7 @@ define(
     ], function (_, Backbone, Session) {
     'use strict';
 
-    var Schools = Backbone.Collection.extend({
+    var Sessions = Backbone.Collection.extend({
 
         model: Session,
         url: '/api/sessions',
@@ -15,5 +15,5 @@ define(
         }
 
     });
-    return Schools;
+    return Sessions;
 });
