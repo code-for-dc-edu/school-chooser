@@ -54,7 +54,8 @@ define(
                 school: schoolAttrs,
                 selectedItems: this.selectedItems,
                 rankingArrays: this.rankingArrays,
-                content: content
+                content: content,
+                utils: utils
             }));
             
 
