@@ -4,9 +4,11 @@ define(
      'backbone',
      'd3',
      'charts/rbullet',
+     'charts/pie',
+     'utils',
      'i18n!nls/content',
-     'plugins/jquery-quickfit'
-    ], function ($, _, Backbone, d3, rubberBulletChart, content) {
+     'plugins/jquery-quickfit',
+    ], function ($, _, Backbone, d3, rubberBulletChart, pie, utils, content) {
     'use strict';
 
     var SchoolView = Backbone.View.extend({
@@ -54,6 +56,7 @@ define(
                 rankingArrays: this.rankingArrays,
                 content: content
             }));
+            
 
             this.rbChart = rubberBulletChart()
                 .width($('#app').width() - 22)
@@ -70,7 +73,8 @@ define(
                     })
                     .call(rbChart);
             });
-
+            var racialDiversityData=utils.valsObjToArr(schoolAttrs.racialDiversity.val);
+            sel.select('.race-pie-container').call(pie, racialDiversityData,{w:200,h:200});
             var fittext = this.fittext();
             setTimeout(fittext,0);
 
