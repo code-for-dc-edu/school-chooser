@@ -143,39 +143,44 @@
                                 <p>Details go here.</p>
                             <% break; case 'racialDiversity': %>
                                 <%if(details){%>
+                                <div class="race-pie-container" />
                                 <ul class="details-list">
-                                    <li>Asian: <%=app.utils.percentage(details.asian)%>
+                                    <li>Asian: <%=utils.fPercent(details.asian)%>
                                     </li>
-                                    <li>African American: <%=app.utils.percentage(details.africanAmerican)%>
+                                    <li>African American: <%=utils.fPercent(details.africanAmerican)%>
                                     </li>
-                                    <li>Multiracial: <%=app.utils.percentage(details.multiracial)%>
+                                    <li>Multiracial: <%=utils.fPercent(details.multiracial)%>
                                     </li>
-                                    <li>Hawaiian/Pacific Islander: <%=app.utils.percentage(details.multiracial)%>
+                                    <li>Hawaiian/Pacific Islander: <%=utils.fPercent(details.multiracial)%>
                                     </li>
-                                    <li>Caucausian: <%=app.utils.percentage(details.white)%>
+                                    <li>Caucausian: <%=utils.fPercent(details.white)%>
                                     </li>
-                                    <li>Hispanic: <%=app.utils.percentage(details.hispanic)%>
+                                    <li>Hispanic: <%=utils.fPercent(details.hispanic)%>
                                     </li>
-                                    <li>American Indian/Alaskan Native: <%=app.utils.percentage(details.americanIndianAlaskaNative)%>
+                                    <li>American Indian/Alaskan Native: <%=utils.fPercent(details.americanIndianAlaskaNative)%>
                                     </li>
                                 </ul>
                                 <%}else{%>Sorry! We have no racial diversity details for this school <%}%>
                             <% break; case 'schoolClimate': %>
                                 <%if(details){%>
                                 <ul class="details-list"> 
-                                    <li>Attendance rate: <%=app.utils.percentage(details.attendanceRate)%>
+                                    <li>Attendance rate: <%=utils.fPercent(details.attendanceRate)%>
                                         </li>
                                     <%if(details.attendanceRate || details.attendanceRate===0){%>
-                                    <li>Suspension rate: <%=app.utils.percentage(details.suspensionRate)%>
+                                    <li>Suspension rate: <%=utils.fPercent(details.suspensionRate)%>
                                         </li><%}%>
                                     <%if(details.attendanceRate || details.attendanceRate===0){%>
-                                    <li>Truancy rate: <%=app.utils.percentage(details.truancyRate)%>
+                                    <li>Truancy rate: <%=utils.fPercent(details.truancyRate)%>
                                         </li><%}%>
                                     <%if(details.attendanceRate || details.attendanceRate===0){%>
-                                    <li>Mid-year withdrawal rate: <%=app.utils.percentage(details.midyearWithdrawal)%>
+                                    <li>Mid-year withdrawal rate: <%=utils.fPercent(details.midyearWithdrawal)%>
                                         </li><%}%>
                                 </ul>                                
                                 <%}else{%>Sorry! We have no school climate details for this school.<%}%>
+                            <% break; case 'studentsFromMyNeighborhood': %>
+                                 <%if(details){%>
+                                 <p><%= details=== -1 ? 'Between one and nine' : details %> students from your neighborhood attend this school.</p>
+                                 <%}%>
                             <% break; } %>
                         </div>
                     <% }); %>
